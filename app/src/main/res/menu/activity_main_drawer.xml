@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_currency"
+            android:icon="@drawable/ic_currency"
+            android:title="@string/menu_currency" />
+        <item
+            android:id="@+id/nav_fragments"
+            android:icon="@drawable/ic_fragments"
+            android:title="@string/menu_fragments" />
+        <item
+            android:id="@+id/nav_incubators"
+            android:icon="@drawable/ic_incubators"
+            android:title="@string/menu_incubators" />
+        <item
+            android:id="@+id/nav_scarabs"
+            android:icon="@drawable/ic_scarabs"
+            android:title="@string/menu_scarabs" />
+        <item
+            android:id="@+id/nav_fossils"
+            android:icon="@drawable/ic_fossils"
+            android:title="@string/menu_fossils" />
+        <item
+            android:id="@+id/nav_resonators"
+            android:icon="@drawable/ic_resonators"
+            android:title="@string/menu_resonators" />
+        <item
+            android:id="@+id/nav_essences"
+            android:icon="@drawable/ic_essences"
+            android:title="@string/menu_essences" />
+        <item
+            android:id="@+id/nav_divination_cards"
+            android:icon="@drawable/ic_divination_cards"
+            android:title="@string/menu_divination_cards" />
+        <item
+            android:id="@+id/nav_prophecies"
+            android:icon="@drawable/ic_prophecies"
+            android:title="@string/menu_prophecies" />
+        <item
+            android:id="@+id/nav_skill_gems"
+            android:icon="@drawable/ic_skill_gems"
+            android:title="@string/menu_skill_gems" />
+        <item
+            android:id="@+id/nav_base_types"
+            android:icon="@drawable/ic_base_types"
+            android:title="@string/menu_base_types" />
+        <item
+            android:id="@+id/nav_helmet_enchantments"
+            android:icon="@drawable/ic_helmet_enchantments"
+            android:title="@string/menu_helmet_enchantments" />
+        <item
+            android:id="@+id/nav_unique_maps"
+            android:icon="@drawable/ic_unique_maps"
+            android:title="@string/menu_unique_maps" />
+        <item
+            android:id="@+id/nav_maps"
+            android:icon="@drawable/ic_maps"
+            android:title="@string/menu_maps" />
+        <item
+            android:id="@+id/nav_unique_jewels"
+            android:icon="@drawable/ic_unique_jewels"
+            android:title="@string/menu_unique_jewels" />
+        <item
+            android:id="@+id/nav_unique_flasks"
+            android:icon="@drawable/ic_unique_flasks"
+            android:title="@string/menu_unique_flasks" />
+        <item
+            android:id="@+id/nav_unique_weapons"
+            android:icon="@drawable/ic_unique_weapons"
+            android:title="@string/menu_unique_weapons" />
+        <item
+            android:id="@+id/nav_unique_armours"
+            android:icon="@drawable/ic_unique_armours"
+            android:title="@string/menu_unique_armours" />
+        <item
+            android:id="@+id/nav_unique_accessories"
+            android:icon="@drawable/ic_unique_accessories"
+            android:title="@string/menu_unique_accessories" />
+        <item
+            android:id="@+id/nav_beasts"
+            android:icon="@drawable/ic_beasts"
+            android:title="@string/menu_beasts" />
+    </group>
+
+</menu>

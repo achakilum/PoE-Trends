@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/currency_list_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="136dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/pattern_list_item_card_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:elevation="8dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/pattern_list_item_card_view_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#110000"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/icon_image_view"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:background="@color/colorPrimary"
+                            android:padding="4dp"
+                            android:scaleType="fitCenter"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/currency_load_placeholder" />
+
+                        <TextView
+                            android:id="@+id/currency_type_name_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:background="@color/colorPrimaryDark"
+                            android:gravity="center|start"
+                            android:padding="8dp"
+                            android:text="TextView"
+                            android:textSize="16dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toEndOf="@+id/icon_image_view"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/currency_buy_prefix"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Buy"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/currency_type_name_text_view" />
+
+                        <TextView
+                            android:id="@+id/currency_buy_count_affix"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginTop="8dp"
+                            android:text="1.0 ×"
+                            app:layout_constraintStart_toEndOf="@+id/currency_buy_prefix"
+                            app:layout_constraintTop_toBottomOf="@+id/currency_type_name_text_view" />
+
+                        <ImageView
+                            android:id="@+id/currency_buy_item_icon"
+                            android:layout_width="24dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/currency_buy_count_affix"
+                            app:layout_constraintStart_toEndOf="@+id/currency_buy_count_affix"
+                            app:layout_constraintTop_toTopOf="@+id/currency_buy_count_affix"
+                            app:srcCompat="@drawable/currency_load_placeholder" />
+
+                        <TextView
+                            android:id="@+id/currency_buy_cost_affix"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginTop="8dp"
+                            android:text="for 1.0 ×"
+                            app:layout_constraintStart_toEndOf="@+id/currency_buy_item_icon"
+                            app:layout_constraintTop_toBottomOf="@+id/currency_type_name_text_view" />
+
+                        <ImageView
+                            android:id="@+id/currency_buy_cost_icon"
+                            android:layout_width="24dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/currency_buy_cost_affix"
+                            app:layout_constraintStart_toEndOf="@+id/currency_buy_cost_affix"
+                            app:layout_constraintTop_toTopOf="@+id/currency_buy_cost_affix"
+                            app:srcCompat="@drawable/ic_chaos_orb" />
+
+                        <TextView
+                            android:id="@+id/currency_sell_prefix"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Sell"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/currency_buy_prefix" />
+
+                        <TextView
+                            android:id="@+id/currency_sell_count_affix"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginTop="8dp"
+                            android:text="1.0 ×"
+                            app:layout_constraintStart_toEndOf="@+id/currency_sell_prefix"
+                            app:layout_constraintTop_toBottomOf="@+id/currency_buy_count_affix" />
+
+                        <ImageView
+                            android:id="@+id/currency_sell_item_icon"
+                            android:layout_width="24dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/currency_sell_count_affix"
+                            app:layout_constraintStart_toEndOf="@+id/currency_sell_count_affix"
+                            app:layout_constraintTop_toTopOf="@+id/currency_sell_count_affix"
+                            app:srcCompat="@drawable/currency_load_placeholder" />
+
+                        <TextView
+                            android:id="@+id/currency_sell_cost_affix"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginTop="8dp"
+                            android:text="for 1.0 ×"
+                            app:layout_constraintStart_toEndOf="@+id/currency_sell_item_icon"
+                            app:layout_constraintTop_toBottomOf="@+id/currency_buy_cost_affix" />
+
+                        <ImageView
+                            android:id="@+id/currency_sell_cost_icon"
+                            android:layout_width="24dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/currency_sell_cost_affix"
+                            app:layout_constraintStart_toEndOf="@+id/currency_sell_cost_affix"
+                            app:layout_constraintTop_toTopOf="@+id/currency_sell_cost_affix"
+                            app:srcCompat="@drawable/ic_chaos_orb" />
+
+                        <TextView
+                            android:id="@+id/currency_buy_value_change"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="+0.0%"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/currency_type_name_text_view" />
+
+                        <TextView
+                            android:id="@+id/currency_sell_value_change"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="+0.0%"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/currency_buy_value_change" />
+
+                        <View
+                            android:id="@+id/currency_buy_line_guide"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="6dp"
+                            android:background="#969696"
+                            app:layout_constraintBottom_toBottomOf="@+id/currency_buy_value_change"
+                            app:layout_constraintEnd_toStartOf="@+id/currency_buy_value_change"
+                            app:layout_constraintStart_toEndOf="@+id/currency_buy_cost_icon"
+                            app:layout_constraintTop_toTopOf="@+id/currency_buy_value_change" />
+
+                        <View
+                            android:id="@+id/currency_sell_line_guide"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="6dp"
+                            android:background="#969696"
+                            app:layout_constraintBottom_toBottomOf="@+id/currency_sell_value_change"
+                            app:layout_constraintEnd_toStartOf="@+id/currency_sell_value_change"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toEndOf="@+id/currency_sell_cost_icon"
+                            app:layout_constraintTop_toTopOf="@+id/currency_sell_value_change" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

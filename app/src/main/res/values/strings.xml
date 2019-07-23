@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">PoE Trends</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_currency">Currency</string>
+    <string name="menu_fragments">Fragments</string>
+    <string name="menu_incubators">Incubators</string>
+    <string name="menu_scarabs">Scarabs</string>
+    <string name="menu_fossils">Fossils</string>
+    <string name="menu_resonators">Resonators</string>
+    <string name="menu_essences">Essences</string>
+    <string name="menu_divination_cards">Divination Cards</string>
+    <string name="menu_prophecies">Prophecies</string>
+    <string name="menu_skill_gems">Skill Gems</string>
+    <string name="menu_base_types">Base Types</string>
+    <string name="menu_helmet_enchantments">Helmet Enchantments</string>
+    <string name="menu_unique_maps">Unique Maps</string>
+    <string name="menu_maps">Maps</string>
+    <string name="menu_unique_jewels">Unique Jewels</string>
+    <string name="menu_unique_flasks">Unique Flasks</string>
+    <string name="menu_unique_weapons">Unique Weapons</string>
+    <string name="menu_unique_armours">Unique Armours</string>
+    <string name="menu_unique_accessories">Unique Accessories</string>
+    <string name="menu_beasts">Beasts</string>
+</resources>
