@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     {
         recyclerView?.let {
 
-            recyclerView?.swapAdapter(PoeNinjaAdapter(currencyOverview, PoeNinjaAdapter.DISPLAY_CURRENCY), false)
+            recyclerView?.swapAdapter(PoeNinjaAdapter(currencyOverview), false)
 
         } ?: run {
 
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             rvLayoutManager = LinearLayoutManager(this)
             recyclerView?.layoutManager = rvLayoutManager
 
-            rvAdapter = PoeNinjaAdapter(currencyOverview, PoeNinjaAdapter.DISPLAY_CURRENCY)
+            rvAdapter = PoeNinjaAdapter(currencyOverview)
             recyclerView?.adapter = rvAdapter
         }
     }
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     {
         recyclerView?.let {
 
-            recyclerView?.swapAdapter(PoeNinjaAdapter(itemOverview, PoeNinjaAdapter.DISPLAY_ITEM), false)
+            recyclerView?.swapAdapter(PoeNinjaAdapter(itemOverview), false)
 
         } ?: run {
 
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             rvLayoutManager = LinearLayoutManager(this)
             recyclerView?.layoutManager = rvLayoutManager
 
-            rvAdapter = PoeNinjaAdapter(itemOverview, PoeNinjaAdapter.DISPLAY_ITEM)
+            rvAdapter = PoeNinjaAdapter(itemOverview)
             recyclerView?.adapter = rvAdapter
         }
     }
@@ -152,102 +152,102 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         {
             R.id.nav_currency ->
             {
-                poeNinjaViewModel.loadCurrencyOverview("Legion", "Currency")
+                poeNinjaViewModel.setOverviewName("Currency")
                 this.title = getString(R.string.menu_currency)
             }
             R.id.nav_fragments ->
             {
-                poeNinjaViewModel.loadCurrencyOverview("Legion", "Fragment")
+                poeNinjaViewModel.setOverviewName("Fragment")
                 this.title = getString(R.string.menu_fragments)
             }
             R.id.nav_incubators ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "Incubator")
+                poeNinjaViewModel.setOverviewName("Incubator")
                 this.title = getString(R.string.menu_incubators)
             }
             R.id.nav_scarabs ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "Scarab")
+                poeNinjaViewModel.setOverviewName("Scarab")
                 this.title = getString(R.string.menu_scarabs)
             }
             R.id.nav_fossils ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "Fossil")
+                poeNinjaViewModel.setOverviewName("Fossil")
                 this.title = getString(R.string.menu_fossils)
             }
             R.id.nav_resonators ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "Resonator")
+                poeNinjaViewModel.setOverviewName("Resonator")
                 this.title = getString(R.string.menu_resonators)
             }
             R.id.nav_essences ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "Essence")
+                poeNinjaViewModel.setOverviewName("Essence")
                 this.title = getString(R.string.menu_essences)
             }
             R.id.nav_divination_cards ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "DivinationCard")
+                poeNinjaViewModel.setOverviewName("DivinationCard")
                 this.title = getString(R.string.menu_divination_cards)
             }
             R.id.nav_prophecies ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "Prophecy")
+                poeNinjaViewModel.setOverviewName("Prophecy")
                 this.title = getString(R.string.menu_prophecies)
             }
             R.id.nav_skill_gems ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "SkillGem")
+                poeNinjaViewModel.setOverviewName("SkillGem")
                 this.title = getString(R.string.menu_skill_gems)
             }
             R.id.nav_base_types ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "BaseType")
+                poeNinjaViewModel.setOverviewName("BaseType")
                 this.title = getString(R.string.menu_base_types)
             }
             R.id.nav_helmet_enchantments ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "HelmetEnchant")
+                poeNinjaViewModel.setOverviewName("HelmetEnchant")
                 this.title = getString(R.string.menu_helmet_enchantments)
             }
             R.id.nav_unique_maps ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "UniqueMap")
+                poeNinjaViewModel.setOverviewName("UniqueMap")
                 this.title = getString(R.string.menu_unique_maps)
             }
             R.id.nav_maps ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "Map")
+                poeNinjaViewModel.setOverviewName("Map")
                 this.title = getString(R.string.menu_maps)
             }
             R.id.nav_unique_jewels ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "UniqueJewel")
+                poeNinjaViewModel.setOverviewName("UniqueJewel")
                 this.title = getString(R.string.menu_unique_jewels)
             }
             R.id.nav_unique_flasks ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "UniqueFlask")
+                poeNinjaViewModel.setOverviewName("UniqueFlask")
                 this.title = getString(R.string.menu_unique_flasks)
             }
             R.id.nav_unique_weapons ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "UniqueWeapon")
+                poeNinjaViewModel.setOverviewName("UniqueWeapon")
                 this.title = getString(R.string.menu_unique_weapons)
             }
             R.id.nav_unique_armours ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "UniqueArmour")
+                poeNinjaViewModel.setOverviewName("UniqueArmour")
                 this.title = getString(R.string.menu_unique_armours)
             }
             R.id.nav_unique_accessories ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "UniqueAccessory")
+                poeNinjaViewModel.setOverviewName("UniqueAccessory")
                 this.title = getString(R.string.menu_unique_accessories)
             }
             R.id.nav_beasts ->
             {
-                poeNinjaViewModel.loadItemOverview("Legion", "Beast")
+                poeNinjaViewModel.setOverviewName("Beast")
                 this.title = getString(R.string.menu_beasts)
             }
         }

@@ -11,9 +11,9 @@ import io.reactivex.schedulers.Schedulers
 
 class PoeNinjaViewModel : ViewModel()
 {
-    private val league: String = "Legion"
-    private val overviewName: String = "Currency"
-    private val overviewType: Int = Overview.CURRENCY
+    private var league: String = "Legion"
+    private var overviewName: String = "Currency"
+    private var overviewType: Int = Overview.CURRENCY
 
     private val poeNinjaService: GetPoeNinjaDataService? by lazy {
         PoeNinjaClientInstance.create()
@@ -27,27 +27,22 @@ class PoeNinjaViewModel : ViewModel()
 
     private var disposable: Disposable? = null
 
-    fun getOverview() : LiveData<Overview>
-    {
-        return overview
-    }
-
-    fun reloadOverview()
+    private fun reloadOverview()
     {
         when (overviewType)
         {
             Overview.CURRENCY ->
             {
-                loadCurrencyOverview(league, overviewName)
+                loadCurrencyOverview(overviewName)
             }
             Overview.ITEM ->
             {
-                loadItemOverview(league, overviewName)
+                loadItemOverview(overviewName)
             }
         }
     }
 
-    fun loadCurrencyOverview(league : String, type : String)
+    private fun loadCurrencyOverview(type : String)
     {
         disposable = poeNinjaService!!.getFullCurrencyOverview(league, type)
             .subscribeOn(Schedulers.io())
@@ -58,7 +53,7 @@ class PoeNinjaViewModel : ViewModel()
             )
     }
 
-    fun loadItemOverview(league : String, type : String)
+    private fun loadItemOverview(type : String)
     {
         disposable = poeNinjaService!!.getFullItemOverview(league, type)
             .subscribeOn(Schedulers.io())
@@ -69,13 +64,35 @@ class PoeNinjaViewModel : ViewModel()
             )
     }
 
-    fun handleOverviewResult(result : Overview)
+    private fun handleOverviewResult(result : Overview)
     {
+        result.type = overviewType
         overview.value = result
     }
 
-    fun handleOverviewError(errorMessage : String?)
+    private fun handleOverviewError(errorMessage : String?)
     {
         errorMessage?.let{ Log.i("PoeNinjaViewModel", errorMessage) }
+    }
+
+    fun getOverview() : LiveData<Overview>
+    {
+        return overview
+    }
+
+    fun setOverviewName(newOverviewName: String)
+    {
+        overviewName = newOverviewName
+
+        if (overviewName.equals("Currency") || overviewName.equals("Fragment"))
+        {
+            overviewType = Overview.CURRENCY
+        }
+        else
+        {
+            overviewType = Overview.ITEM
+        }
+
+        reloadOverview()
     }
 }

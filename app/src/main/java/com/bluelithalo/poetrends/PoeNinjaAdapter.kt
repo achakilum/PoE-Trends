@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 
 import androidx.recyclerview.widget.RecyclerView
+import com.bluelithalo.poetrends.model.Overview
 
 import com.bluelithalo.poetrends.model.currency.CurrencyOverview
 import com.bluelithalo.poetrends.model.item.ItemOverview
@@ -18,37 +19,29 @@ import com.squareup.picasso.Picasso
 class PoeNinjaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
     private val MAX_ITEMS_LOADED = 50
+    private var overview: Overview? = null
 
-    private var currencyOverview: CurrencyOverview? = null
-    private var itemOverview: ItemOverview? = null
-    private var displayType: Int = 0
-
-    constructor(newCurrencyOverview: CurrencyOverview?, newDisplayType: Int)
+    constructor(newOverview: Overview?)
     {
-        currencyOverview = newCurrencyOverview
-        itemOverview = null
-        displayType = newDisplayType
-    }
-
-    constructor(newItemOverview: ItemOverview?, newDisplayType: Int)
-    {
-        currencyOverview = null
-        itemOverview = newItemOverview
-        displayType = newDisplayType
+        overview = newOverview
     }
 
     override fun getItemCount(): Int
     {
         var count = 0
 
-        if (displayType == DISPLAY_CURRENCY)
+        when (overview?.type)
         {
-            count = currencyOverview?.lines!!.size
-        }
-        else
-        if (displayType == DISPLAY_ITEM)
-        {
-            count = itemOverview?.lines!!.size
+            Overview.CURRENCY ->
+            {
+                val currencyOverview = overview as CurrencyOverview
+                count = currencyOverview?.lines?.size ?: 0
+            }
+            Overview.ITEM ->
+            {
+                val itemOverview = overview as ItemOverview
+                count = itemOverview?.lines?.size ?: 0
+            }
         }
 
         return Math.min(count, MAX_ITEMS_LOADED)
@@ -56,68 +49,35 @@ class PoeNinjaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     override fun getItemViewType(position: Int): Int
     {
-        return displayType
+        return overview?.type ?: Overview.NONE
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder
     {
         val inflater = LayoutInflater.from(viewGroup.context)
 
-        return if (viewType == DISPLAY_CURRENCY)
+        return when (viewType)
         {
-            val currencyView = inflater.inflate(R.layout.currency_list_item, viewGroup, false)
-            CurrencyViewHolder(currencyView)
-        }
-        else
-        //if (viewType == DISPLAY_ITEM)
-        {
-            val itemView = inflater.inflate(R.layout.item_list_item, viewGroup, false)
-            ItemViewHolder(itemView)
+            Overview.CURRENCY -> CurrencyViewHolder(inflater.inflate(R.layout.currency_list_item, viewGroup, false))
+            Overview.ITEM -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
+            else -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
         }
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int)
     {
-        if (viewHolder.itemViewType == DISPLAY_CURRENCY)
+        when (viewHolder.itemViewType)
         {
-            val cvh = viewHolder as CurrencyViewHolder
-            cvh.configureViewHolder(currencyOverview, position)
+            Overview.CURRENCY ->
+            {
+                val cvh = viewHolder as CurrencyViewHolder
+                cvh.configureViewHolder(overview, position)
+            }
+            Overview.ITEM ->
+            {
+                val ivh = viewHolder as ItemViewHolder
+                ivh.configureViewHolder(overview, position)
+            }
         }
-        else
-        if (viewHolder.itemViewType == DISPLAY_ITEM)
-        {
-            val ivh = viewHolder as ItemViewHolder
-            ivh.configureViewHolder(itemOverview, position)
-        }
-    }
-
-    fun getCurrencyOverview() : CurrencyOverview?
-    {
-        return currencyOverview;
-    }
-
-    fun setCurrencyOverview(newCO : CurrencyOverview?)
-    {
-        currencyOverview = newCO
-        itemOverview = null
-        displayType = DISPLAY_CURRENCY
-    }
-
-    fun getItemOverview() : ItemOverview?
-    {
-        return itemOverview;
-    }
-
-    fun setItemOverview(newIO : ItemOverview?)
-    {
-        currencyOverview = null
-        itemOverview = newIO
-        displayType = DISPLAY_ITEM
-    }
-
-    companion object
-    {
-        val DISPLAY_CURRENCY = 0
-        val DISPLAY_ITEM = 1
     }
 }

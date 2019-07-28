@@ -9,7 +9,7 @@ open class Overview
         val ITEM = 2
     }
 
-    var type : Int? = null
+    var type : Int
 
     constructor()
     {
