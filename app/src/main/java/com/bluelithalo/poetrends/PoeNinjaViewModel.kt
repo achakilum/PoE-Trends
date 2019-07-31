@@ -5,15 +5,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bluelithalo.poetrends.model.Overview
+import com.bluelithalo.poetrends.model.currency.CurrencyOverview
+import com.bluelithalo.poetrends.model.item.ItemOverview
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 class PoeNinjaViewModel : ViewModel()
 {
     private var league: String = "Legion"
     private var overviewName: String = "Currency"
     private var overviewType: Int = Overview.CURRENCY
+    private var searchQuery: String = ""
 
     private val poeNinjaService: GetPoeNinjaDataService? by lazy {
         PoeNinjaClientInstance.create()
@@ -44,24 +49,58 @@ class PoeNinjaViewModel : ViewModel()
 
     private fun loadCurrencyOverview(type : String)
     {
-        disposable = poeNinjaService!!.getFullCurrencyOverview(league, type)
+        disposable = poeNinjaService?.let {
+            it.getFullCurrencyOverview(league, type)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { currencyOverview: CurrencyOverview -> filterCurrencyOverview(currencyOverview) }
             .subscribe(
                 { result -> handleOverviewResult(result) },
                 { error -> handleOverviewError(error.message) }
             )
+        }
     }
 
     private fun loadItemOverview(type : String)
     {
-        disposable = poeNinjaService!!.getFullItemOverview(league, type)
+        disposable = poeNinjaService?.let {
+            it.getFullItemOverview(league, type)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { itemOverview: ItemOverview -> filterItemOverview(itemOverview) }
             .subscribe(
                 { result -> handleOverviewResult(result) },
                 { error -> handleOverviewError(error.message) }
             )
+        }
+    }
+
+    private fun filterCurrencyOverview(currencyOverview: CurrencyOverview)
+    {
+        var newLines : ArrayList<com.bluelithalo.poetrends.model.currency.Line> = ArrayList()
+        for (line in currencyOverview.lines!!)
+        {
+            if (line.currencyTypeName!!.toLowerCase().contains(searchQuery.toLowerCase()))
+            {
+                newLines.add(line)
+            }
+        }
+
+        currencyOverview.lines = newLines
+    }
+
+    private fun filterItemOverview(itemOverview: ItemOverview)
+    {
+        var newLines : ArrayList<com.bluelithalo.poetrends.model.item.Line> = ArrayList()
+        for (line in itemOverview.lines!!)
+        {
+            if (line.name!!.toLowerCase().contains(searchQuery.toLowerCase()))
+            {
+                newLines.add(line)
+            }
+        }
+
+        itemOverview.lines = newLines
     }
 
     private fun handleOverviewResult(result : Overview)
@@ -93,6 +132,13 @@ class PoeNinjaViewModel : ViewModel()
             overviewType = Overview.ITEM
         }
 
+        this.searchQuery = ""
+        reloadOverview()
+    }
+
+    fun setSearchQuery(newSearchQuery: String)
+    {
+        searchQuery = newSearchQuery
         reloadOverview()
     }
 }

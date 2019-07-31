@@ -1,6 +1,11 @@
 package com.bluelithalo.poetrends
 
+import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.KeyEvent
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
@@ -10,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.View
+import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -19,6 +25,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bluelithalo.poetrends.model.Overview
 import com.bluelithalo.poetrends.model.currency.CurrencyOverview
 import com.bluelithalo.poetrends.model.item.ItemOverview
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener
 {
@@ -26,6 +35,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var poeNinjaViewModel : PoeNinjaViewModel
 
     private var loadingProgressBar: ProgressBar? = null
+    private var searchQueryBar: EditText? = null
 
     private var recyclerView: RecyclerView? = null
     private var rvLayoutManager: RecyclerView.LayoutManager? = null
@@ -50,7 +60,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.itemIconTintList = null
         navView.menu.getItem(0).isChecked = true
 
-        //listLabel = findViewById<TextView?>(R.id.main_list_label)
         this.title = "Current Trends"
         this.loadingProgressBar = findViewById<ProgressBar>(R.id.loading_progress_bar)
 
@@ -71,13 +80,43 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             this.loadingProgressBar?.visibility = View.GONE
         })
+
+        this.searchQueryBar = findViewById<EditText>(R.id.search_query_bar)
+        this.searchQueryBar?.addTextChangedListener(object : TextWatcher
+        {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int)
+            {
+                s?.let { poeNinjaViewModel.setSearchQuery(it.toString()) }
+                loadingProgressBar?.visibility = View.VISIBLE
+            }
+        })
+
+        this.searchQueryBar?.setOnEditorActionListener(object : TextView.OnEditorActionListener
+        {
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean
+            {
+                if (actionId == EditorInfo.IME_ACTION_DONE)
+                {
+                    var imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+                    searchQueryBar?.clearFocus()
+
+                    return true
+                }
+
+                return false
+            }
+        })
     }
 
     private fun updateRecyclerViewWithCurrency(currencyOverview: CurrencyOverview?)
     {
         recyclerView?.let {
 
-            recyclerView?.swapAdapter(PoeNinjaAdapter(currencyOverview), false)
+            it.swapAdapter(PoeNinjaAdapter(currencyOverview), false)
+            it.smoothScrollToPosition(0)
 
         } ?: run {
 
@@ -96,7 +135,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     {
         recyclerView?.let {
 
-            recyclerView?.swapAdapter(PoeNinjaAdapter(itemOverview), false)
+            it.swapAdapter(PoeNinjaAdapter(itemOverview), false)
+            it.smoothScrollToPosition(0)
 
         } ?: run {
 
@@ -147,6 +187,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     {
         // Handle navigation view item clicks here.
         //listLabel?.text = "Loading..."
+
+        // TODO: Move activity title changes to LiveData in ViewModel (as part of Overview)
 
         when (item.itemId)
         {
@@ -254,6 +296,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         this.title = "Trends: ${this.title}"
         this.loadingProgressBar?.visibility = View.VISIBLE
+        this.searchQueryBar?.text?.clear()
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
