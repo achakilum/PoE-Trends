@@ -2,17 +2,19 @@ package com.bluelithalo.poetrends.model
 
 open class Overview
 {
-    companion object
+    enum class Type
     {
-        val NONE = 0
-        val CURRENCY = 1
-        val ITEM = 2
+        NONE, CURRENCY, FRAGMENT,
+        INCUBATOR, SCARAB, FOSSIL, RESONATOR, BEAST,
+        ESSENCE, DIVINATION_CARD, PROPHECY, SKILL_GEM, BASE_TYPE, HELMET_ENCHANT, MAP,
+        UNIQUE_MAP, UNIQUE_JEWEL, UNIQUE_FLASK, UNIQUE_WEAPON, UNIQUE_ARMOUR, UNIQUE_ACCESSORY
+
     }
 
-    var type : Int
+    var type : Type
 
     constructor()
     {
-        type = Overview.NONE
+        type = Type.NONE
     }
 }

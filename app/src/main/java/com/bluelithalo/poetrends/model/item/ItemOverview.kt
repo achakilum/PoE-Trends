@@ -8,9 +8,4 @@ class ItemOverview : Overview()
 {
     @SerializedName("lines")
     var lines: List<Line>? = null
-
-    init
-    {
-        type = Overview.ITEM
-    }
 }

@@ -1,4 +1,4 @@
-package com.bluelithalo.poetrends
+package com.bluelithalo.poetrends.poe_ninja
 
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

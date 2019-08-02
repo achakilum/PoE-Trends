@@ -1,4 +1,4 @@
-package com.bluelithalo.poetrends
+package com.bluelithalo.poetrends.poe_ninja
 
 import com.bluelithalo.poetrends.model.currency.CurrencyOverview
 import com.bluelithalo.poetrends.model.item.ItemOverview

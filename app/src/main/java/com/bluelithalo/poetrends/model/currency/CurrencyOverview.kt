@@ -10,9 +10,4 @@ class CurrencyOverview : Overview()
 
     @SerializedName("currencyDetails")
     var currencyDetails: List<CurrencyDetail>? = null
-
-    init
-    {
-        type = Overview.CURRENCY
-    }
 }
