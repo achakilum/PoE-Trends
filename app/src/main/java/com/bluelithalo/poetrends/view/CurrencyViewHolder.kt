@@ -1,9 +1,7 @@
 package com.bluelithalo.poetrends.view
 
 import android.graphics.Color
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bluelithalo.poetrends.R
@@ -14,7 +12,7 @@ import com.squareup.picasso.Picasso
 class CurrencyViewHolder : PoeNinjaViewHolder
 {
     var currencyTypeNameTextView: TextView
-    var iconImageView: ImageView
+    var currencyIconImageView: ImageView
 
     var currencyBuyCountAffix: TextView
     var currencyBuyItemIcon: ImageView
@@ -29,7 +27,7 @@ class CurrencyViewHolder : PoeNinjaViewHolder
     constructor(v: View) : super(v)
     {
         currencyTypeNameTextView = v.findViewById<TextView>(R.id.currency_type_name_text_view)
-        iconImageView = v.findViewById<ImageView>(R.id.icon_image_view)
+        currencyIconImageView = v.findViewById<ImageView>(R.id.currency_icon_image_view)
 
         currencyBuyCountAffix = v.findViewById<TextView>(R.id.currency_buy_count_affix)
         currencyBuyItemIcon = v.findViewById<ImageView>(R.id.currency_buy_item_icon)
@@ -45,29 +43,16 @@ class CurrencyViewHolder : PoeNinjaViewHolder
     override fun configureViewHolder(overview: Overview?, position: Int)
     {
         val currencyOverview = overview as CurrencyOverview
-        val currencyLine = currencyOverview?.lines!![position]
-        val currencyTypeName = currencyLine.currencyTypeName
+        val currencyLine = currencyOverview?.lines?.let { it[position] }
+        val currencyTypeName = currencyLine?.currencyTypeName
         val iconUrl = this.getIconUrlForCurrencyType(currencyOverview, currencyTypeName)
-
-        val buyDataAvailable = (currencyLine.receive != null)
-        val sellDataAvailable = (currencyLine.pay != null)
-        val buyValueChangeDataAvailable = currencyLine.lowConfidenceReceiveSparkLine != null
-        val sellValueChangeDataAvailable = currencyLine.lowConfidencePaySparkLine != null
-
-        val buyValue = if (buyDataAvailable) currencyLine.receive?.value else 1.0 // Pay 23220.000000000000000000000000 Chaos, Get 1.0 Mirror of Kalandra
-        val sellValue = if (sellDataAvailable) currencyLine.pay?.value else 1.0 // Pay 1.0 Mirror of Kalandra, Get (1 / 0.0000437502569411764705882353 = 22857.0086193) Chaos
-        val buyValueChange = if (buyValueChangeDataAvailable) currencyLine.lowConfidenceReceiveSparkLine?.totalChange else 0.0
-        val sellValueChange = if (sellValueChangeDataAvailable) currencyLine.lowConfidencePaySparkLine?.totalChange else 0.0
-        val buyValueChangeText = (if (buyValueChange!! > 0.0) "+" else "") + String.format("%.1f", buyValueChange) + "%"
-        val sellValueChangeText = (if (sellValueChange!! > 0.0) "+" else "") + String.format("%.1f", sellValueChange) + "%"
-
 
         currencyTypeNameTextView.text = currencyTypeName
         Picasso.get()
             .load(iconUrl)
             .placeholder(R.drawable.currency_load_placeholder)
             .error(R.drawable.currency_load_error)
-            .into(iconImageView)
+            .into(currencyIconImageView)
         Picasso.get()
             .load(iconUrl)
             .placeholder(R.drawable.currency_load_placeholder)
@@ -79,33 +64,72 @@ class CurrencyViewHolder : PoeNinjaViewHolder
             .error(R.drawable.currency_load_error)
             .into(currencySellItemIcon)
 
-        val buyCountAffix = if (buyDataAvailable) String.format("%.1f", Math.max(1.0, 1.0 / buyValue!!)) + " \u00D7" else "N/A \u00D7"
-        val buyCostAffix = if (buyDataAvailable) "for " + String.format("%.1f", Math.max(1.0, buyValue!!)) + " \u00D7" else "for N/A \u00D7"
+        // Buy data available
+        currencyLine?.receive?.let {
+            val buyValue = it.value
+            buyValue?.let {
+                val buyCountAffix = String.format("%.1f", Math.max(1.0, 1.0 / buyValue)) + " \u00D7"
+                val buyCostAffix = "for " + String.format("%.1f", Math.max(1.0, buyValue)) + " \u00D7"
+                currencyBuyCountAffix.text = buyCountAffix
+                currencyBuyCostAffix.text = buyCostAffix
+            }
+            // Buy value change data available
+            currencyLine.lowConfidenceReceiveSparkLine?.let {
+                val buyValueChange = it.totalChange
+                buyValueChange?.let {
+                    val buyValueChangeText = (if (buyValueChange > 0.0) "+" else "") + String.format("%.1f", buyValueChange) + "%"
+                    currencyBuyValueChange.text = buyValueChangeText
+                    currencyBuyValueChange.setTextColor(if (buyValueChange >= 0.0) Color.GREEN else Color.RED)
+                }
+            }
+        } ?: run {
+            val buyCountAffix = "N/A \u00D7"
+            val buyCostAffix = "for N/A \u00D7"
+            currencyBuyCountAffix.text = buyCountAffix
+            currencyBuyCostAffix.text = buyCostAffix
+            currencyBuyValueChange.text = "N/A"
+            currencyBuyValueChange.setTextColor(Color.GRAY)
+        }
 
-        val sellCountAffix = if (sellDataAvailable) String.format("%.1f", Math.max(1.0, sellValue!!)) + " \u00D7" else "N/A \u00D7"
-        val sellCostAffix = if (sellDataAvailable) "for " + String.format("%.1f", Math.max(1.0, 1.0 / sellValue!!)) + " \u00D7" else "for N/A \u00D7"
-
-        currencyBuyCountAffix.text = buyCountAffix
-        currencyBuyCostAffix.text = buyCostAffix
-
-        currencySellCountAffix.text = sellCountAffix
-        currencySellCostAffix.text = sellCostAffix
-
-        currencyBuyValueChange.text = if (buyDataAvailable) buyValueChangeText else "N/A"
-        currencyBuyValueChange.setTextColor(if (buyDataAvailable) if (buyValueChange >= 0.0) Color.GREEN else Color.RED else Color.GRAY)
-        currencySellValueChange.text = if (sellDataAvailable) sellValueChangeText else "N/A"
-        currencySellValueChange.setTextColor(if (sellDataAvailable) if (sellValueChange >= 0.0) Color.GREEN else Color.RED else Color.GRAY)
+        // Sell data available
+        currencyLine?.pay?.let {
+            val sellValue = it.value
+            sellValue?.let {
+                val sellCountAffix = String.format("%.1f", Math.max(1.0, sellValue)) + " \u00D7"
+                val sellCostAffix = "for " + String.format("%.1f", Math.max(1.0, 1.0 / sellValue)) + " \u00D7"
+                currencySellCountAffix.text = sellCountAffix
+                currencySellCostAffix.text = sellCostAffix
+            }
+            // Sell value change data available
+            currencyLine.lowConfidencePaySparkLine?.let {
+                val sellValueChange = it.totalChange
+                sellValueChange?.let {
+                    val sellValueChangeText = (if (sellValueChange > 0.0) "+" else "") + String.format("%.1f", sellValueChange) + "%"
+                    currencySellValueChange.text = sellValueChangeText
+                    currencySellValueChange.setTextColor(if (sellValueChange >= 0.0) Color.GREEN else Color.RED)
+                }
+            }
+        } ?: run {
+            val sellCountAffix = "N/A \u00D7"
+            val sellCostAffix = "for N/A \u00D7"
+            currencySellCountAffix.text = sellCountAffix
+            currencySellCostAffix.text = sellCostAffix
+            currencySellValueChange.text = "N/A"
+            currencySellValueChange.setTextColor(Color.GRAY)
+        }
     }
 
     private fun getIconUrlForCurrencyType(currencyOverview: CurrencyOverview?, currencyTypeName: String?): String?
     {
         var iconUrl: String? = ""
 
-        for (cd in currencyOverview?.currencyDetails!!)
-        {
-            if (cd.name == currencyTypeName)
+        currencyOverview?.currencyDetails?.let {
+            for (cd in it)
             {
-                iconUrl = cd.icon
+                if (cd.name == currencyTypeName)
+                {
+                    iconUrl = cd.icon
+                }
             }
         }
 

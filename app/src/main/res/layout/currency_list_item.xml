@@ -7,7 +7,7 @@
     android:layout_height="136dp">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/pattern_list_item_card_view"
+            android:id="@+id/currency_list_item_card_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:elevation="8dp"
@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/pattern_list_item_card_view_layout"
+                    android:id="@+id/currency_list_item_card_view_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#110000"
@@ -31,7 +31,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:id="@+id/icon_image_view"
+                            android:id="@+id/currency_icon_image_view"
                             android:layout_width="0dp"
                             android:layout_height="48dp"
                             android:background="@color/colorPrimary"
@@ -53,7 +53,7 @@
                             android:textSize="16dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toEndOf="@+id/icon_image_view"
+                            app:layout_constraintStart_toEndOf="@+id/currency_icon_image_view"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView

@@ -10,6 +10,7 @@ import com.bluelithalo.poetrends.model.Overview
 import com.bluelithalo.poetrends.model.currency.CurrencyOverview
 import com.bluelithalo.poetrends.model.item.ItemOverview
 import com.bluelithalo.poetrends.view.CurrencyViewHolder
+import com.bluelithalo.poetrends.view.FragmentViewHolder
 import com.bluelithalo.poetrends.view.ItemViewHolder
 
 class PoeNinjaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
@@ -53,7 +54,7 @@ class PoeNinjaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
         return when (overviewType)
         {
             Overview.Type.CURRENCY -> CurrencyViewHolder(inflater.inflate(R.layout.currency_list_item, viewGroup, false))
-            Overview.Type.FRAGMENT -> CurrencyViewHolder(inflater.inflate(R.layout.currency_list_item, viewGroup, false))
+            Overview.Type.FRAGMENT -> FragmentViewHolder(inflater.inflate(R.layout.fragment_list_item, viewGroup, false))
             Overview.Type.INCUBATOR -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
             Overview.Type.SCARAB -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
             Overview.Type.FOSSIL -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
@@ -83,7 +84,7 @@ class PoeNinjaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
         when (overviewType)
         {
             Overview.Type.CURRENCY -> (viewHolder as CurrencyViewHolder).configureViewHolder(overview, position)
-            Overview.Type.FRAGMENT -> (viewHolder as CurrencyViewHolder).configureViewHolder(overview, position)
+            Overview.Type.FRAGMENT -> (viewHolder as FragmentViewHolder).configureViewHolder(overview, position)
             Overview.Type.INCUBATOR -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
             Overview.Type.SCARAB -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
             Overview.Type.FOSSIL -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
