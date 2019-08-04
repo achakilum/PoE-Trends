@@ -9,9 +9,7 @@ import com.bluelithalo.poetrends.model.Overview
 
 import com.bluelithalo.poetrends.model.currency.CurrencyOverview
 import com.bluelithalo.poetrends.model.item.ItemOverview
-import com.bluelithalo.poetrends.view.CurrencyViewHolder
-import com.bluelithalo.poetrends.view.FragmentViewHolder
-import com.bluelithalo.poetrends.view.ItemViewHolder
+import com.bluelithalo.poetrends.view.*
 
 class PoeNinjaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
@@ -55,24 +53,24 @@ class PoeNinjaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
         {
             Overview.Type.CURRENCY -> CurrencyViewHolder(inflater.inflate(R.layout.currency_list_item, viewGroup, false))
             Overview.Type.FRAGMENT -> FragmentViewHolder(inflater.inflate(R.layout.fragment_list_item, viewGroup, false))
-            Overview.Type.INCUBATOR -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
-            Overview.Type.SCARAB -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
-            Overview.Type.FOSSIL -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
-            Overview.Type.RESONATOR -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
-            Overview.Type.ESSENCE -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
-            Overview.Type.DIVINATION_CARD -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
-            Overview.Type.PROPHECY -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
-            Overview.Type.SKILL_GEM -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
+            Overview.Type.INCUBATOR -> IncubatorViewHolder(inflater.inflate(R.layout.incubator_list_item, viewGroup, false))
+            Overview.Type.SCARAB -> ScarabViewHolder(inflater.inflate(R.layout.scarab_list_item, viewGroup, false))
+            Overview.Type.FOSSIL -> FossilViewHolder(inflater.inflate(R.layout.fossil_list_item, viewGroup, false))
+            Overview.Type.RESONATOR -> ResonatorViewHolder(inflater.inflate(R.layout.resonator_list_item, viewGroup, false))
+            Overview.Type.ESSENCE -> EssenceViewHolder(inflater.inflate(R.layout.essence_list_item, viewGroup, false))
+            Overview.Type.DIVINATION_CARD -> DivinationCardViewHolder(inflater.inflate(R.layout.divination_card_list_item, viewGroup, false))
+            Overview.Type.PROPHECY -> ProphecyViewHolder(inflater.inflate(R.layout.prophecy_list_item, viewGroup, false))
+            Overview.Type.SKILL_GEM -> SkillGemViewHolder(inflater.inflate(R.layout.skill_gem_list_item, viewGroup, false))
             Overview.Type.BASE_TYPE -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
-            Overview.Type.HELMET_ENCHANT -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
+            Overview.Type.HELMET_ENCHANT -> HelmetEnchantViewHolder(inflater.inflate(R.layout.helmet_enchant_list_item, viewGroup, false))
             Overview.Type.UNIQUE_MAP -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
-            Overview.Type.MAP -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
+            Overview.Type.MAP -> MapViewHolder(inflater.inflate(R.layout.map_list_item, viewGroup, false))
             Overview.Type.UNIQUE_JEWEL -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
             Overview.Type.UNIQUE_FLASK -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
             Overview.Type.UNIQUE_WEAPON -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
             Overview.Type.UNIQUE_ARMOUR -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
             Overview.Type.UNIQUE_ACCESSORY -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
-            Overview.Type.BEAST -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
+            Overview.Type.BEAST -> BeastViewHolder(inflater.inflate(R.layout.beast_list_item, viewGroup, false))
             Overview.Type.NONE -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
         }
     }
@@ -85,24 +83,24 @@ class PoeNinjaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
         {
             Overview.Type.CURRENCY -> (viewHolder as CurrencyViewHolder).configureViewHolder(overview, position)
             Overview.Type.FRAGMENT -> (viewHolder as FragmentViewHolder).configureViewHolder(overview, position)
-            Overview.Type.INCUBATOR -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
-            Overview.Type.SCARAB -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
-            Overview.Type.FOSSIL -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
-            Overview.Type.RESONATOR -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
-            Overview.Type.ESSENCE -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
-            Overview.Type.DIVINATION_CARD -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
-            Overview.Type.PROPHECY -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
-            Overview.Type.SKILL_GEM -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
+            Overview.Type.INCUBATOR -> (viewHolder as IncubatorViewHolder).configureViewHolder(overview, position)
+            Overview.Type.SCARAB -> (viewHolder as ScarabViewHolder).configureViewHolder(overview, position)
+            Overview.Type.FOSSIL -> (viewHolder as FossilViewHolder).configureViewHolder(overview, position)
+            Overview.Type.RESONATOR -> (viewHolder as ResonatorViewHolder).configureViewHolder(overview, position)
+            Overview.Type.ESSENCE -> (viewHolder as EssenceViewHolder).configureViewHolder(overview, position)
+            Overview.Type.DIVINATION_CARD -> (viewHolder as DivinationCardViewHolder).configureViewHolder(overview, position)
+            Overview.Type.PROPHECY -> (viewHolder as ProphecyViewHolder).configureViewHolder(overview, position)
+            Overview.Type.SKILL_GEM -> (viewHolder as SkillGemViewHolder).configureViewHolder(overview, position)
             Overview.Type.BASE_TYPE -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
-            Overview.Type.HELMET_ENCHANT -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
+            Overview.Type.HELMET_ENCHANT -> (viewHolder as HelmetEnchantViewHolder).configureViewHolder(overview, position)
             Overview.Type.UNIQUE_MAP -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
-            Overview.Type.MAP -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
+            Overview.Type.MAP -> (viewHolder as MapViewHolder).configureViewHolder(overview, position)
             Overview.Type.UNIQUE_JEWEL -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
             Overview.Type.UNIQUE_FLASK -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
             Overview.Type.UNIQUE_WEAPON -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
             Overview.Type.UNIQUE_ARMOUR -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
             Overview.Type.UNIQUE_ACCESSORY -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
-            Overview.Type.BEAST -> (viewHolder as ItemViewHolder).configureViewHolder(overview, position)
+            Overview.Type.BEAST -> (viewHolder as BeastViewHolder).configureViewHolder(overview, position)
         }
     }
 }

@@ -50,22 +50,23 @@ class FragmentViewHolder : PoeNinjaViewHolder
         fragmentTypeNameTextView.text = fragmentTypeName
         Picasso.get()
             .load(iconUrl)
-            .placeholder(R.drawable.fragment_load_placeholder)
-            .error(R.drawable.fragment_load_error)
+            .placeholder(R.drawable.load_placeholder_fragment)
+            .error(R.drawable.load_error_fragment)
             .into(fragmentIconImageView)
         Picasso.get()
             .load(iconUrl)
-            .placeholder(R.drawable.fragment_load_placeholder)
-            .error(R.drawable.fragment_load_error)
+            .placeholder(R.drawable.load_placeholder_fragment)
+            .error(R.drawable.load_error_fragment)
             .into(fragmentBuyItemIcon)
         Picasso.get()
             .load(iconUrl)
-            .placeholder(R.drawable.fragment_load_placeholder)
-            .error(R.drawable.fragment_load_error)
+            .placeholder(R.drawable.load_placeholder_fragment)
+            .error(R.drawable.load_error_fragment)
             .into(fragmentSellItemIcon)
 
         // Buy data available
         fragmentLine?.receive?.let {
+
             val buyValue = it.value
             buyValue?.let {
                 val buyCountAffix = String.format("%.1f", Math.max(1.0, 1.0 / buyValue)) + " \u00D7"
@@ -73,6 +74,7 @@ class FragmentViewHolder : PoeNinjaViewHolder
                 fragmentBuyCountAffix.text = buyCountAffix
                 fragmentBuyCostAffix.text = buyCostAffix
             }
+
             // Buy value change data available
             fragmentLine.lowConfidenceReceiveSparkLine?.let {
                 val buyValueChange = it.totalChange

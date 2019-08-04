@@ -3,4 +3,6 @@
     <color name="colorPrimary">#662222</color>
     <color name="colorPrimaryDark">#331111</color>
     <color name="colorAccent">#993333</color>
+    <color name="colorExtraMod1">#101010</color>
+    <color name="colorExtraMod2">#202020</color>
 </resources>

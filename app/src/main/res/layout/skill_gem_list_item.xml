@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/skill_gem_list_item_layout"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="108dp">
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/skill_gem_list_item_card_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:elevation="8dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/skill_gem_list_item_card_view_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#110000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                    android:id="@+id/skill_gem_icon_image_view"
+                    android:layout_width="48dp"
+                    android:layout_height="0dp"
+                    android:background="@color/colorPrimary"
+                    android:padding="4dp"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/load_placeholder_skill_gem"/>
+
+            <TextView
+                    android:id="@+id/skill_gem_name_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:background="@color/colorPrimaryDark"
+                    android:gravity="center|start"
+                    android:text="Skill Gem"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@+id/skill_gem_icon_image_view"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/skill_gem_corrupted_image_view"/>
+
+            <TextView
+                    android:id="@+id/skill_gem_chaos_value_affix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="1.0 ×"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/skill_gem_icon_image_view"
+                    app:layout_constraintTop_toBottomOf="@+id/skill_gem_name_text_view" />
+
+            <ImageView
+                    android:id="@+id/skill_gem_exalt_value_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/skill_gem_exalt_value_affix"
+                    app:layout_constraintStart_toEndOf="@+id/skill_gem_exalt_value_affix"
+                    app:layout_constraintTop_toTopOf="@+id/skill_gem_exalt_value_affix"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/ic_exalted_orb" />
+
+            <ImageView
+                    android:id="@+id/skill_gem_chaos_value_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/skill_gem_chaos_value_affix"
+                    app:layout_constraintStart_toEndOf="@+id/skill_gem_chaos_value_affix"
+                    app:layout_constraintTop_toTopOf="@+id/skill_gem_chaos_value_affix"
+                    app:srcCompat="@drawable/ic_chaos_orb" />
+
+            <TextView
+                    android:id="@+id/skill_gem_value_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="0.0%"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/skill_gem_name_text_view"/>
+
+            <TextView
+                    android:id="@+id/skill_gem_exalt_value_affix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="1.0 ×"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/skill_gem_chaos_value_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/skill_gem_name_text_view" />
+
+            <View
+                    android:id="@+id/skill_gem_value_line_guide"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="#969696"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/skill_gem_exalt_value_affix"
+                    app:layout_constraintStart_toEndOf="@+id/skill_gem_chaos_value_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/skill_gem_name_text_view" />
+
+            <View
+                    android:id="@+id/skill_gem_value_line_guide2"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="#969696"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/skill_gem_value_change"
+                    app:layout_constraintStart_toEndOf="@+id/skill_gem_exalt_value_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/skill_gem_name_text_view" />
+            <TextView
+                    android:text="Quality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:id="@+id/skill_gem_quality_label" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" android:textSize="10sp"
+                    android:fontFamily="sans-serif-smallcaps" android:gravity="bottom|center"
+                    android:textStyle="bold" android:paddingStart="6dp" android:paddingEnd="6sp"
+                    android:background="@color/colorExtraMod1"/>
+            <TextView
+                    android:text="+20"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:id="@+id/skill_gem_quality_text_view"
+                    app:layout_constraintEnd_toEndOf="@+id/skill_gem_quality_label"
+                    app:layout_constraintTop_toBottomOf="@+id/skill_gem_quality_label"
+                    app:layout_constraintBottom_toBottomOf="@+id/skill_gem_name_text_view" android:gravity="center"
+                    android:fontFamily="sans-serif-smallcaps" android:textSize="20sp" android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/skill_gem_quality_label"
+                    android:background="@color/colorExtraMod1"/>
+            <TextView
+                    android:text="Level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:id="@+id/skill_gem_level_label"
+                    android:textSize="10sp"
+                    android:fontFamily="sans-serif-smallcaps" android:gravity="bottom|center"
+                    android:textStyle="bold" android:paddingStart="6dp" android:paddingEnd="6sp"
+                    android:background="@color/colorExtraMod2"
+                    app:layout_constraintEnd_toStartOf="@+id/skill_gem_quality_label"
+                    app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                    android:text="20"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:id="@+id/skill_gem_level_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/skill_gem_quality_label"
+                    app:layout_constraintBottom_toBottomOf="@+id/skill_gem_name_text_view" android:gravity="center"
+                    android:fontFamily="sans-serif-smallcaps" android:textSize="20sp" android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/skill_gem_level_label"
+                    android:background="@color/colorExtraMod2"
+                    app:layout_constraintEnd_toStartOf="@+id/skill_gem_quality_text_view"/>
+            <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="0dp" app:srcCompat="@drawable/ic_uncorrupted"
+                    android:id="@+id/skill_gem_corrupted_image_view"
+                    app:layout_constraintBottom_toBottomOf="@+id/skill_gem_name_text_view"
+                    app:layout_constraintEnd_toStartOf="@+id/skill_gem_level_label" android:padding="8dp"
+                    android:background="@color/colorPrimaryDark"
+                    app:layout_constraintTop_toTopOf="parent"
+            />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

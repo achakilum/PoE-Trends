@@ -50,22 +50,23 @@ class CurrencyViewHolder : PoeNinjaViewHolder
         currencyTypeNameTextView.text = currencyTypeName
         Picasso.get()
             .load(iconUrl)
-            .placeholder(R.drawable.currency_load_placeholder)
-            .error(R.drawable.currency_load_error)
+            .placeholder(R.drawable.load_placeholder_currency)
+            .error(R.drawable.load_error_currency)
             .into(currencyIconImageView)
         Picasso.get()
             .load(iconUrl)
-            .placeholder(R.drawable.currency_load_placeholder)
-            .error(R.drawable.currency_load_error)
+            .placeholder(R.drawable.load_placeholder_currency)
+            .error(R.drawable.load_error_currency)
             .into(currencyBuyItemIcon)
         Picasso.get()
             .load(iconUrl)
-            .placeholder(R.drawable.currency_load_placeholder)
-            .error(R.drawable.currency_load_error)
+            .placeholder(R.drawable.load_placeholder_currency)
+            .error(R.drawable.load_error_currency)
             .into(currencySellItemIcon)
 
         // Buy data available
         currencyLine?.receive?.let {
+
             val buyValue = it.value
             buyValue?.let {
                 val buyCountAffix = String.format("%.1f", Math.max(1.0, 1.0 / buyValue)) + " \u00D7"
@@ -73,6 +74,7 @@ class CurrencyViewHolder : PoeNinjaViewHolder
                 currencyBuyCountAffix.text = buyCountAffix
                 currencyBuyCostAffix.text = buyCostAffix
             }
+
             // Buy value change data available
             currencyLine.lowConfidenceReceiveSparkLine?.let {
                 val buyValueChange = it.totalChange
@@ -81,6 +83,7 @@ class CurrencyViewHolder : PoeNinjaViewHolder
                     currencyBuyValueChange.text = buyValueChangeText
                     currencyBuyValueChange.setTextColor(if (buyValueChange >= 0.0) Color.GREEN else Color.RED)
                 }
+
             }
         } ?: run {
             val buyCountAffix = "N/A \u00D7"

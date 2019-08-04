@@ -21,19 +21,19 @@ class Line
     var levelRequired: Int? = null
 
     @SerializedName("baseType")
-    var baseType: Any? = null
+    var baseType: String? = null
 
     @SerializedName("stackSize")
     var stackSize: Int? = null
 
     @SerializedName("variant")
-    var variant: Any? = null
+    var variant: String? = null
 
     @SerializedName("prophecyText")
-    var prophecyText: Any? = null
+    var prophecyText: String? = null
 
     @SerializedName("artFilename")
-    var artFilename: Any? = null
+    var artFilename: String? = null
 
     @SerializedName("links")
     var links: Int? = null

@@ -40,7 +40,7 @@
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/fragment_load_placeholder" />
+                    app:srcCompat="@drawable/load_placeholder_fragment" />
 
             <TextView
                     android:id="@+id/fragment_type_name_text_view"
@@ -49,12 +49,12 @@
                     android:background="@color/colorPrimaryDark"
                     android:gravity="center|start"
                     android:padding="8dp"
-                    android:text="TextView"
+                    android:text="Fragment"
                     android:textSize="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/fragment_icon_image_view"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                     android:id="@+id/fragment_buy_prefix"
@@ -84,7 +84,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/fragment_buy_count_affix"
                     app:layout_constraintStart_toEndOf="@+id/fragment_buy_count_affix"
                     app:layout_constraintTop_toTopOf="@+id/fragment_buy_count_affix"
-                    app:srcCompat="@drawable/fragment_load_placeholder" />
+                    app:srcCompat="@drawable/load_placeholder_fragment" />
 
             <TextView
                     android:id="@+id/fragment_buy_cost_affix"
@@ -133,7 +133,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/fragment_sell_count_affix"
                     app:layout_constraintStart_toEndOf="@+id/fragment_sell_count_affix"
                     app:layout_constraintTop_toTopOf="@+id/fragment_sell_count_affix"
-                    app:srcCompat="@drawable/fragment_load_placeholder" />
+                    app:srcCompat="@drawable/load_placeholder_fragment" />
 
             <TextView
                     android:id="@+id/fragment_sell_cost_affix"

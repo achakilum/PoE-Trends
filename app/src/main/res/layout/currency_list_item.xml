@@ -40,21 +40,21 @@
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/currency_load_placeholder" />
+                            app:srcCompat="@drawable/load_placeholder_currency" />
 
                         <TextView
-                            android:id="@+id/currency_type_name_text_view"
-                            android:layout_width="0dp"
-                            android:layout_height="48dp"
-                            android:background="@color/colorPrimaryDark"
-                            android:gravity="center|start"
-                            android:padding="8dp"
-                            android:text="TextView"
-                            android:textSize="16dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toEndOf="@+id/currency_icon_image_view"
-                            app:layout_constraintTop_toTopOf="parent" />
+                                android:id="@+id/currency_type_name_text_view"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:background="@color/colorPrimaryDark"
+                                android:gravity="center|start"
+                                android:padding="8dp"
+                                android:text="Currency"
+                                android:textSize="16dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toEndOf="@+id/currency_icon_image_view"
+                                app:layout_constraintTop_toTopOf="parent"/>
 
                         <TextView
                             android:id="@+id/currency_buy_prefix"
@@ -84,7 +84,7 @@
                             app:layout_constraintBottom_toBottomOf="@+id/currency_buy_count_affix"
                             app:layout_constraintStart_toEndOf="@+id/currency_buy_count_affix"
                             app:layout_constraintTop_toTopOf="@+id/currency_buy_count_affix"
-                            app:srcCompat="@drawable/currency_load_placeholder" />
+                            app:srcCompat="@drawable/load_placeholder_currency" />
 
                         <TextView
                             android:id="@+id/currency_buy_cost_affix"
@@ -133,7 +133,7 @@
                             app:layout_constraintBottom_toBottomOf="@+id/currency_sell_count_affix"
                             app:layout_constraintStart_toEndOf="@+id/currency_sell_count_affix"
                             app:layout_constraintTop_toTopOf="@+id/currency_sell_count_affix"
-                            app:srcCompat="@drawable/currency_load_placeholder" />
+                            app:srcCompat="@drawable/load_placeholder_currency" />
 
                         <TextView
                             android:id="@+id/currency_sell_cost_affix"

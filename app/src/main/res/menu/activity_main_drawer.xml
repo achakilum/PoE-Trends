@@ -49,9 +49,9 @@
             android:icon="@drawable/ic_base_types"
             android:title="@string/menu_base_types" />
         <item
-            android:id="@+id/nav_helmet_enchantments"
+            android:id="@+id/nav_helmet_enchants"
             android:icon="@drawable/ic_helmet_enchantments"
-            android:title="@string/menu_helmet_enchantments" />
+            android:title="@string/menu_helmet_enchant" />
         <item
             android:id="@+id/nav_unique_maps"
             android:icon="@drawable/ic_unique_maps"

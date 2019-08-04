@@ -259,10 +259,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 poeNinjaViewModel.setOverviewType(Overview.Type.BASE_TYPE)
                 this.title = getString(R.string.menu_base_types)
             }
-            R.id.nav_helmet_enchantments ->
+            R.id.nav_helmet_enchants ->
             {
                 poeNinjaViewModel.setOverviewType(Overview.Type.HELMET_ENCHANT)
-                this.title = getString(R.string.menu_helmet_enchantments)
+                this.title = getString(R.string.menu_helmet_enchant)
             }
             R.id.nav_unique_maps ->
             {

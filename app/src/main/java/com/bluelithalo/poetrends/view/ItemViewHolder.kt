@@ -14,11 +14,8 @@ class ItemViewHolder : PoeNinjaViewHolder
     var itemNameTextView: TextView
     var itemIconImageView: ImageView
 
-    var chaosValueIcon: ImageView
-    var exaltValueIcon: ImageView
-
-    var chaosValueAffix: TextView
-    var exaltValueAffix: TextView
+    var itemChaosValueAffix: TextView
+    var itemExaltValueAffix: TextView
 
     var itemValueChange: TextView
 
@@ -27,11 +24,8 @@ class ItemViewHolder : PoeNinjaViewHolder
         itemNameTextView = v.findViewById<View>(R.id.item_name_text_view) as TextView
         itemIconImageView = v.findViewById<View>(R.id.item_icon_image_view) as ImageView
 
-        chaosValueIcon = v.findViewById<View>(R.id.item_chaos_value_icon) as ImageView
-        exaltValueIcon = v.findViewById<View>(R.id.item_exalt_value_icon) as ImageView
-
-        chaosValueAffix = v.findViewById<View>(R.id.item_chaos_value_affix) as TextView
-        exaltValueAffix = v.findViewById<View>(R.id.item_exalt_value_affix) as TextView
+        itemChaosValueAffix = v.findViewById<View>(R.id.item_chaos_value_affix) as TextView
+        itemExaltValueAffix = v.findViewById<View>(R.id.item_exalt_value_affix) as TextView
 
         itemValueChange = v.findViewById<View>(R.id.item_value_change) as TextView
     }
@@ -39,33 +33,33 @@ class ItemViewHolder : PoeNinjaViewHolder
     override fun configureViewHolder(overview: Overview?, position: Int)
     {
         val itemOverview = overview as ItemOverview
-        val itemLine = itemOverview?.lines!![position]
-        val itemName = itemLine?.name
+        val itemLine = itemOverview?.lines?.let { it[position] }
 
-        val valueDataAvailable = (itemLine != null)
-        val valueChangeDataAvailable = itemLine.sparkline != null
+        itemLine?.let {
+            Picasso.get()
+                .load(it.icon)
+                .placeholder(R.drawable.load_placeholder_item)
+                .error(R.drawable.load_error_item)
+                .into(itemIconImageView)
 
-        val chaosValue = if (valueDataAvailable) itemLine.chaosValue else 0.0
-        val exaltValue = if (valueDataAvailable) itemLine.exaltedValue else 0.0
-        val valueChange = if (valueChangeDataAvailable) itemLine.sparkline?.totalChange else 0.0
+            val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
+            val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
+            itemNameTextView.text = it.name
+            itemChaosValueAffix.text = chaosValueAffixText
+            itemExaltValueAffix.text = exaltValueAffixText
 
-        val chaosValueAffixText = if (valueDataAvailable) String.format("%.1f", chaosValue) + " \u00D7" else "N/A"
-        val exaltValueAffixText = if (valueDataAvailable) String.format("%.1f", exaltValue) + " \u00D7" else "N/A"
-        val valueChangeText = if (valueChangeDataAvailable) (if (valueChange!! > 0.0) "+" else "") + String.format("%.1f", valueChange) + "%" else "N/A"
-        val iconUrl = if (valueDataAvailable) itemLine.icon else ""
-
-        Picasso.get()
-            .load(iconUrl)
-            .placeholder(R.drawable.item_load_placeholder)
-            .error(R.drawable.item_load_error)
-            .into(itemIconImageView)
-
-        itemNameTextView.text = itemName
-
-        chaosValueAffix.text = chaosValueAffixText
-        exaltValueAffix.text = exaltValueAffixText
-
-        itemValueChange.text = if (valueChangeDataAvailable) valueChangeText else "N/A"
-        itemValueChange.setTextColor(if (valueChangeDataAvailable) if (valueChange!! >= 0.0) Color.GREEN else Color.RED else Color.GRAY)
+            it.sparkline?.totalChange?.let {
+                val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
+                itemValueChange.text = valueChangeText
+                itemValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
+            }
+        } ?: run {
+            itemIconImageView.setImageResource(R.drawable.load_error_item)
+            itemNameTextView.text = "N/A"
+            itemChaosValueAffix.text = "N/A \u00D7"
+            itemExaltValueAffix.text = "N/A \u00D7"
+            itemValueChange.text = "N/A"
+            itemValueChange.setTextColor(Color.GRAY)
+        }
     }
 }
