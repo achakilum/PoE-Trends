@@ -54,7 +54,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/fossil_icon_image_view"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" android:ellipsize="start" android:singleLine="true"/>
 
             <TextView
                     android:id="@+id/fossil_chaos_value_affix"

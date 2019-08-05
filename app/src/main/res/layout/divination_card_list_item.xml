@@ -53,7 +53,8 @@
                     android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/divination_card_icon_image_view"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/divination_card_stack_size_label"/>
+                    app:layout_constraintEnd_toStartOf="@+id/divination_card_stack_size_label"
+                    android:ellipsize="start" android:singleLine="true"/>
 
             <TextView
                     android:id="@+id/divination_card_chaos_value_affix"

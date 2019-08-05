@@ -58,7 +58,7 @@ class SkillGemViewHolder : PoeNinjaViewHolder
             skillGemExaltValueAffix.text = exaltValueAffixText
             skillGemLevelTextView.text = "${it.gemLevel}"
             skillGemQualityTextView.text = skillGemQualityText
-            skillGemCorruptedImageView.setImageResource(if (it.corrupted == true) R.drawable.ic_corrupted else R.drawable.ic_uncorrupted)
+            skillGemCorruptedImageView.setImageResource(if (it.corrupted == true) R.drawable.ic_corrupted else android.R.color.transparent)
 
             it.sparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"

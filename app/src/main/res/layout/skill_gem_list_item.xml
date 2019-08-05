@@ -54,7 +54,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
-                    app:layout_constraintEnd_toStartOf="@+id/skill_gem_corrupted_image_view"/>
+                    app:layout_constraintEnd_toStartOf="@+id/skill_gem_corrupted_image_view" android:ellipsize="start" android:singleLine="true"/>
 
             <TextView
                     android:id="@+id/skill_gem_chaos_value_affix"
@@ -179,7 +179,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/skill_gem_quality_text_view"/>
             <ImageView
                     android:layout_width="40dp"
-                    android:layout_height="0dp" app:srcCompat="@drawable/ic_uncorrupted"
+                    android:layout_height="0dp" app:srcCompat="@android:color/transparent"
                     android:id="@+id/skill_gem_corrupted_image_view"
                     app:layout_constraintBottom_toBottomOf="@+id/skill_gem_name_text_view"
                     app:layout_constraintEnd_toStartOf="@+id/skill_gem_level_label" android:padding="8dp"

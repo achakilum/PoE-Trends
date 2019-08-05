@@ -2,12 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
                                                    xmlns:tools="http://schemas.android.com/tools"
-                                                   android:id="@+id/essence_list_item_layout"
+                                                   android:id="@+id/unique_weapon_list_item_layout"
                                                    android:layout_width="match_parent"
-                                                   android:layout_height="108dp">
+                                                   android:layout_height="110dp">
 
     <androidx.cardview.widget.CardView
-            android:id="@+id/essence_list_item_card_view"
+            android:id="@+id/unique_weapon_list_item_card_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:elevation="8dp"
@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/essence_list_item_card_view_layout"
+                android:id="@+id/unique_weapon_list_item_card_view_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#110000"
@@ -31,7 +31,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                    android:id="@+id/essence_icon_image_view"
+                    android:id="@+id/unique_weapon_icon_image_view"
                     android:layout_width="48dp"
                     android:layout_height="0dp"
                     android:background="@color/colorPrimary"
@@ -40,23 +40,32 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/load_placeholder_essence" />
+                    app:srcCompat="@drawable/load_placeholder_unique_weapon"/>
 
             <TextView
-                    android:id="@+id/essence_name_text_view"
+                    android:id="@+id/unique_weapon_name_text_view"
                     android:layout_width="0dp"
-                    android:layout_height="48dp"
+                    android:layout_height="27dp"
                     android:background="@color/colorPrimaryDark"
-                    android:gravity="center|start"
-                    android:padding="8dp"
-                    android:text="Essence"
+                    android:gravity="bottom|start"
+                    android:text="Unique Weapon"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/essence_icon_image_view"
+                    app:layout_constraintStart_toEndOf="@+id/unique_weapon_icon_image_view"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/essence_tier_label" android:ellipsize="start" android:singleLine="true"/>
+                    app:layout_constraintEnd_toStartOf="@+id/unique_weapon_level_label" android:paddingStart="8dp"
+                    android:paddingEnd="8dp" android:ellipsize="start" android:singleLine="true"/>
 
             <TextView
-                    android:id="@+id/essence_chaos_value_affix"
+                    android:text="Weapon"
+                    android:layout_width="0dp"
+                    android:layout_height="23dp" android:id="@+id/unique_weapon_base_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/unique_weapon_icon_image_view"
+                    app:layout_constraintEnd_toStartOf="@+id/unique_weapon_level_label"
+                    app:layout_constraintTop_toBottomOf="@+id/unique_weapon_name_text_view"
+                    android:background="@color/colorPrimaryDark" android:paddingStart="8dp" android:paddingEnd="8dp"
+                    android:textSize="12sp" android:gravity="top" android:textStyle="italic"/>
+            <TextView
+                    android:id="@+id/unique_weapon_chaos_value_affix"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -64,43 +73,41 @@
                     android:layout_marginBottom="8dp"
                     android:text="1.0 ×"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/essence_icon_image_view"
-                    app:layout_constraintTop_toBottomOf="@+id/essence_name_text_view" />
+                    app:layout_constraintStart_toEndOf="@+id/unique_weapon_icon_image_view"
+                    app:layout_constraintTop_toBottomOf="@+id/unique_weapon_base_text_view"/>
 
             <ImageView
-                    android:id="@+id/essence_exalt_value_icon"
+                    android:id="@+id/unique_weapon_exalt_value_icon"
                     android:layout_width="24dp"
                     android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/essence_exalt_value_affix"
-                    app:layout_constraintStart_toEndOf="@+id/essence_exalt_value_affix"
-                    app:layout_constraintTop_toTopOf="@+id/essence_exalt_value_affix"
+                    app:layout_constraintBottom_toBottomOf="@+id/unique_weapon_exalt_value_affix"
+                    app:layout_constraintStart_toEndOf="@+id/unique_weapon_exalt_value_affix"
+                    app:layout_constraintTop_toTopOf="@+id/unique_weapon_exalt_value_affix"
                     app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@drawable/ic_exalted_orb" />
+                    app:srcCompat="@drawable/ic_exalted_orb"/>
 
             <ImageView
-                    android:id="@+id/essence_chaos_value_icon"
+                    android:id="@+id/unique_weapon_chaos_value_icon"
                     android:layout_width="24dp"
                     android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/essence_chaos_value_affix"
-                    app:layout_constraintStart_toEndOf="@+id/essence_chaos_value_affix"
-                    app:layout_constraintTop_toTopOf="@+id/essence_chaos_value_affix"
-                    app:srcCompat="@drawable/ic_chaos_orb" />
+                    app:layout_constraintBottom_toBottomOf="@+id/unique_weapon_chaos_value_affix"
+                    app:layout_constraintStart_toEndOf="@+id/unique_weapon_chaos_value_affix"
+                    app:layout_constraintTop_toTopOf="@+id/unique_weapon_chaos_value_affix"
+                    app:srcCompat="@drawable/ic_chaos_orb"/>
 
             <TextView
-                    android:id="@+id/essence_value_change"
+                    android:id="@+id/unique_weapon_value_change"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
                     android:text="0.0%"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/essence_name_text_view"/>
+                    app:layout_constraintTop_toBottomOf="@+id/unique_weapon_base_text_view"/>
 
             <TextView
-                    android:id="@+id/essence_exalt_value_affix"
+                    android:id="@+id/unique_weapon_exalt_value_affix"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
@@ -108,50 +115,52 @@
                     android:layout_marginBottom="8dp"
                     android:text="1.0 ×"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/essence_chaos_value_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/essence_name_text_view" />
+                    app:layout_constraintStart_toEndOf="@+id/unique_weapon_chaos_value_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/unique_weapon_base_text_view"/>
 
             <View
-                    android:id="@+id/essence_value_line_guide"
+                    android:id="@+id/unique_weapon_value_line_guide"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_marginStart="2dp"
                     android:layout_marginEnd="6dp"
                     android:background="#969696"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/essence_exalt_value_affix"
-                    app:layout_constraintStart_toEndOf="@+id/essence_chaos_value_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/essence_name_text_view" />
+                    app:layout_constraintEnd_toStartOf="@+id/unique_weapon_exalt_value_affix"
+                    app:layout_constraintStart_toEndOf="@+id/unique_weapon_chaos_value_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/unique_weapon_base_text_view"/>
 
             <View
-                    android:id="@+id/essence_value_line_guide2"
+                    android:id="@+id/unique_weapon_value_line_guide2"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_marginStart="2dp"
                     android:layout_marginEnd="6dp"
                     android:background="#969696"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/essence_value_change"
-                    app:layout_constraintStart_toEndOf="@+id/essence_exalt_value_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/essence_name_text_view" />
+                    app:layout_constraintEnd_toStartOf="@+id/unique_weapon_value_change"
+                    app:layout_constraintStart_toEndOf="@+id/unique_weapon_exalt_value_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/unique_weapon_base_text_view"
+            />
             <TextView
-                    android:text="Tier"
+                    android:text="Level"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:id="@+id/essence_tier_label" app:layout_constraintEnd_toEndOf="parent"
+                    android:id="@+id/unique_weapon_level_label" app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" android:textSize="10sp"
                     android:fontFamily="sans-serif-smallcaps" android:gravity="bottom|center"
                     android:textStyle="bold" android:paddingStart="6dp" android:paddingEnd="6sp"
                     android:background="@color/colorExtraMod1"/>
             <TextView
-                    android:text="0"
+                    android:text="00"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:id="@+id/essence_tier_text_view" app:layout_constraintEnd_toEndOf="@+id/essence_tier_label"
-                    app:layout_constraintTop_toBottomOf="@+id/essence_tier_label"
-                    app:layout_constraintBottom_toBottomOf="@+id/essence_name_text_view" android:gravity="center"
+                    android:id="@+id/unique_weapon_level_text_view"
+                    app:layout_constraintEnd_toEndOf="@+id/unique_weapon_level_label"
+                    app:layout_constraintTop_toBottomOf="@+id/unique_weapon_level_label"
+                    app:layout_constraintBottom_toBottomOf="@+id/unique_weapon_base_text_view" android:gravity="center"
                     android:fontFamily="sans-serif-smallcaps" android:textSize="20sp" android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/essence_tier_label"
+                    app:layout_constraintStart_toStartOf="@+id/unique_weapon_level_label"
                     android:background="@color/colorExtraMod1"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

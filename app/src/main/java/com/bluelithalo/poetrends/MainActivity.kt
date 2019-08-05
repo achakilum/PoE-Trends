@@ -306,7 +306,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
 
-        this.title = "Trends: ${this.title}"
+        this.title = "${poeNinjaViewModel.getLeagueId()}: ${this.title}"
         this.loadingProgressBar?.visibility = View.VISIBLE
         this.searchQueryBar?.text?.clear()
 
