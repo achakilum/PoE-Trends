@@ -19,8 +19,8 @@ class BaseTypeViewHolder : PoeNinjaViewHolder
 
     var baseTypeValueChange: TextView
 
-    var baseTypeLevelTextView: TextView
-    var baseTypeModImageView: ImageView
+    var baseTypeItemLevelTextView: TextView
+    var baseTypeVariantImageView: ImageView
 
     constructor(v: View) : super(v)
     {
@@ -32,8 +32,8 @@ class BaseTypeViewHolder : PoeNinjaViewHolder
 
         baseTypeValueChange = v.findViewById<View>(R.id.base_type_value_change) as TextView
 
-        baseTypeLevelTextView = v.findViewById<View>(R.id.base_type_level_text_view) as TextView
-        baseTypeModImageView = v.findViewById<View>(R.id.base_type_mod_image_view) as ImageView
+        baseTypeItemLevelTextView = v.findViewById<View>(R.id.base_type_item_level_text_view) as TextView
+        baseTypeVariantImageView = v.findViewById<View>(R.id.base_type_variant_image_view) as ImageView
     }
 
     override fun configureViewHolder(overview: Overview?, position: Int)
@@ -46,15 +46,15 @@ class BaseTypeViewHolder : PoeNinjaViewHolder
 
             it.variant?.let {
                 if (it.equals("Elder")) {
-                    baseTypeModImageView.setImageResource(R.drawable.ic_elder)
+                    baseTypeVariantImageView.setImageResource(R.drawable.ic_elder)
                     iconUrl += "&elder=1"
                 }
                 else if (it.equals("Shaper")) {
-                    baseTypeModImageView.setImageResource(R.drawable.ic_shaper)
+                    baseTypeVariantImageView.setImageResource(R.drawable.ic_shaper)
                     iconUrl += "&shaper=1"
                 }
             } ?: run {
-                baseTypeModImageView.setImageResource(android.R.color.transparent)
+                baseTypeVariantImageView.setImageResource(android.R.color.transparent)
             }
 
             Picasso.get()
@@ -69,7 +69,7 @@ class BaseTypeViewHolder : PoeNinjaViewHolder
             baseTypeNameTextView.text = it.name
             baseTypeChaosValueAffix.text = chaosValueAffixText
             baseTypeExaltValueAffix.text = exaltValueAffixText
-            baseTypeLevelTextView.text = baseTypeLevelText
+            baseTypeItemLevelTextView.text = baseTypeLevelText
 
             it.sparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
@@ -81,7 +81,7 @@ class BaseTypeViewHolder : PoeNinjaViewHolder
             baseTypeNameTextView.text = "N/A"
             baseTypeChaosValueAffix.text = "N/A \u00D7"
             baseTypeExaltValueAffix.text = "N/A \u00D7"
-            baseTypeLevelTextView.text = "X"
+            baseTypeItemLevelTextView.text = "X"
             baseTypeValueChange.text = "N/A"
             baseTypeValueChange.setTextColor(Color.GRAY)
         }

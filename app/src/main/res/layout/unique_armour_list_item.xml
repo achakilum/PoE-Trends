@@ -52,7 +52,7 @@
                     android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/unique_armour_icon_image_view"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/unique_armour_item_level_label" android:paddingStart="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/unique_armour_level_label" android:paddingStart="8dp"
                     android:paddingEnd="8dp" android:ellipsize="start" android:singleLine="true"/>
 
             <TextView
@@ -60,7 +60,7 @@
                     android:layout_width="0dp"
                     android:layout_height="23dp" android:id="@+id/unique_armour_base_text_view"
                     app:layout_constraintStart_toEndOf="@+id/unique_armour_icon_image_view"
-                    app:layout_constraintEnd_toStartOf="@+id/unique_armour_item_level_label"
+                    app:layout_constraintEnd_toStartOf="@+id/unique_armour_level_label"
                     app:layout_constraintTop_toBottomOf="@+id/unique_armour_name_text_view"
                     android:background="@color/colorPrimaryDark" android:paddingStart="8dp" android:paddingEnd="8dp"
                     android:textSize="12sp" android:gravity="top" android:textStyle="italic"/>
@@ -143,10 +143,10 @@
                     app:layout_constraintTop_toBottomOf="@+id/unique_armour_base_text_view"
             />
             <TextView
-                    android:text="iLevel"
+                    android:text="Level"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:id="@+id/unique_armour_item_level_label" app:layout_constraintEnd_toEndOf="parent"
+                    android:id="@+id/unique_armour_level_label" app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" android:textSize="10sp"
                     android:fontFamily="sans-serif-smallcaps" android:gravity="bottom|center"
                     android:textStyle="bold" android:paddingStart="6dp" android:paddingEnd="6sp"
@@ -155,12 +155,12 @@
                     android:text="00"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:id="@+id/unique_armour_item_level_text_view"
-                    app:layout_constraintEnd_toEndOf="@+id/unique_armour_item_level_label"
-                    app:layout_constraintTop_toBottomOf="@+id/unique_armour_item_level_label"
+                    android:id="@+id/unique_armour_level_text_view"
+                    app:layout_constraintEnd_toEndOf="@+id/unique_armour_level_label"
+                    app:layout_constraintTop_toBottomOf="@+id/unique_armour_level_label"
                     app:layout_constraintBottom_toBottomOf="@+id/unique_armour_base_text_view" android:gravity="center"
                     android:fontFamily="sans-serif-smallcaps" android:textSize="20sp" android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/unique_armour_item_level_label"
+                    app:layout_constraintStart_toStartOf="@+id/unique_armour_level_label"
                     android:background="@color/colorExtraMod1"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
