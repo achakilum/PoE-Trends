@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bluelithalo.poetrends.R
 import com.bluelithalo.poetrends.model.Overview
 import com.bluelithalo.poetrends.model.currency.CurrencyOverview
 import com.bluelithalo.poetrends.model.item.ItemOverview
@@ -50,6 +51,31 @@ class PoeNinjaViewModel : ViewModel()
             it[Overview.Type.UNIQUE_ARMOUR] = "UniqueArmour"
             it[Overview.Type.UNIQUE_ACCESSORY] = "UniqueAccessory"
             it[Overview.Type.BEAST] = "Beast"
+        }
+    }
+
+    private val titleAffixesByType: HashMap<Overview.Type, Int> by lazy {
+        HashMap<Overview.Type, Int>().also {
+            it[Overview.Type.CURRENCY] = R.string.menu_currency
+            it[Overview.Type.FRAGMENT] = R.string.menu_fragments
+            it[Overview.Type.INCUBATOR] = R.string.menu_incubators
+            it[Overview.Type.SCARAB] = R.string.menu_scarabs
+            it[Overview.Type.FOSSIL] = R.string.menu_fossils
+            it[Overview.Type.RESONATOR] = R.string.menu_resonators
+            it[Overview.Type.ESSENCE] = R.string.menu_essences
+            it[Overview.Type.DIVINATION_CARD] = R.string.menu_divination_cards
+            it[Overview.Type.PROPHECY] = R.string.menu_prophecies
+            it[Overview.Type.SKILL_GEM] = R.string.menu_skill_gems
+            it[Overview.Type.BASE_TYPE] = R.string.menu_base_types
+            it[Overview.Type.HELMET_ENCHANT] = R.string.menu_helmet_enchant
+            it[Overview.Type.UNIQUE_MAP] = R.string.menu_unique_maps
+            it[Overview.Type.MAP] = R.string.menu_maps
+            it[Overview.Type.UNIQUE_JEWEL] = R.string.menu_unique_jewels
+            it[Overview.Type.UNIQUE_FLASK] = R.string.menu_unique_flasks
+            it[Overview.Type.UNIQUE_WEAPON] = R.string.menu_unique_weapons
+            it[Overview.Type.UNIQUE_ARMOUR] = R.string.menu_unique_armours
+            it[Overview.Type.UNIQUE_ACCESSORY] = R.string.menu_unique_accessories
+            it[Overview.Type.BEAST] = R.string.menu_beasts
         }
     }
 
@@ -157,6 +183,8 @@ class PoeNinjaViewModel : ViewModel()
 
     private fun handleOverviewResult(result : Overview)
     {
+        result.leagueId = leagueId
+        result.typeAffixResourceId = titleAffixesByType[overviewType] ?: R.string.menu_currency
         result.type = overviewType
         overview.value = result
     }

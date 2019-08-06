@@ -11,10 +11,7 @@ open class Overview
 
     }
 
-    var type : Type
-
-    constructor()
-    {
-        type = Type.NONE
-    }
+    var leagueId: String = ""
+    var typeAffixResourceId: Int = 0
+    var type : Type = Type.NONE
 }

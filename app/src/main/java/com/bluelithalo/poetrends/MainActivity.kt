@@ -1,19 +1,17 @@
 package com.bluelithalo.poetrends
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
+import android.view.*
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
-import android.view.MenuItem
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import android.view.Menu
-import android.view.View
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -26,6 +24,7 @@ import com.bluelithalo.poetrends.model.currency.CurrencyOverview
 import com.bluelithalo.poetrends.model.item.ItemOverview
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.widget.SearchView
 import com.bluelithalo.poetrends.poe_ninja.PoeNinjaAdapter
 import com.bluelithalo.poetrends.poe_ninja.PoeNinjaViewModel
 
@@ -35,7 +34,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var poeNinjaViewModel : PoeNinjaViewModel
 
     private var loadingProgressBar: ProgressBar? = null
-    private var searchQueryBar: EditText? = null
+    private var searchQueryBar: SearchView? = null
 
     private var recyclerView: RecyclerView? = null
     private var rvLayoutManager: RecyclerView.LayoutManager? = null
@@ -60,7 +59,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.itemIconTintList = null
         navView.menu.getItem(0).isChecked = true
 
-        this.title = "Current Trends"
+        this.title = getString(R.string.menu_loading)
         this.loadingProgressBar = findViewById<ProgressBar>(R.id.loading_progress_bar)
 
         poeNinjaViewModel = ViewModelProviders.of(this).get(PoeNinjaViewModel::class.java)
@@ -91,36 +90,33 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             this.loadingProgressBar?.visibility = View.GONE
+            this.title = "${overview.leagueId}: ${getString(overview.typeAffixResourceId)}"
         })
 
-        this.searchQueryBar = findViewById<EditText>(R.id.search_query_bar)
-        this.searchQueryBar?.addTextChangedListener(object : TextWatcher
-        {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int)
+        this.searchQueryBar = findViewById<SearchView>(R.id.search_query_bar)
+        this.searchQueryBar?.let {
+            it.setOnQueryTextListener(object : SearchView.OnQueryTextListener
             {
-                s?.let { poeNinjaViewModel.setSearchQuery(it.toString()) }
-                loadingProgressBar?.visibility = View.VISIBLE
-            }
-        })
-
-        this.searchQueryBar?.setOnEditorActionListener(object : TextView.OnEditorActionListener
-        {
-            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean
-            {
-                if (actionId == EditorInfo.IME_ACTION_DONE)
+                override fun onQueryTextSubmit(query: String?): Boolean
                 {
-                    var imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+                    query?.let {
+                        poeNinjaViewModel.setSearchQuery(it)
+                    }
+                    loadingProgressBar?.visibility = View.VISIBLE
                     searchQueryBar?.clearFocus()
-
                     return true
                 }
 
-                return false
-            }
-        })
+                override fun onQueryTextChange(newText: String?): Boolean
+                {
+                    newText?.let {
+                        poeNinjaViewModel.setSearchQuery(it)
+                    }
+                    loadingProgressBar?.visibility = View.VISIBLE
+                    return true
+                }
+            })
+        }
     }
 
     private fun updateRecyclerViewWithCurrency(currencyOverview: CurrencyOverview?)
@@ -179,6 +175,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreateOptionsMenu(menu: Menu): Boolean
     {
         // Inflate the menu; this adds items to the action bar if it is present.
+
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
@@ -188,6 +185,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         return when (item.itemId)
         {
             R.id.action_settings -> true
@@ -198,117 +196,34 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean
     {
         // Handle navigation view item clicks here.
-        //listLabel?.text = "Loading..."
-
-        // TODO: Move activity title changes to LiveData in ViewModel (as part of Overview)
 
         when (item.itemId)
         {
-            R.id.nav_currency ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.CURRENCY)
-                this.title = getString(R.string.menu_currency)
-            }
-            R.id.nav_fragments ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.FRAGMENT)
-                this.title = getString(R.string.menu_fragments)
-            }
-            R.id.nav_incubators ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.INCUBATOR)
-                this.title = getString(R.string.menu_incubators)
-            }
-            R.id.nav_scarabs ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.SCARAB)
-                this.title = getString(R.string.menu_scarabs)
-            }
-            R.id.nav_fossils ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.FOSSIL)
-                this.title = getString(R.string.menu_fossils)
-            }
-            R.id.nav_resonators ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.RESONATOR)
-                this.title = getString(R.string.menu_resonators)
-            }
-            R.id.nav_essences ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.ESSENCE)
-                this.title = getString(R.string.menu_essences)
-            }
-            R.id.nav_divination_cards ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.DIVINATION_CARD)
-                this.title = getString(R.string.menu_divination_cards)
-            }
-            R.id.nav_prophecies ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.PROPHECY)
-                this.title = getString(R.string.menu_prophecies)
-            }
-            R.id.nav_skill_gems ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.SKILL_GEM)
-                this.title = getString(R.string.menu_skill_gems)
-            }
-            R.id.nav_base_types ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.BASE_TYPE)
-                this.title = getString(R.string.menu_base_types)
-            }
-            R.id.nav_helmet_enchants ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.HELMET_ENCHANT)
-                this.title = getString(R.string.menu_helmet_enchant)
-            }
-            R.id.nav_unique_maps ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.UNIQUE_MAP)
-                this.title = getString(R.string.menu_unique_maps)
-            }
-            R.id.nav_maps ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.MAP)
-                this.title = getString(R.string.menu_maps)
-            }
-            R.id.nav_unique_jewels ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.UNIQUE_JEWEL)
-                this.title = getString(R.string.menu_unique_jewels)
-            }
-            R.id.nav_unique_flasks ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.UNIQUE_FLASK)
-                this.title = getString(R.string.menu_unique_flasks)
-            }
-            R.id.nav_unique_weapons ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.UNIQUE_WEAPON)
-                this.title = getString(R.string.menu_unique_weapons)
-            }
-            R.id.nav_unique_armours ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.UNIQUE_ARMOUR)
-                this.title = getString(R.string.menu_unique_armours)
-            }
-            R.id.nav_unique_accessories ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.UNIQUE_ACCESSORY)
-                this.title = getString(R.string.menu_unique_accessories)
-            }
-            R.id.nav_beasts ->
-            {
-                poeNinjaViewModel.setOverviewType(Overview.Type.BEAST)
-                this.title = getString(R.string.menu_beasts)
-            }
+            R.id.nav_currency -> poeNinjaViewModel.setOverviewType(Overview.Type.CURRENCY)
+            R.id.nav_fragments -> poeNinjaViewModel.setOverviewType(Overview.Type.FRAGMENT)
+            R.id.nav_incubators -> poeNinjaViewModel.setOverviewType(Overview.Type.INCUBATOR)
+            R.id.nav_scarabs -> poeNinjaViewModel.setOverviewType(Overview.Type.SCARAB)
+            R.id.nav_fossils -> poeNinjaViewModel.setOverviewType(Overview.Type.FOSSIL)
+            R.id.nav_resonators -> poeNinjaViewModel.setOverviewType(Overview.Type.RESONATOR)
+            R.id.nav_essences -> poeNinjaViewModel.setOverviewType(Overview.Type.ESSENCE)
+            R.id.nav_divination_cards -> poeNinjaViewModel.setOverviewType(Overview.Type.DIVINATION_CARD)
+            R.id.nav_prophecies -> poeNinjaViewModel.setOverviewType(Overview.Type.PROPHECY)
+            R.id.nav_skill_gems -> poeNinjaViewModel.setOverviewType(Overview.Type.SKILL_GEM)
+            R.id.nav_base_types -> poeNinjaViewModel.setOverviewType(Overview.Type.BASE_TYPE)
+            R.id.nav_helmet_enchants -> poeNinjaViewModel.setOverviewType(Overview.Type.HELMET_ENCHANT)
+            R.id.nav_unique_maps -> poeNinjaViewModel.setOverviewType(Overview.Type.UNIQUE_MAP)
+            R.id.nav_maps -> poeNinjaViewModel.setOverviewType(Overview.Type.MAP)
+            R.id.nav_unique_jewels -> poeNinjaViewModel.setOverviewType(Overview.Type.UNIQUE_JEWEL)
+            R.id.nav_unique_flasks -> poeNinjaViewModel.setOverviewType(Overview.Type.UNIQUE_FLASK)
+            R.id.nav_unique_weapons -> poeNinjaViewModel.setOverviewType(Overview.Type.UNIQUE_WEAPON)
+            R.id.nav_unique_armours -> poeNinjaViewModel.setOverviewType(Overview.Type.UNIQUE_ARMOUR)
+            R.id.nav_unique_accessories -> poeNinjaViewModel.setOverviewType(Overview.Type.UNIQUE_ACCESSORY)
+            R.id.nav_beasts -> poeNinjaViewModel.setOverviewType(Overview.Type.BEAST)
         }
 
-        this.title = "${poeNinjaViewModel.getLeagueId()}: ${this.title}"
+        this.title = getString(R.string.menu_loading)
         this.loadingProgressBar?.visibility = View.VISIBLE
-        this.searchQueryBar?.text?.clear()
+        this.searchQueryBar?.setQuery("", true)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)

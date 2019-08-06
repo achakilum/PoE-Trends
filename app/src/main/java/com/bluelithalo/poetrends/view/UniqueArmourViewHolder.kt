@@ -20,7 +20,7 @@ class UniqueArmourViewHolder : PoeNinjaViewHolder
 
     var uniqueArmourValueChange: TextView
 
-    var uniqueArmourLevelTextView: TextView
+    var uniqueArmourItemLevelTextView: TextView
 
     constructor(v: View) : super(v)
     {
@@ -33,7 +33,7 @@ class UniqueArmourViewHolder : PoeNinjaViewHolder
 
         uniqueArmourValueChange = v.findViewById<View>(R.id.unique_armour_value_change) as TextView
 
-        uniqueArmourLevelTextView = v.findViewById<View>(R.id.unique_armour_level_text_view) as TextView
+        uniqueArmourItemLevelTextView = v.findViewById<View>(R.id.unique_armour_item_level_text_view) as TextView
     }
 
     override fun configureViewHolder(overview: Overview?, position: Int)
@@ -55,7 +55,7 @@ class UniqueArmourViewHolder : PoeNinjaViewHolder
             uniqueArmourBaseTextView.text = it.baseType
             uniqueArmourChaosValueAffix.text = chaosValueAffixText
             uniqueArmourExaltValueAffix.text = exaltValueAffixText
-            uniqueArmourLevelTextView.text = "${it.levelRequired}"
+            uniqueArmourItemLevelTextView.text = "${it.levelRequired}"
 
             it.sparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
@@ -68,7 +68,7 @@ class UniqueArmourViewHolder : PoeNinjaViewHolder
             uniqueArmourBaseTextView.text = "N/A"
             uniqueArmourChaosValueAffix.text = "N/A \u00D7"
             uniqueArmourExaltValueAffix.text = "N/A \u00D7"
-            uniqueArmourLevelTextView.text = "X"
+            uniqueArmourItemLevelTextView.text = "X"
             uniqueArmourValueChange.text = "N/A"
             uniqueArmourValueChange.setTextColor(Color.GRAY)
         }

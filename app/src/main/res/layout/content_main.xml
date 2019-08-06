@@ -8,50 +8,6 @@
                                                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
                                                    tools:context=".MainActivity"
                                                    tools:showIn="@layout/app_bar_main">
-
-    <!--
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/main_nested_scroll_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="136dp">
-
-        <LinearLayout
-            android:id="@+id/main_linear_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/main_list_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:ellipsize="start"
-                android:gravity="center"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:singleLine="true"
-                android:text="Loading..." />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/main_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="0dp" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-    -->
-
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_recycler_view"
             android:layout_width="match_parent"
@@ -60,7 +16,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/search_query_bar">
+            app:layout_constraintTop_toBottomOf="@+id/search_query_bar" android:layout_marginTop="8dp">
     </androidx.recyclerview.widget.RecyclerView>
     <ProgressBar
             style="?android:attr/progressBarStyle"
@@ -70,16 +26,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/main_recycler_view"
             app:layout_constraintTop_toTopOf="@+id/main_recycler_view"/>
-    <EditText
+    <androidx.appcompat.widget.SearchView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:ems="10"
-            android:maxLines="1"
             android:imeOptions="actionDone"
-            android:id="@+id/search_query_bar" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
+            android:id="@+id/search_query_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:textAlignment="textStart"
-            android:drawableLeft="@android:drawable/ic_menu_search" android:drawablePadding="8dp"/>
+            app:queryHint="Search..." app:iconifiedByDefault="false" android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
