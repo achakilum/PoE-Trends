@@ -1,10 +1,8 @@
 package com.bluelithalo.poetrends
 
-import android.annotation.SuppressLint
-import android.content.Context
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.*
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -12,9 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import android.widget.EditText
 import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,8 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bluelithalo.poetrends.model.Overview
 import com.bluelithalo.poetrends.model.currency.CurrencyOverview
 import com.bluelithalo.poetrends.model.item.ItemOverview
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import com.bluelithalo.poetrends.poe_ninja.PoeNinjaAdapter
 import com.bluelithalo.poetrends.poe_ninja.PoeNinjaViewModel
@@ -59,8 +53,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.itemIconTintList = null
         navView.menu.getItem(0).isChecked = true
 
-        this.title = getString(R.string.menu_loading)
         this.loadingProgressBar = findViewById<ProgressBar>(R.id.loading_progress_bar)
+        setLoadingState()
 
         poeNinjaViewModel = ViewModelProviders.of(this).get(PoeNinjaViewModel::class.java)
         poeNinjaViewModel.getOverview().observe(this, Observer<Overview> { overview ->
@@ -186,9 +180,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
+        when (item.itemId)
+        {
+            R.id.action_change_league -> startActivityForResult(Intent(this, LeagueSelectorActivity::class.java), MainActivity.CHANGE_LEAGUE)
+        }
+
         return when (item.itemId)
         {
-            R.id.action_settings -> true
+            R.id.action_change_league -> return true
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -221,12 +220,42 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_beasts -> poeNinjaViewModel.setOverviewType(Overview.Type.BEAST)
         }
 
-        this.title = getString(R.string.menu_loading)
-        this.loadingProgressBar?.visibility = View.VISIBLE
+        setLoadingState()
         this.searchQueryBar?.setQuery("", true)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+    {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK)
+        {
+            val extras = data?.extras
+            if (requestCode == MainActivity.CHANGE_LEAGUE)
+            {
+                extras?.let {
+                    val leagueId = extras.getString(LeagueSelectorActivity.RESULT_LEAGUE_ID)
+                    this.poeNinjaViewModel.setLeagueId(leagueId)
+                    setLoadingState()
+                }
+            }
+        }
+
+    }
+
+    private fun setLoadingState()
+    {
+        this.title = getString(R.string.menu_loading)
+        this.loadingProgressBar?.visibility = View.VISIBLE
+    }
+
+    companion object
+    {
+        val CHANGE_LEAGUE = 1
+    }
+
 }

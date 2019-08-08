@@ -5,4 +5,7 @@
     <color name="colorAccent">#993333</color>
     <color name="colorExtraMod1">#101010</color>
     <color name="colorExtraMod2">#202020</color>
+
+    <color name="colorLeagueSoftcore">#003366</color>
+    <color name="colorLeagueHardcore">#440000</color>
 </resources>

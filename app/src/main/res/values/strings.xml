@@ -5,9 +5,9 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_change_league">Change League&#8230;</string>
 
-    <string name="menu_loading">Loading...</string>
+    <string name="menu_loading">Loading&#8230;</string>
 
     <string name="menu_currency">Currency</string>
     <string name="menu_fragments">Fragments</string>
@@ -29,4 +29,5 @@
     <string name="menu_unique_armours">Unique Armours</string>
     <string name="menu_unique_accessories">Unique Accessories</string>
     <string name="menu_beasts">Beasts</string>
+    <string name="title_activity_league_selector">LeagueSelectorActivity</string>
 </resources>
