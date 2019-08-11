@@ -16,6 +16,7 @@ class IncubatorViewHolder : PoeNinjaViewHolder
 
     var incubatorChaosValueAffix: TextView
     var incubatorExaltValueAffix: TextView
+    var incubatorConfidenceMarker: View
 
     var incubatorValueChange: TextView
 
@@ -26,6 +27,7 @@ class IncubatorViewHolder : PoeNinjaViewHolder
 
         incubatorChaosValueAffix = v.findViewById<View>(R.id.incubator_chaos_value_affix) as TextView
         incubatorExaltValueAffix = v.findViewById<View>(R.id.incubator_exalt_value_affix) as TextView
+        incubatorConfidenceMarker = v.findViewById<View>(R.id.incubator_confidence_marker) as View
 
         incubatorValueChange = v.findViewById<View>(R.id.incubator_value_change) as TextView
     }
@@ -44,11 +46,17 @@ class IncubatorViewHolder : PoeNinjaViewHolder
 
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
+            val count = (it.count ?: 0)
             incubatorNameTextView.text = it.name
             incubatorChaosValueAffix.text = chaosValueAffixText
             incubatorExaltValueAffix.text = exaltValueAffixText
+            incubatorConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 incubatorValueChange.text = valueChangeText
                 incubatorValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -60,6 +68,7 @@ class IncubatorViewHolder : PoeNinjaViewHolder
             incubatorExaltValueAffix.text = "N/A \u00D7"
             incubatorValueChange.text = "N/A"
             incubatorValueChange.setTextColor(Color.GRAY)
+            incubatorConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

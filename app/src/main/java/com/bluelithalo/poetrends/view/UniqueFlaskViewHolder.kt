@@ -17,6 +17,7 @@ class UniqueFlaskViewHolder : PoeNinjaViewHolder
 
     var uniqueFlaskChaosValueAffix: TextView
     var uniqueFlaskExaltValueAffix: TextView
+    var uniqueFlaskConfidenceMarker: View
 
     var uniqueFlaskValueChange: TextView
 
@@ -30,6 +31,7 @@ class UniqueFlaskViewHolder : PoeNinjaViewHolder
 
         uniqueFlaskChaosValueAffix = v.findViewById<View>(R.id.unique_flask_chaos_value_affix) as TextView
         uniqueFlaskExaltValueAffix = v.findViewById<View>(R.id.unique_flask_exalt_value_affix) as TextView
+        uniqueFlaskConfidenceMarker = v.findViewById<View>(R.id.unique_flask_confidence_marker) as View
 
         uniqueFlaskValueChange = v.findViewById<View>(R.id.unique_flask_value_change) as TextView
 
@@ -51,13 +53,19 @@ class UniqueFlaskViewHolder : PoeNinjaViewHolder
             val uniqueFlaskName = it.name + if (it.variant?.length ?: 0 > 0) ", ${it.variant}" else ""
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
+            val count = (it.count ?: 0)
             uniqueFlaskNameTextView.text = uniqueFlaskName
             uniqueFlaskBaseTextView.text = it.baseType
             uniqueFlaskChaosValueAffix.text = chaosValueAffixText
             uniqueFlaskExaltValueAffix.text = exaltValueAffixText
             uniqueFlaskLevelTextView.text = "${it.levelRequired}"
+            uniqueFlaskConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 uniqueFlaskValueChange.text = valueChangeText
                 uniqueFlaskValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -71,6 +79,7 @@ class UniqueFlaskViewHolder : PoeNinjaViewHolder
             uniqueFlaskLevelTextView.text = "X"
             uniqueFlaskValueChange.text = "N/A"
             uniqueFlaskValueChange.setTextColor(Color.GRAY)
+            uniqueFlaskConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

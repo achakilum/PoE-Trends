@@ -16,6 +16,7 @@ class DivinationCardViewHolder : PoeNinjaViewHolder
 
     var divinationCardChaosValueAffix: TextView
     var divinationCardExaltValueAffix: TextView
+    var divinationCardConfidenceMarker: View
 
     var divinationCardValueChange: TextView
 
@@ -28,6 +29,7 @@ class DivinationCardViewHolder : PoeNinjaViewHolder
 
         divinationCardChaosValueAffix = v.findViewById<View>(R.id.divination_card_chaos_value_affix) as TextView
         divinationCardExaltValueAffix = v.findViewById<View>(R.id.divination_card_exalt_value_affix) as TextView
+        divinationCardConfidenceMarker = v.findViewById<View>(R.id.divination_card_confidence_marker) as View
 
         divinationCardValueChange = v.findViewById<View>(R.id.divination_card_value_change) as TextView
 
@@ -48,12 +50,18 @@ class DivinationCardViewHolder : PoeNinjaViewHolder
 
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
+            val count = (it.count ?: 0)
             divinationCardNameTextView.text = it.name
             divinationCardChaosValueAffix.text = chaosValueAffixText
             divinationCardExaltValueAffix.text = exaltValueAffixText
             divinationCardStackSizeTextView.text = "${it.stackSize}"
+            divinationCardConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 divinationCardValueChange.text = valueChangeText
                 divinationCardValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -66,6 +74,7 @@ class DivinationCardViewHolder : PoeNinjaViewHolder
             divinationCardStackSizeTextView.text = "X"
             divinationCardValueChange.text = "N/A"
             divinationCardValueChange.setTextColor(Color.GRAY)
+            divinationCardConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

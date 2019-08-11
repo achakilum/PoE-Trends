@@ -1,11 +1,8 @@
 package com.bluelithalo.poetrends.view
 
-import android.content.Context
-import android.graphics.Color
 import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bluelithalo.poetrends.R
 import com.bluelithalo.poetrends.model.league.League
@@ -28,11 +25,11 @@ class LeagueViewHolder : RecyclerView.ViewHolder
         league?.let {
             leagueIdTextView.text = it.id
             leagueDescriptionTextView.text = it.description
-            leagueListItemLayout.setBackgroundResource(R.color.colorLeagueSoftcore)
+            leagueListItemLayout.setBackgroundResource(R.color.league_softcore)
             it.rules?.iterator()?.forEach {
                 if (it.name?.equals("Hardcore") == true)
                 {
-                    leagueListItemLayout.setBackgroundResource(R.color.colorLeagueHardcore)
+                    leagueListItemLayout.setBackgroundResource(R.color.league_hardcore)
                 }
             }
         } ?: run {

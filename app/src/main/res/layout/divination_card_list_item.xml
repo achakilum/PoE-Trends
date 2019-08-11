@@ -65,8 +65,8 @@
                     android:layout_marginBottom="8dp"
                     android:text="1.0 ×"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/divination_card_icon_image_view"
-                    app:layout_constraintTop_toBottomOf="@+id/divination_card_name_text_view" />
+                    app:layout_constraintStart_toEndOf="@+id/divination_card_confidence_marker"
+                    app:layout_constraintTop_toBottomOf="@+id/divination_card_name_text_view"/>
 
             <ImageView
                     android:id="@+id/divination_card_exalt_value_icon"
@@ -135,6 +135,16 @@
                     app:layout_constraintEnd_toStartOf="@+id/divination_card_value_change"
                     app:layout_constraintStart_toEndOf="@+id/divination_card_exalt_value_icon"
                     app:layout_constraintTop_toBottomOf="@+id/divination_card_name_text_view" />
+
+            <View
+                    android:layout_width="4dp"
+                    android:layout_height="0dp"
+                    android:id="@+id/divination_card_confidence_marker"
+                    app:layout_constraintTop_toBottomOf="@+id/divination_card_name_text_view"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/divination_card_icon_image_view"
+                    android:background="@color/confidence_none"/>
+
             <TextView
                     android:text="Stack"
                     android:layout_width="wrap_content"

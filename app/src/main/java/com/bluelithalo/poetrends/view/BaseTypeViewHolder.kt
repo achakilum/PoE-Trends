@@ -16,6 +16,7 @@ class BaseTypeViewHolder : PoeNinjaViewHolder
 
     var baseTypeChaosValueAffix: TextView
     var baseTypeExaltValueAffix: TextView
+    var baseTypeConfidenceMarker: View
 
     var baseTypeValueChange: TextView
 
@@ -29,6 +30,7 @@ class BaseTypeViewHolder : PoeNinjaViewHolder
 
         baseTypeChaosValueAffix = v.findViewById<View>(R.id.base_type_chaos_value_affix) as TextView
         baseTypeExaltValueAffix = v.findViewById<View>(R.id.base_type_exalt_value_affix) as TextView
+        baseTypeConfidenceMarker = v.findViewById<View>(R.id.base_type_confidence_marker) as View
 
         baseTypeValueChange = v.findViewById<View>(R.id.base_type_value_change) as TextView
 
@@ -66,12 +68,18 @@ class BaseTypeViewHolder : PoeNinjaViewHolder
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
             val baseTypeLevelText = if (it.levelRequired ?: 0 >= 86) "86+" else "${it.levelRequired}"
+            val count = (it.count ?: 0)
             baseTypeNameTextView.text = it.name
             baseTypeChaosValueAffix.text = chaosValueAffixText
             baseTypeExaltValueAffix.text = exaltValueAffixText
             baseTypeItemLevelTextView.text = baseTypeLevelText
+            baseTypeConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 baseTypeValueChange.text = valueChangeText
                 baseTypeValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -84,6 +92,7 @@ class BaseTypeViewHolder : PoeNinjaViewHolder
             baseTypeItemLevelTextView.text = "X"
             baseTypeValueChange.text = "N/A"
             baseTypeValueChange.setTextColor(Color.GRAY)
+            baseTypeConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

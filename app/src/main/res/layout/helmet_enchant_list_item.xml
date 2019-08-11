@@ -65,8 +65,8 @@
                     android:layout_marginBottom="8dp"
                     android:text="1.0 ×"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/helmet_enchant_icon_image_view"
-                    app:layout_constraintTop_toBottomOf="@+id/helmet_enchant_name_text_view" />
+                    app:layout_constraintStart_toEndOf="@+id/helmet_enchant_confidence_marker"
+                    app:layout_constraintTop_toBottomOf="@+id/helmet_enchant_name_text_view"/>
 
             <ImageView
                     android:id="@+id/helmet_enchant_exalt_value_icon"
@@ -111,6 +111,15 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/helmet_enchant_chaos_value_icon"
                     app:layout_constraintTop_toBottomOf="@+id/helmet_enchant_name_text_view" />
+
+            <View
+                    android:layout_width="4dp"
+                    android:layout_height="0dp"
+                    android:id="@+id/helmet_enchant_confidence_marker"
+                    app:layout_constraintTop_toBottomOf="@+id/helmet_enchant_name_text_view"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/helmet_enchant_icon_image_view"
+                    android:background="@color/confidence_none"/>
 
             <View
                     android:id="@+id/helmet_enchant_value_line_guide"

@@ -17,6 +17,7 @@ class UniqueWeaponViewHolder : PoeNinjaViewHolder
 
     var uniqueWeaponChaosValueAffix: TextView
     var uniqueWeaponExaltValueAffix: TextView
+    var uniqueWeaponConfidenceMarker: View
 
     var uniqueWeaponValueChange: TextView
 
@@ -32,6 +33,7 @@ class UniqueWeaponViewHolder : PoeNinjaViewHolder
         uniqueWeaponExaltValueAffix = v.findViewById<View>(R.id.unique_weapon_exalt_value_affix) as TextView
 
         uniqueWeaponValueChange = v.findViewById<View>(R.id.unique_weapon_value_change) as TextView
+        uniqueWeaponConfidenceMarker = v.findViewById<View>(R.id.unique_weapon_confidence_marker) as View
 
         uniqueWeaponLevelTextView = v.findViewById<View>(R.id.unique_weapon_level_text_view) as TextView
     }
@@ -51,13 +53,19 @@ class UniqueWeaponViewHolder : PoeNinjaViewHolder
             val uniqueWeaponName = it.name + (if (it.links ?: 0 >= 5) ", ${it.links}L" else "") + (if (it.variant?.length ?: 0 > 0) ", ${it.variant}" else "")
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
+            val count = (it.count ?: 0)
             uniqueWeaponNameTextView.text = uniqueWeaponName
             uniqueWeaponBaseTextView.text = it.baseType
             uniqueWeaponChaosValueAffix.text = chaosValueAffixText
             uniqueWeaponExaltValueAffix.text = exaltValueAffixText
             uniqueWeaponLevelTextView.text = "${it.levelRequired}"
+            uniqueWeaponConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 uniqueWeaponValueChange.text = valueChangeText
                 uniqueWeaponValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -71,6 +79,7 @@ class UniqueWeaponViewHolder : PoeNinjaViewHolder
             uniqueWeaponLevelTextView.text = "X"
             uniqueWeaponValueChange.text = "N/A"
             uniqueWeaponValueChange.setTextColor(Color.GRAY)
+            uniqueWeaponConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

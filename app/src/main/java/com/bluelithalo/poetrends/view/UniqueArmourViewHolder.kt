@@ -17,6 +17,7 @@ class UniqueArmourViewHolder : PoeNinjaViewHolder
 
     var uniqueArmourChaosValueAffix: TextView
     var uniqueArmourExaltValueAffix: TextView
+    var uniqueArmourConfidenceMarker: View
 
     var uniqueArmourValueChange: TextView
 
@@ -30,6 +31,7 @@ class UniqueArmourViewHolder : PoeNinjaViewHolder
 
         uniqueArmourChaosValueAffix = v.findViewById<View>(R.id.unique_armour_chaos_value_affix) as TextView
         uniqueArmourExaltValueAffix = v.findViewById<View>(R.id.unique_armour_exalt_value_affix) as TextView
+        uniqueArmourConfidenceMarker = v.findViewById<View>(R.id.unique_armour_confidence_marker) as View
 
         uniqueArmourValueChange = v.findViewById<View>(R.id.unique_armour_value_change) as TextView
 
@@ -51,13 +53,19 @@ class UniqueArmourViewHolder : PoeNinjaViewHolder
             val uniqueArmourName = it.name + (if (it.links ?: 0 >= 5) ", ${it.links}L" else "") + (if (it.variant?.length ?: 0 > 0) ", ${it.variant}" else "")
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
+            val count = (it.count ?: 0)
             uniqueArmourNameTextView.text = uniqueArmourName
             uniqueArmourBaseTextView.text = it.baseType
             uniqueArmourChaosValueAffix.text = chaosValueAffixText
             uniqueArmourExaltValueAffix.text = exaltValueAffixText
             uniqueArmourLevelTextView.text = "${it.levelRequired}"
+            uniqueArmourConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 uniqueArmourValueChange.text = valueChangeText
                 uniqueArmourValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -71,6 +79,7 @@ class UniqueArmourViewHolder : PoeNinjaViewHolder
             uniqueArmourLevelTextView.text = "X"
             uniqueArmourValueChange.text = "N/A"
             uniqueArmourValueChange.setTextColor(Color.GRAY)
+            uniqueArmourConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

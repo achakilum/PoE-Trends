@@ -17,6 +17,7 @@ class UniqueAccessoryViewHolder : PoeNinjaViewHolder
 
     var uniqueAccessoryChaosValueAffix: TextView
     var uniqueAccessoryExaltValueAffix: TextView
+    var uniqueAccessoryConfidenceMarker: View
 
     var uniqueAccessoryValueChange: TextView
 
@@ -30,6 +31,7 @@ class UniqueAccessoryViewHolder : PoeNinjaViewHolder
 
         uniqueAccessoryChaosValueAffix = v.findViewById<View>(R.id.unique_accessory_chaos_value_affix) as TextView
         uniqueAccessoryExaltValueAffix = v.findViewById<View>(R.id.unique_accessory_exalt_value_affix) as TextView
+        uniqueAccessoryConfidenceMarker = v.findViewById<View>(R.id.unique_accessory_confidence_marker) as View
 
         uniqueAccessoryValueChange = v.findViewById<View>(R.id.unique_accessory_value_change) as TextView
 
@@ -51,13 +53,19 @@ class UniqueAccessoryViewHolder : PoeNinjaViewHolder
             val uniqueAccessoryName = it.name + if (it.variant?.length ?: 0 > 0) ", ${it.variant}" else ""
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
+            val count = (it.count ?: 0)
             uniqueAccessoryNameTextView.text = uniqueAccessoryName
             uniqueAccessoryBaseTextView.text = it.baseType
             uniqueAccessoryChaosValueAffix.text = chaosValueAffixText
             uniqueAccessoryExaltValueAffix.text = exaltValueAffixText
             uniqueAccessoryLevelTextView.text = "${it.levelRequired}"
+            uniqueAccessoryConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 uniqueAccessoryValueChange.text = valueChangeText
                 uniqueAccessoryValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -71,6 +79,7 @@ class UniqueAccessoryViewHolder : PoeNinjaViewHolder
             uniqueAccessoryLevelTextView.text = "X"
             uniqueAccessoryValueChange.text = "N/A"
             uniqueAccessoryValueChange.setTextColor(Color.GRAY)
+            uniqueAccessoryConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

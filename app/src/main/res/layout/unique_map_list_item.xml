@@ -73,7 +73,7 @@
                     android:layout_marginBottom="8dp"
                     android:text="1.0 ×"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/unique_map_icon_image_view"
+                    app:layout_constraintStart_toEndOf="@+id/unique_map_confidence_marker"
                     app:layout_constraintTop_toBottomOf="@+id/unique_map_base_text_view"/>
 
             <ImageView
@@ -117,6 +117,15 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/unique_map_chaos_value_icon"
                     app:layout_constraintTop_toBottomOf="@+id/unique_map_base_text_view"/>
+
+            <View
+                    android:layout_width="4dp"
+                    android:layout_height="0dp"
+                    android:id="@+id/unique_map_confidence_marker"
+                    app:layout_constraintTop_toBottomOf="@+id/unique_map_base_text_view"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/unique_map_icon_image_view"
+                    android:background="@color/confidence_none"/>
 
             <View
                     android:id="@+id/unique_map_value_line_guide"

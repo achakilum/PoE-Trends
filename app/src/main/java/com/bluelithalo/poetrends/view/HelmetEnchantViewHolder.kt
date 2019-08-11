@@ -16,6 +16,7 @@ class HelmetEnchantViewHolder : PoeNinjaViewHolder
 
     var helmetEnchantChaosValueAffix: TextView
     var helmetEnchantExaltValueAffix: TextView
+    var helmetEnchantConfidenceMarker: View
 
     var helmetEnchantValueChange: TextView
 
@@ -26,6 +27,7 @@ class HelmetEnchantViewHolder : PoeNinjaViewHolder
 
         helmetEnchantChaosValueAffix = v.findViewById<View>(R.id.helmet_enchant_chaos_value_affix) as TextView
         helmetEnchantExaltValueAffix = v.findViewById<View>(R.id.helmet_enchant_exalt_value_affix) as TextView
+        helmetEnchantConfidenceMarker = v.findViewById<View>(R.id.helmet_enchant_confidence_marker) as View
 
         helmetEnchantValueChange = v.findViewById<View>(R.id.helmet_enchant_value_change) as TextView
     }
@@ -44,11 +46,17 @@ class HelmetEnchantViewHolder : PoeNinjaViewHolder
 
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
+            val count = (it.count ?: 0)
             helmetEnchantNameTextView.text = it.name
             helmetEnchantChaosValueAffix.text = chaosValueAffixText
             helmetEnchantExaltValueAffix.text = exaltValueAffixText
+            helmetEnchantConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 helmetEnchantValueChange.text = valueChangeText
                 helmetEnchantValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -60,6 +68,7 @@ class HelmetEnchantViewHolder : PoeNinjaViewHolder
             helmetEnchantExaltValueAffix.text = "N/A \u00D7"
             helmetEnchantValueChange.text = "N/A"
             helmetEnchantValueChange.setTextColor(Color.GRAY)
+            helmetEnchantConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

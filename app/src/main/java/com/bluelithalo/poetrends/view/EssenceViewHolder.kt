@@ -16,6 +16,7 @@ class EssenceViewHolder : PoeNinjaViewHolder
 
     var essenceChaosValueAffix: TextView
     var essenceExaltValueAffix: TextView
+    var essenceConfidenceMarker: View
 
     var essenceValueChange: TextView
 
@@ -28,6 +29,7 @@ class EssenceViewHolder : PoeNinjaViewHolder
 
         essenceChaosValueAffix = v.findViewById<View>(R.id.essence_chaos_value_affix) as TextView
         essenceExaltValueAffix = v.findViewById<View>(R.id.essence_exalt_value_affix) as TextView
+        essenceConfidenceMarker = v.findViewById<View>(R.id.essence_confidence_marker) as View
 
         essenceValueChange = v.findViewById<View>(R.id.essence_value_change) as TextView
 
@@ -48,12 +50,18 @@ class EssenceViewHolder : PoeNinjaViewHolder
 
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
+            val count = (it.count ?: 0)
             essenceNameTextView.text = it.name
             essenceChaosValueAffix.text = chaosValueAffixText
             essenceExaltValueAffix.text = exaltValueAffixText
             essenceTierTextView.text = "${it.mapTier}"
+            essenceConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 essenceValueChange.text = valueChangeText
                 essenceValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -66,6 +74,7 @@ class EssenceViewHolder : PoeNinjaViewHolder
             essenceTierTextView.text = "X"
             essenceValueChange.text = "N/A"
             essenceValueChange.setTextColor(Color.GRAY)
+            essenceConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

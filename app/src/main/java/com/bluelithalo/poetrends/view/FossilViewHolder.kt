@@ -16,6 +16,7 @@ class FossilViewHolder : PoeNinjaViewHolder
 
     var fossilChaosValueAffix: TextView
     var fossilExaltValueAffix: TextView
+    var fossilConfidenceMarker: View
 
     var fossilValueChange: TextView
 
@@ -26,6 +27,7 @@ class FossilViewHolder : PoeNinjaViewHolder
 
         fossilChaosValueAffix = v.findViewById<View>(R.id.fossil_chaos_value_affix) as TextView
         fossilExaltValueAffix = v.findViewById<View>(R.id.fossil_exalt_value_affix) as TextView
+        fossilConfidenceMarker = v.findViewById<View>(R.id.fossil_confidence_marker) as View
 
         fossilValueChange = v.findViewById<View>(R.id.fossil_value_change) as TextView
     }
@@ -44,11 +46,17 @@ class FossilViewHolder : PoeNinjaViewHolder
 
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
+            val count = (it.count ?: 0)
             fossilNameTextView.text = it.name
             fossilChaosValueAffix.text = chaosValueAffixText
             fossilExaltValueAffix.text = exaltValueAffixText
+            fossilConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 fossilValueChange.text = valueChangeText
                 fossilValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -60,6 +68,7 @@ class FossilViewHolder : PoeNinjaViewHolder
             fossilExaltValueAffix.text = "N/A \u00D7"
             fossilValueChange.text = "N/A"
             fossilValueChange.setTextColor(Color.GRAY)
+            fossilConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

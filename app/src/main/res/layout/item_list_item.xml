@@ -57,16 +57,16 @@
                     app:layout_constraintTop_toTopOf="parent" android:ellipsize="start" android:singleLine="true"/>
 
             <TextView
-                android:id="@+id/item_chaos_value_affix"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="1.0 ×"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/item_icon_image_view"
-                app:layout_constraintTop_toBottomOf="@+id/item_name_text_view" />
+                    android:id="@+id/item_chaos_value_affix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="1.0 ×"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/item_confidence_marker"
+                    app:layout_constraintTop_toBottomOf="@+id/item_name_text_view"/>
 
             <ImageView
                 android:id="@+id/item_exalt_value_icon"
@@ -111,6 +111,15 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/item_chaos_value_icon"
                 app:layout_constraintTop_toBottomOf="@+id/item_name_text_view" />
+
+            <View
+                    android:layout_width="4dp"
+                    android:layout_height="0dp"
+                    android:id="@+id/item_confidence_marker"
+                    app:layout_constraintTop_toBottomOf="@+id/item_name_text_view"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/item_icon_image_view"
+                    android:background="@color/confidence_none"/>
 
             <View
                 android:id="@+id/item_value_line_guide"

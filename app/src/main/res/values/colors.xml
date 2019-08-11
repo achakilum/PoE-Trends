@@ -6,6 +6,11 @@
     <color name="colorExtraMod1">#101010</color>
     <color name="colorExtraMod2">#202020</color>
 
-    <color name="colorLeagueSoftcore">#003366</color>
-    <color name="colorLeagueHardcore">#440000</color>
+    <color name="league_softcore">#003366</color>
+    <color name="league_hardcore">#440000</color>
+
+    <color name="confidence_high">#004400</color>
+    <color name="confidence_medium">#666600</color>
+    <color name="confidence_low">#880000</color>
+    <color name="confidence_none">#444444</color>
 </resources>

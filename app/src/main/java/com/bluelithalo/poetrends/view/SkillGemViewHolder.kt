@@ -16,6 +16,7 @@ class SkillGemViewHolder : PoeNinjaViewHolder
 
     var skillGemChaosValueAffix: TextView
     var skillGemExaltValueAffix: TextView
+    var skillGemConfidenceMarker: View
 
     var skillGemValueChange: TextView
 
@@ -30,6 +31,7 @@ class SkillGemViewHolder : PoeNinjaViewHolder
 
         skillGemChaosValueAffix = v.findViewById<View>(R.id.skill_gem_chaos_value_affix) as TextView
         skillGemExaltValueAffix = v.findViewById<View>(R.id.skill_gem_exalt_value_affix) as TextView
+        skillGemConfidenceMarker = v.findViewById<View>(R.id.skill_gem_confidence_marker) as View
 
         skillGemValueChange = v.findViewById<View>(R.id.skill_gem_value_change) as TextView
 
@@ -53,14 +55,20 @@ class SkillGemViewHolder : PoeNinjaViewHolder
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
             val skillGemQualityText = "+${it.gemQuality}"
+            val count = (it.count ?: 0)
             skillGemNameTextView.text = it.name
             skillGemChaosValueAffix.text = chaosValueAffixText
             skillGemExaltValueAffix.text = exaltValueAffixText
             skillGemLevelTextView.text = "${it.gemLevel}"
             skillGemQualityTextView.text = skillGemQualityText
             skillGemCorruptedImageView.setImageResource(if (it.corrupted == true) R.drawable.ic_corrupted else android.R.color.transparent)
+            skillGemConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 skillGemValueChange.text = valueChangeText
                 skillGemValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -73,6 +81,7 @@ class SkillGemViewHolder : PoeNinjaViewHolder
             skillGemLevelTextView.text = "X"
             skillGemValueChange.text = "N/A"
             skillGemValueChange.setTextColor(Color.GRAY)
+            skillGemConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

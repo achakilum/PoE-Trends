@@ -17,6 +17,7 @@ class UniqueMapViewHolder : PoeNinjaViewHolder
 
     var uniqueMapChaosValueAffix: TextView
     var uniqueMapExaltValueAffix: TextView
+    var uniqueMapConfidenceMarker: View
 
     var uniqueMapValueChange: TextView
 
@@ -32,6 +33,7 @@ class UniqueMapViewHolder : PoeNinjaViewHolder
         uniqueMapExaltValueAffix = v.findViewById<View>(R.id.unique_map_exalt_value_affix) as TextView
 
         uniqueMapValueChange = v.findViewById<View>(R.id.unique_map_value_change) as TextView
+        uniqueMapConfidenceMarker = v.findViewById<View>(R.id.unique_map_confidence_marker) as View
 
         uniqueMapTierTextView = v.findViewById<View>(R.id.unique_map_tier_text_view) as TextView
     }
@@ -51,13 +53,19 @@ class UniqueMapViewHolder : PoeNinjaViewHolder
             val uniqueMapName = it.name + if (it.variant?.length ?: 0 > 0) ", ${it.variant}" else ""
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
+            val count = (it.count ?: 0)
             uniqueMapNameTextView.text = uniqueMapName
             uniqueMapBaseTextView.text = it.baseType
             uniqueMapChaosValueAffix.text = chaosValueAffixText
             uniqueMapExaltValueAffix.text = exaltValueAffixText
             uniqueMapTierTextView.text = "${it.mapTier}"
+            uniqueMapConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 uniqueMapValueChange.text = valueChangeText
                 uniqueMapValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -71,6 +79,7 @@ class UniqueMapViewHolder : PoeNinjaViewHolder
             uniqueMapTierTextView.text = "X"
             uniqueMapValueChange.text = "N/A"
             uniqueMapValueChange.setTextColor(Color.GRAY)
+            uniqueMapConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

@@ -16,6 +16,7 @@ class ProphecyViewHolder : PoeNinjaViewHolder
 
     var prophecyChaosValueAffix: TextView
     var prophecyExaltValueAffix: TextView
+    var prophecyConfidenceMarker: View
 
     var prophecyValueChange: TextView
 
@@ -26,6 +27,7 @@ class ProphecyViewHolder : PoeNinjaViewHolder
 
         prophecyChaosValueAffix = v.findViewById<View>(R.id.prophecy_chaos_value_affix) as TextView
         prophecyExaltValueAffix = v.findViewById<View>(R.id.prophecy_exalt_value_affix) as TextView
+        prophecyConfidenceMarker = v.findViewById<View>(R.id.prophecy_confidence_marker) as View
 
         prophecyValueChange = v.findViewById<View>(R.id.prophecy_value_change) as TextView
     }
@@ -45,11 +47,17 @@ class ProphecyViewHolder : PoeNinjaViewHolder
             val prophecyName = it.name + if (it.variant?.length ?: 0 > 0) ", ${it.variant}" else ""
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
+            val count = (it.count ?: 0)
             prophecyNameTextView.text = prophecyName
             prophecyChaosValueAffix.text = chaosValueAffixText
             prophecyExaltValueAffix.text = exaltValueAffixText
+            prophecyConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 prophecyValueChange.text = valueChangeText
                 prophecyValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -61,6 +69,7 @@ class ProphecyViewHolder : PoeNinjaViewHolder
             prophecyExaltValueAffix.text = "N/A \u00D7"
             prophecyValueChange.text = "N/A"
             prophecyValueChange.setTextColor(Color.GRAY)
+            prophecyConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

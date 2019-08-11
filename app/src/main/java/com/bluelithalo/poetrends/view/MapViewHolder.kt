@@ -16,6 +16,7 @@ class MapViewHolder : PoeNinjaViewHolder
 
     var mapChaosValueAffix: TextView
     var mapExaltValueAffix: TextView
+    var mapConfidenceMarker: View
 
     var mapValueChange: TextView
 
@@ -28,6 +29,7 @@ class MapViewHolder : PoeNinjaViewHolder
 
         mapChaosValueAffix = v.findViewById<View>(R.id.map_chaos_value_affix) as TextView
         mapExaltValueAffix = v.findViewById<View>(R.id.map_exalt_value_affix) as TextView
+        mapConfidenceMarker = v.findViewById<View>(R.id.map_confidence_marker) as View
 
         mapValueChange = v.findViewById<View>(R.id.map_value_change) as TextView
 
@@ -48,12 +50,18 @@ class MapViewHolder : PoeNinjaViewHolder
 
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
+            val count = (it.count ?: 0)
             mapNameTextView.text = it.name
             mapChaosValueAffix.text = chaosValueAffixText
             mapExaltValueAffix.text = exaltValueAffixText
             mapTierTextView.text = "${it.mapTier}"
+            mapConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 mapValueChange.text = valueChangeText
                 mapValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -66,6 +74,7 @@ class MapViewHolder : PoeNinjaViewHolder
             mapTierTextView.text = "X"
             mapValueChange.text = "N/A"
             mapValueChange.setTextColor(Color.GRAY)
+            mapConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

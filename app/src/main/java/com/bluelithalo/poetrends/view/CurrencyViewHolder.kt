@@ -18,11 +18,13 @@ class CurrencyViewHolder : PoeNinjaViewHolder
     var currencyBuyItemIcon: ImageView
     var currencyBuyCostAffix: TextView
     var currencyBuyValueChange: TextView
+    var currencyBuyConfidenceMarker: View
 
     var currencySellCountAffix: TextView
     var currencySellItemIcon: ImageView
     var currencySellCostAffix: TextView
     var currencySellValueChange: TextView
+    var currencySellConfidenceMarker: View
 
     constructor(v: View) : super(v)
     {
@@ -33,11 +35,13 @@ class CurrencyViewHolder : PoeNinjaViewHolder
         currencyBuyItemIcon = v.findViewById<ImageView>(R.id.currency_buy_item_icon)
         currencyBuyCostAffix = v.findViewById<TextView>(R.id.currency_buy_cost_affix)
         currencyBuyValueChange = v.findViewById<TextView>(R.id.currency_buy_value_change)
+        currencyBuyConfidenceMarker = v.findViewById<View>(R.id.currency_buy_confidence_marker)
 
         currencySellCountAffix = v.findViewById<TextView>(R.id.currency_sell_count_affix)
         currencySellItemIcon = v.findViewById<ImageView>(R.id.currency_sell_item_icon)
         currencySellCostAffix = v.findViewById<TextView>(R.id.currency_sell_cost_affix)
         currencySellValueChange = v.findViewById<TextView>(R.id.currency_sell_value_change)
+        currencySellConfidenceMarker = v.findViewById<View>(R.id.currency_sell_confidence_marker)
     }
 
     override fun configureViewHolder(overview: Overview?, position: Int)
@@ -85,6 +89,13 @@ class CurrencyViewHolder : PoeNinjaViewHolder
                 }
 
             }
+
+            val count = it.count ?: 0
+            currencyBuyConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
         } ?: run {
             val buyCountAffix = "N/A \u00D7"
             val buyCostAffix = "for N/A \u00D7"
@@ -92,6 +103,7 @@ class CurrencyViewHolder : PoeNinjaViewHolder
             currencyBuyCostAffix.text = buyCostAffix
             currencyBuyValueChange.text = "N/A"
             currencyBuyValueChange.setTextColor(Color.GRAY)
+            currencyBuyConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
 
         // Sell data available
@@ -112,6 +124,13 @@ class CurrencyViewHolder : PoeNinjaViewHolder
                     currencySellValueChange.setTextColor(if (sellValueChange >= 0.0) Color.GREEN else Color.RED)
                 }
             }
+
+            val count = it.count ?: 0
+            currencySellConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
         } ?: run {
             val sellCountAffix = "N/A \u00D7"
             val sellCostAffix = "for N/A \u00D7"
@@ -119,6 +138,7 @@ class CurrencyViewHolder : PoeNinjaViewHolder
             currencySellCostAffix.text = sellCostAffix
             currencySellValueChange.text = "N/A"
             currencySellValueChange.setTextColor(Color.GRAY)
+            currencySellConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 

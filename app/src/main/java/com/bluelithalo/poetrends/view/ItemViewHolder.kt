@@ -16,6 +16,7 @@ class ItemViewHolder : PoeNinjaViewHolder
 
     var itemChaosValueAffix: TextView
     var itemExaltValueAffix: TextView
+    var itemConfidenceMarker: View
 
     var itemValueChange: TextView
 
@@ -26,6 +27,7 @@ class ItemViewHolder : PoeNinjaViewHolder
 
         itemChaosValueAffix = v.findViewById<View>(R.id.item_chaos_value_affix) as TextView
         itemExaltValueAffix = v.findViewById<View>(R.id.item_exalt_value_affix) as TextView
+        itemConfidenceMarker = v.findViewById<View>(R.id.item_confidence_marker) as View
 
         itemValueChange = v.findViewById<View>(R.id.item_value_change) as TextView
     }
@@ -44,11 +46,17 @@ class ItemViewHolder : PoeNinjaViewHolder
 
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
+            val count = (it.count ?: 0)
             itemNameTextView.text = it.name
             itemChaosValueAffix.text = chaosValueAffixText
             itemExaltValueAffix.text = exaltValueAffixText
+            itemConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 itemValueChange.text = valueChangeText
                 itemValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -60,6 +68,7 @@ class ItemViewHolder : PoeNinjaViewHolder
             itemExaltValueAffix.text = "N/A \u00D7"
             itemValueChange.text = "N/A"
             itemValueChange.setTextColor(Color.GRAY)
+            itemConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

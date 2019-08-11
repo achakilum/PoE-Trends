@@ -16,6 +16,7 @@ class ScarabViewHolder : PoeNinjaViewHolder
 
     var scarabChaosValueAffix: TextView
     var scarabExaltValueAffix: TextView
+    var scarabConfidenceMarker: View
 
     var scarabValueChange: TextView
 
@@ -26,6 +27,7 @@ class ScarabViewHolder : PoeNinjaViewHolder
 
         scarabChaosValueAffix = v.findViewById<View>(R.id.scarab_chaos_value_affix) as TextView
         scarabExaltValueAffix = v.findViewById<View>(R.id.scarab_exalt_value_affix) as TextView
+        scarabConfidenceMarker = v.findViewById<View>(R.id.scarab_confidence_marker) as View
 
         scarabValueChange = v.findViewById<View>(R.id.scarab_value_change) as TextView
     }
@@ -44,11 +46,17 @@ class ScarabViewHolder : PoeNinjaViewHolder
 
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
+            val count = (it.count ?: 0)
             scarabNameTextView.text = it.name
             scarabChaosValueAffix.text = chaosValueAffixText
             scarabExaltValueAffix.text = exaltValueAffixText
+            scarabConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
 
-            it.sparkline?.totalChange?.let {
+            it.lowConfidenceSparkline?.totalChange?.let {
                 val valueChangeText = (if (it > 0.0) "+" else "") + String.format("%.1f", it) + "%"
                 scarabValueChange.text = valueChangeText
                 scarabValueChange.setTextColor(if (it >= 0.0) Color.GREEN else Color.RED)
@@ -60,6 +68,7 @@ class ScarabViewHolder : PoeNinjaViewHolder
             scarabExaltValueAffix.text = "N/A \u00D7"
             scarabValueChange.text = "N/A"
             scarabValueChange.setTextColor(Color.GRAY)
+            scarabConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 }

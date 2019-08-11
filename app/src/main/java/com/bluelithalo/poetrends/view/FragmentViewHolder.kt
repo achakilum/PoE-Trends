@@ -18,11 +18,13 @@ class FragmentViewHolder : PoeNinjaViewHolder
     var fragmentBuyItemIcon: ImageView
     var fragmentBuyCostAffix: TextView
     var fragmentBuyValueChange: TextView
+    var fragmentBuyConfidenceMarker: View
 
     var fragmentSellCountAffix: TextView
     var fragmentSellItemIcon: ImageView
     var fragmentSellCostAffix: TextView
     var fragmentSellValueChange: TextView
+    var fragmentSellConfidenceMarker: View
 
     constructor(v: View) : super(v)
     {
@@ -33,11 +35,13 @@ class FragmentViewHolder : PoeNinjaViewHolder
         fragmentBuyItemIcon = v.findViewById<ImageView>(R.id.fragment_buy_item_icon)
         fragmentBuyCostAffix = v.findViewById<TextView>(R.id.fragment_buy_cost_affix)
         fragmentBuyValueChange = v.findViewById<TextView>(R.id.fragment_buy_value_change)
+        fragmentBuyConfidenceMarker = v.findViewById<View>(R.id.fragment_buy_confidence_marker)
 
         fragmentSellCountAffix = v.findViewById<TextView>(R.id.fragment_sell_count_affix)
         fragmentSellItemIcon = v.findViewById<ImageView>(R.id.fragment_sell_item_icon)
         fragmentSellCostAffix = v.findViewById<TextView>(R.id.fragment_sell_cost_affix)
         fragmentSellValueChange = v.findViewById<TextView>(R.id.fragment_sell_value_change)
+        fragmentSellConfidenceMarker = v.findViewById<View>(R.id.fragment_sell_confidence_marker)
     }
 
     override fun configureViewHolder(overview: Overview?, position: Int)
@@ -84,6 +88,13 @@ class FragmentViewHolder : PoeNinjaViewHolder
                     fragmentBuyValueChange.setTextColor(if (buyValueChange >= 0.0) Color.GREEN else Color.RED)
                 }
             }
+
+            val count = it.count ?: 0
+            fragmentBuyConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
         } ?: run {
             val buyCountAffix = "N/A \u00D7"
             val buyCostAffix = "for N/A \u00D7"
@@ -91,6 +102,7 @@ class FragmentViewHolder : PoeNinjaViewHolder
             fragmentBuyCostAffix.text = buyCostAffix
             fragmentBuyValueChange.text = "N/A"
             fragmentBuyValueChange.setTextColor(Color.GRAY)
+            fragmentBuyConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
 
         // Sell data available
@@ -111,6 +123,13 @@ class FragmentViewHolder : PoeNinjaViewHolder
                     fragmentSellValueChange.setTextColor(if (sellValueChange >= 0.0) Color.GREEN else Color.RED)
                 }
             }
+
+            val count = it.count ?: 0
+            fragmentSellConfidenceMarker.setBackgroundResource(when {
+                count < 5 -> R.color.confidence_low
+                count < 10 -> R.color.confidence_medium
+                else -> R.color.confidence_high
+            })
         } ?: run {
             val sellCountAffix = "N/A \u00D7"
             val sellCostAffix = "for N/A \u00D7"
@@ -118,6 +137,7 @@ class FragmentViewHolder : PoeNinjaViewHolder
             fragmentSellCostAffix.text = sellCostAffix
             fragmentSellValueChange.text = "N/A"
             fragmentSellValueChange.setTextColor(Color.GRAY)
+            fragmentSellConfidenceMarker.setBackgroundResource(R.color.confidence_none)
         }
     }
 
