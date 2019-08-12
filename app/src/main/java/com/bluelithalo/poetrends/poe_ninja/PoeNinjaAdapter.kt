@@ -13,7 +13,7 @@ import com.bluelithalo.poetrends.view.*
 
 class PoeNinjaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
-    private val MAX_ITEMS_LOADED = 50
+    private var itemsLoaded = 50
     private var overview: Overview? = null
 
     constructor(newOverview: Overview?)
@@ -21,22 +21,32 @@ class PoeNinjaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
         overview = newOverview
     }
 
+    fun growItemCount()
+    {
+        itemsLoaded = Math.min(getOverviewSize(), itemsLoaded + 50)
+    }
+
     override fun getItemCount(): Int
     {
-        var count = 0
+        return Math.min(getOverviewSize(), itemsLoaded)
+    }
+
+    fun getOverviewSize() : Int
+    {
+        var size = 0
 
         if (overview is CurrencyOverview)
         {
             val currencyOverview = overview as CurrencyOverview
-            count = currencyOverview?.lines?.size ?: 0
+            size = currencyOverview?.lines?.size ?: 0
         }
         else
         {
             val itemOverview = overview as ItemOverview
-            count = itemOverview?.lines?.size ?: 0
+            size = itemOverview?.lines?.size ?: 0
         }
 
-        return Math.min(count, MAX_ITEMS_LOADED)
+        return size
     }
 
     override fun getItemViewType(position: Int): Int

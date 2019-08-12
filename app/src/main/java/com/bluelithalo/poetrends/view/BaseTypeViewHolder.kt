@@ -61,8 +61,8 @@ class BaseTypeViewHolder : PoeNinjaViewHolder
 
             Picasso.get()
                 .load(iconUrl)
-                .placeholder(R.drawable.load_placeholder_skill_gem)
-                .error(R.drawable.load_error_skill_gem)
+                .placeholder(R.drawable.load_placeholder_base_type)
+                .error(R.drawable.load_error_base_type)
                 .into(baseTypeIconImageView)
 
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"

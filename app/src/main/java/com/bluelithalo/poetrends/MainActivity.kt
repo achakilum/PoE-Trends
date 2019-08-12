@@ -3,6 +3,7 @@ package com.bluelithalo.poetrends
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -27,12 +28,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 {
     private lateinit var poeNinjaViewModel : PoeNinjaViewModel
 
+    private var loading : Boolean = true
     private var loadingProgressBar: ProgressBar? = null
     private var searchQueryBar: SearchView? = null
 
     private var recyclerView: RecyclerView? = null
     private var rvLayoutManager: RecyclerView.LayoutManager? = null
     private var rvAdapter: PoeNinjaAdapter? = null
+    private var rvScrollListener: RecyclerView.OnScrollListener = object : RecyclerView.OnScrollListener()
+    {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int)
+        {
+            super.onScrolled(recyclerView, dx, dy)
+
+            val visibleItemCount: Int = rvLayoutManager?.childCount ?: 0
+            val totalItemCount: Int = rvLayoutManager?.itemCount ?: 0
+            val firstVisibleItemPosition: Int = (rvLayoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+            val overviewSize = (rvAdapter?.getOverviewSize() ?: 0)
+
+            if ((visibleItemCount + firstVisibleItemPosition >= totalItemCount) && (firstVisibleItemPosition >= 0) && (totalItemCount <= overviewSize))
+            {
+                rvAdapter?.growItemCount()
+                rvAdapter?.notifyDataSetChanged()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -83,6 +103,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Overview.Type.BEAST -> updateRecyclerViewWithItems(overview as ItemOverview)
             }
 
+            loading = false
             this.loadingProgressBar?.visibility = View.GONE
             this.title = "${overview.leagueId}: ${getString(overview.typeAffixResourceId)}"
         })
@@ -117,8 +138,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     {
         recyclerView?.let {
 
-            it.swapAdapter(PoeNinjaAdapter(currencyOverview), false)
+            val newRVAdapter = PoeNinjaAdapter(currencyOverview)
+            it.swapAdapter(newRVAdapter, false)
             it.smoothScrollToPosition(0)
+            rvAdapter = newRVAdapter
 
         } ?: run {
 
@@ -130,6 +153,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             rvAdapter = PoeNinjaAdapter(currencyOverview)
             recyclerView?.adapter = rvAdapter
+
+            recyclerView?.addOnScrollListener(rvScrollListener)
         }
     }
 
@@ -137,8 +162,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     {
         recyclerView?.let {
 
-            it.swapAdapter(PoeNinjaAdapter(itemOverview), false)
+            val newRVAdapter = PoeNinjaAdapter(itemOverview)
+            it.swapAdapter(newRVAdapter, false)
             it.smoothScrollToPosition(0)
+            rvAdapter = newRVAdapter
 
         } ?: run {
 
@@ -150,6 +177,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             rvAdapter = PoeNinjaAdapter(itemOverview)
             recyclerView?.adapter = rvAdapter
+
+            recyclerView?.addOnScrollListener(rvScrollListener)
         }
     }
 
@@ -249,6 +278,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun setLoadingState()
     {
+        this.loading = true
         this.title = getString(R.string.menu_loading)
         this.loadingProgressBar?.visibility = View.VISIBLE
     }
@@ -257,5 +287,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     {
         val CHANGE_LEAGUE = 1
     }
-
 }

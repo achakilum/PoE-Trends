@@ -2,9 +2,9 @@
     <string name="app_name">PoE Trends</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_title">PoE Trends</string>
+    <string name="nav_header_subtitle">Data source: poe.ninja</string>
+    <string name="nav_header_desc">Path of Exile Economy Tracker</string>
     <string name="action_change_league">Change League&#8230;</string>
 
     <string name="menu_loading">Loading&#8230;</string>
