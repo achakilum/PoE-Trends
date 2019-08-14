@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModel
 import com.bluelithalo.poetrends.R
 import com.bluelithalo.poetrends.model.Overview
 import com.bluelithalo.poetrends.model.currency.CurrencyOverview
+import com.bluelithalo.poetrends.model.currency.CurrencyOverviewFilter
 import com.bluelithalo.poetrends.model.item.ItemOverview
+import com.bluelithalo.poetrends.model.item.ItemOverviewFilter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -121,7 +123,7 @@ class PoeNinjaViewModel : ViewModel()
             it.getFullCurrencyOverview(leagueId, overviewNamesByType?.get(overviewType) ?: "")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { currencyOverview: CurrencyOverview -> filterCurrencyOverview(currencyOverview) }
+            .doOnNext { currencyOverview: CurrencyOverview -> CurrencyOverviewFilter.byName(currencyOverview, searchQuery) }
             .subscribe(
                 { result -> handleOverviewResult(result) },
                 { error -> handleOverviewError(error.message) }
@@ -135,50 +137,12 @@ class PoeNinjaViewModel : ViewModel()
             it.getFullItemOverview(leagueId, overviewNamesByType?.get(overviewType) ?: "")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { itemOverview: ItemOverview -> filterItemOverview(itemOverview) }
+            .doOnNext { itemOverview: ItemOverview -> ItemOverviewFilter.byName(itemOverview, searchQuery) }
             .subscribe(
                 { result -> handleOverviewResult(result) },
                 { error -> handleOverviewError(error.message) }
             )
         }
-    }
-
-    private fun filterCurrencyOverview(currencyOverview: CurrencyOverview)
-    {
-        var newLines : ArrayList<com.bluelithalo.poetrends.model.currency.Line> = ArrayList()
-
-        currencyOverview.lines?.let {
-            for (line in it)
-            {
-                line.currencyTypeName?.let {
-                    if (it.toLowerCase().contains(searchQuery.toLowerCase()))
-                    {
-                        newLines.add(line)
-                    }
-                }
-            }
-        }
-
-        currencyOverview.lines = newLines
-    }
-
-    private fun filterItemOverview(itemOverview: ItemOverview)
-    {
-        var newLines : ArrayList<com.bluelithalo.poetrends.model.item.Line> = ArrayList()
-
-        itemOverview.lines?.let {
-            for (line in it)
-            {
-                line.name?.let {
-                    if (it.toLowerCase().contains(searchQuery.toLowerCase()))
-                    {
-                        newLines.add(line)
-                    }
-                }
-            }
-        }
-
-        itemOverview.lines = newLines
     }
 
     private fun handleOverviewResult(result : Overview)

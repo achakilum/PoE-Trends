@@ -3,7 +3,6 @@ package com.bluelithalo.poetrends
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val firstVisibleItemPosition: Int = (rvLayoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
             val overviewSize = (rvAdapter?.getOverviewSize() ?: 0)
 
-            if ((visibleItemCount + firstVisibleItemPosition >= totalItemCount) && (firstVisibleItemPosition >= 0) && (totalItemCount <= overviewSize))
+            if ((visibleItemCount + firstVisibleItemPosition >= totalItemCount) && (firstVisibleItemPosition >= 0) && (totalItemCount < overviewSize))
             {
                 rvAdapter?.growItemCount()
                 rvAdapter?.notifyDataSetChanged()
