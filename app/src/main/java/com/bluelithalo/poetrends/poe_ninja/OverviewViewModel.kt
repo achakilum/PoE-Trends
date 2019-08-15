@@ -6,16 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bluelithalo.poetrends.R
 import com.bluelithalo.poetrends.model.Overview
-import com.bluelithalo.poetrends.model.currency.CurrencyOverview
-import com.bluelithalo.poetrends.model.currency.CurrencyOverviewFilter
-import com.bluelithalo.poetrends.model.item.ItemOverview
-import com.bluelithalo.poetrends.model.item.ItemOverviewFilter
+import com.bluelithalo.poetrends.model.currency.*
+import com.bluelithalo.poetrends.model.item.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-class PoeNinjaViewModel : ViewModel()
+class OverviewViewModel : ViewModel()
 {
     private var leagueId: String = "Legion"
     private var overviewType: Overview.Type = Overview.Type.CURRENCY
@@ -120,10 +118,10 @@ class PoeNinjaViewModel : ViewModel()
     private fun loadCurrencyOverview()
     {
         disposable = poeNinjaService?.let {
-            it.getFullCurrencyOverview(leagueId, overviewNamesByType?.get(overviewType) ?: "")
+            it.getCurrencyOverview(leagueId, overviewNamesByType?.get(overviewType) ?: "")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { currencyOverview: CurrencyOverview -> CurrencyOverviewFilter.byName(currencyOverview, searchQuery) }
+            .doOnNext { currencyOverview: CurrencyOverview -> currencyOverview.byName(searchQuery) }
             .subscribe(
                 { result -> handleOverviewResult(result) },
                 { error -> handleOverviewError(error.message) }
@@ -134,10 +132,10 @@ class PoeNinjaViewModel : ViewModel()
     private fun loadItemOverview()
     {
         disposable = poeNinjaService?.let {
-            it.getFullItemOverview(leagueId, overviewNamesByType?.get(overviewType) ?: "")
+            it.getItemOverview(leagueId, overviewNamesByType?.get(overviewType) ?: "")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { itemOverview: ItemOverview -> ItemOverviewFilter.byName(itemOverview, searchQuery) }
+            .doOnNext { itemOverview: ItemOverview -> itemOverview.byName(searchQuery) }
             .subscribe(
                 { result -> handleOverviewResult(result) },
                 { error -> handleOverviewError(error.message) }
@@ -155,7 +153,7 @@ class PoeNinjaViewModel : ViewModel()
 
     private fun handleOverviewError(errorMessage : String?)
     {
-        errorMessage?.let{ Log.i("PoeNinjaViewModel", errorMessage) }
+        errorMessage?.let{ Log.i("OverviewViewModel", errorMessage) }
     }
 
     fun getLeagueId() : String

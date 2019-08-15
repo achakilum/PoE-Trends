@@ -20,12 +20,12 @@ import com.bluelithalo.poetrends.model.currency.CurrencyOverview
 import com.bluelithalo.poetrends.model.item.ItemOverview
 import androidx.appcompat.widget.SearchView
 import com.bluelithalo.poetrends.poe_ninja.PoeNinjaAdapter
-import com.bluelithalo.poetrends.poe_ninja.PoeNinjaViewModel
+import com.bluelithalo.poetrends.poe_ninja.OverviewViewModel
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener
 {
-    private lateinit var poeNinjaViewModel : PoeNinjaViewModel
+    private lateinit var poeNinjaViewModel : OverviewViewModel
 
     private var loading : Boolean = true
     private var loadingProgressBar: ProgressBar? = null
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         this.loadingProgressBar = findViewById<ProgressBar>(R.id.loading_progress_bar)
         setLoadingState()
 
-        poeNinjaViewModel = ViewModelProviders.of(this).get(PoeNinjaViewModel::class.java)
+        poeNinjaViewModel = ViewModelProviders.of(this).get(OverviewViewModel::class.java)
         poeNinjaViewModel.getOverview().observe(this, Observer<Overview> { overview ->
 
             when (overview.type)

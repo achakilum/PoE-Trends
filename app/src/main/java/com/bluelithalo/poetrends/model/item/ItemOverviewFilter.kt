@@ -2,28 +2,22 @@ package com.bluelithalo.poetrends.model.item
 
 import java.util.ArrayList
 
-class ItemOverviewFilter
+fun ItemOverview.byName(name: String) : ItemOverview
 {
-    companion object
-    {
-        fun byName(itemOverview: ItemOverview, name: String) : ItemOverview
-        {
-            var newLines: ArrayList<Line> = ArrayList()
+    var newLines: ArrayList<Line> = ArrayList()
 
-            itemOverview.lines?.let {
-                for (line in it)
+    this.lines?.let {
+        for (line in it)
+        {
+            line.name?.let {
+                if (it.toLowerCase().contains(name.toLowerCase()))
                 {
-                    line.name?.let {
-                        if (it.toLowerCase().contains(name.toLowerCase()))
-                        {
-                            newLines.add(line)
-                        }
-                    }
+                    newLines.add(line)
                 }
             }
-
-            itemOverview.lines = newLines
-            return itemOverview
         }
     }
+
+    this.lines = newLines
+    return this
 }

@@ -1,8 +1,7 @@
 package com.bluelithalo.poetrends
 
 import com.bluelithalo.poetrends.model.Overview
-import com.bluelithalo.poetrends.model.currency.CurrencyOverview
-import com.bluelithalo.poetrends.model.currency.CurrencyOverviewFilter
+import com.bluelithalo.poetrends.model.currency.*
 import org.junit.Test
 import org.junit.Assert.*
 import java.util.*
@@ -46,12 +45,12 @@ class PoeNinjaUnitTest
     @Test
     fun currencyOverviewsAreValid()
     {
-        val currencyCall = testPoeNinjaService?.getFullCurrencyOverview("Legion", overviewNamesByType?.get(Overview.Type.CURRENCY) ?: "")
+        val currencyCall = testPoeNinjaService?.getCurrencyOverview("Legion", overviewNamesByType?.get(Overview.Type.CURRENCY) ?: "")
         val currencyOverview = currencyCall?.execute()?.body()
 
         assertNotNull(currencyOverview)
 
-        val fragmentCall = testPoeNinjaService?.getFullCurrencyOverview("Legion", overviewNamesByType?.get(Overview.Type.FRAGMENT) ?: "")
+        val fragmentCall = testPoeNinjaService?.getCurrencyOverview("Legion", overviewNamesByType?.get(Overview.Type.FRAGMENT) ?: "")
         val fragmentOverview = fragmentCall?.execute()?.body()
 
         assertNotNull(fragmentOverview)
@@ -60,8 +59,8 @@ class PoeNinjaUnitTest
     @Test
     fun currencyOverviewFilteredBySextantShowsThreeSextants()
     {
-        val currencyCall = testPoeNinjaService?.getFullCurrencyOverview("Legion", overviewNamesByType?.get(Overview.Type.CURRENCY) ?: "")
-        var currencyOverview = CurrencyOverviewFilter.byName(currencyCall?.execute()?.body() ?: CurrencyOverview(), "sextant")
+        val currencyCall = testPoeNinjaService?.getCurrencyOverview("Legion", overviewNamesByType?.get(Overview.Type.CURRENCY) ?: "")
+        var currencyOverview = currencyCall?.execute()?.body()?.byName("sextant")
 
         assertEquals(3, currencyOverview?.lines?.size)
     }

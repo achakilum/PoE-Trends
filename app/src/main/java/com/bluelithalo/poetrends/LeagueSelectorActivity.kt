@@ -32,7 +32,7 @@ class LeagueSelectorActivity : AppCompatActivity(), PoeLeagueAdapter.PoeLeagueCo
         setContentView(R.layout.activity_league_selector)
         setSupportActionBar(toolbar)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
         title = "Choose your League..."
 
         loadingProgressBar = findViewById<ProgressBar?>(R.id.league_selector_loading_progress_bar)
