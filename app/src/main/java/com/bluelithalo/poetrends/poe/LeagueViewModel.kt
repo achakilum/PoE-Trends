@@ -12,7 +12,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-class PoeLeagueViewModel : ViewModel()
+class LeagueViewModel : ViewModel()
 {
     private val poeNinjaService: GetPoeDataService? by lazy {
         PoeClientInstance.create()
@@ -47,7 +47,7 @@ class PoeLeagueViewModel : ViewModel()
 
     private fun handleLeagueListError(errorMessage : String?)
     {
-        errorMessage?.let{ Log.i("PoeLeagueViewModel", errorMessage) }
+        errorMessage?.let{ Log.i("LeagueViewModel", errorMessage) }
     }
 
     private fun filterLeagueList(sourceLeagueList: List<League>) : List<League>

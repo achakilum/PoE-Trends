@@ -5,12 +5,15 @@ import com.google.gson.annotations.SerializedName
 
 class PayCurrencyGraphDatum
 {
-    @SerializedName("count")
+    @Expose
+	@SerializedName("count")
     var count: Int? = null
 
-    @SerializedName("value")
+    @Expose
+	@SerializedName("value")
     var value: Double? = null
 
-    @SerializedName("daysAgo")
+    @Expose
+	@SerializedName("daysAgo")
     var daysAgo: Int? = null
 }

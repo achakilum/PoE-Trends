@@ -9,7 +9,7 @@ import com.bluelithalo.poetrends.R
 import com.bluelithalo.poetrends.model.league.*
 import com.bluelithalo.poetrends.view.*
 
-class PoeLeagueAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
+class LeagueAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
     private var container: PoeLeagueContainer? = null
     private var leagueList: List<League>? = null

@@ -1,15 +1,19 @@
 package com.bluelithalo.poetrends.model.item
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 class ItemGraphDatum
 {
-    @SerializedName("count")
+    @Expose
+	@SerializedName("count")
     var count: Int? = null
 
-    @SerializedName("value")
+    @Expose
+	@SerializedName("value")
     var value: Double? = null
 
-    @SerializedName("daysAgo")
+    @Expose
+	@SerializedName("daysAgo")
     var daysAgo: Int? = null
 }

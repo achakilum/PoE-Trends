@@ -1,12 +1,15 @@
 package com.bluelithalo.poetrends.model.currency
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 class LowConfidencePaySparkLine
 {
-    @SerializedName("data")
+    @Expose
+	@SerializedName("data")
     var data: List<Double>? = null
 
-    @SerializedName("totalChange")
+    @Expose
+	@SerializedName("totalChange")
     var totalChange: Double? = null
 }

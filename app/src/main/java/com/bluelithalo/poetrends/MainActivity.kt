@@ -3,6 +3,7 @@ package com.bluelithalo.poetrends
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -19,11 +20,12 @@ import com.bluelithalo.poetrends.model.Overview
 import com.bluelithalo.poetrends.model.currency.CurrencyOverview
 import com.bluelithalo.poetrends.model.item.ItemOverview
 import androidx.appcompat.widget.SearchView
-import com.bluelithalo.poetrends.poe_ninja.PoeNinjaAdapter
+import com.bluelithalo.poetrends.poe_ninja.OverviewAdapter
 import com.bluelithalo.poetrends.poe_ninja.OverviewViewModel
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener
+                                        , OverviewAdapter.OverviewContainer
 {
     private lateinit var poeNinjaViewModel : OverviewViewModel
 
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private var recyclerView: RecyclerView? = null
     private var rvLayoutManager: RecyclerView.LayoutManager? = null
-    private var rvAdapter: PoeNinjaAdapter? = null
+    private var rvAdapter: OverviewAdapter? = null
     private var rvScrollListener: RecyclerView.OnScrollListener = object : RecyclerView.OnScrollListener()
     {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int)
@@ -137,7 +139,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     {
         recyclerView?.let {
 
-            val newRVAdapter = PoeNinjaAdapter(currencyOverview)
+            val newRVAdapter = OverviewAdapter(this, currencyOverview)
             it.swapAdapter(newRVAdapter, false)
             it.smoothScrollToPosition(0)
             rvAdapter = newRVAdapter
@@ -150,7 +152,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             rvLayoutManager = LinearLayoutManager(this)
             recyclerView?.layoutManager = rvLayoutManager
 
-            rvAdapter = PoeNinjaAdapter(currencyOverview)
+            rvAdapter = OverviewAdapter(this, currencyOverview)
             recyclerView?.adapter = rvAdapter
 
             recyclerView?.addOnScrollListener(rvScrollListener)
@@ -161,7 +163,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     {
         recyclerView?.let {
 
-            val newRVAdapter = PoeNinjaAdapter(itemOverview)
+            val newRVAdapter = OverviewAdapter(this, itemOverview)
             it.swapAdapter(newRVAdapter, false)
             it.smoothScrollToPosition(0)
             rvAdapter = newRVAdapter
@@ -174,10 +176,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             rvLayoutManager = LinearLayoutManager(this)
             recyclerView?.layoutManager = rvLayoutManager
 
-            rvAdapter = PoeNinjaAdapter(itemOverview)
+            rvAdapter = OverviewAdapter(this, itemOverview)
             recyclerView?.adapter = rvAdapter
 
             recyclerView?.addOnScrollListener(rvScrollListener)
+        }
+    }
+
+    override fun onClickCurrencyOverviewItem(overviewType: Overview.Type, iconUrl: String?, lineString: String?, poeTradeId: Int)
+    {
+        if (overviewType == Overview.Type.CURRENCY || overviewType == Overview.Type.FRAGMENT)
+        {
+            val intent = Intent(this, CurrencyHistoryActivity::class.java).apply {
+                putExtra(CurrencyHistoryActivity.POE_TRADE_ID, poeTradeId)
+                putExtra(CurrencyHistoryActivity.LEAGUE_ID, poeNinjaViewModel.getLeagueId())
+                putExtra(CurrencyHistoryActivity.CURRENCY_TYPE_ORDINAL, overviewType.ordinal)
+                putExtra(CurrencyHistoryActivity.CURRENCY_MODEL_STRING, lineString)
+                putExtra(CurrencyHistoryActivity.CURRENCY_ICON_URL, iconUrl)
+            }
+
+            startActivity(intent)
         }
     }
 

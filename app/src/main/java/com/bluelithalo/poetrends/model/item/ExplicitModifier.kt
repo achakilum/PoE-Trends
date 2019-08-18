@@ -5,9 +5,11 @@ import com.google.gson.annotations.SerializedName
 
 class ExplicitModifier
 {
-    @SerializedName("text")
+    @Expose
+	@SerializedName("text")
     var text: String? = null
 
-    @SerializedName("optional")
+    @Expose
+	@SerializedName("optional")
     var optional: Boolean? = null
 }

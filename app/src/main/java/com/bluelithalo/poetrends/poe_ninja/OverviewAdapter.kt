@@ -1,6 +1,8 @@
 package com.bluelithalo.poetrends.poe_ninja
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 
 import androidx.recyclerview.widget.RecyclerView
@@ -10,14 +12,18 @@ import com.bluelithalo.poetrends.model.Overview
 import com.bluelithalo.poetrends.model.currency.CurrencyOverview
 import com.bluelithalo.poetrends.model.item.ItemOverview
 import com.bluelithalo.poetrends.view.*
+import com.google.gson.Gson
+import java.util.*
 
-class PoeNinjaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
+class OverviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
     private var itemsLoaded = 50
     private var overview: Overview? = null
+    private var overviewContainer: OverviewContainer? = null
 
-    constructor(newOverview: Overview?)
+    constructor(newOverviewContainer: OverviewContainer, newOverview: Overview?)
     {
+        overviewContainer = newOverviewContainer
         overview = newOverview
     }
 
@@ -112,5 +118,39 @@ class PoeNinjaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
             Overview.Type.UNIQUE_ACCESSORY -> (viewHolder as UniqueAccessoryViewHolder).configureViewHolder(overview, position)
             Overview.Type.BEAST -> (viewHolder as BeastViewHolder).configureViewHolder(overview, position)
         }
+
+        viewHolder.itemView.setOnClickListener(object : View.OnClickListener
+        {
+            override fun onClick(v: View?)
+            {
+                if (overviewType == Overview.Type.CURRENCY || overviewType == Overview.Type.FRAGMENT)
+                {
+                    val currencyOverview = overview as CurrencyOverview
+                    val currencyLine = currencyOverview?.lines?.let { it[position] }
+                    val currencyTypeName = currencyLine?.currencyTypeName
+
+                    var iconUrl: String? = ""
+                    var poeTradeId: Int = -1
+
+                    currencyOverview?.currencyDetails?.let {
+                        for (cd in it)
+                        {
+                            if (cd.name == currencyTypeName)
+                            {
+                                iconUrl = cd.icon
+                                poeTradeId = cd.poeTradeId ?: -1
+                            }
+                        }
+                    }
+
+                    overviewContainer?.onClickCurrencyOverviewItem(overviewType, iconUrl, Gson().toJson((overview as CurrencyOverview)?.lines?.let { it[position] }), poeTradeId)
+                }
+            }
+        })
+    }
+
+    interface OverviewContainer
+    {
+        fun onClickCurrencyOverviewItem(overviewType: Overview.Type, iconUrl: String?, lineString: String?, poeTradeId: Int)
     }
 }

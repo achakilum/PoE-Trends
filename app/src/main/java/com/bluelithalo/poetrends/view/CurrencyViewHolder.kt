@@ -44,12 +44,11 @@ class CurrencyViewHolder : PoeNinjaViewHolder
         currencySellConfidenceMarker = v.findViewById<View>(R.id.currency_sell_confidence_marker)
     }
 
-    override fun configureViewHolder(overview: Overview?, position: Int)
+    fun configureViewHolder(overview: Overview?, position: Int, iconUrl: String)
     {
         val currencyOverview = overview as CurrencyOverview
         val currencyLine = currencyOverview?.lines?.let { it[position] }
         val currencyTypeName = currencyLine?.currencyTypeName
-        val iconUrl = this.getIconUrlForCurrencyType(currencyOverview, currencyTypeName)
 
         currencyTypeNameTextView.text = currencyTypeName
         Picasso.get()
@@ -142,7 +141,17 @@ class CurrencyViewHolder : PoeNinjaViewHolder
         }
     }
 
-    private fun getIconUrlForCurrencyType(currencyOverview: CurrencyOverview?, currencyTypeName: String?): String?
+    override fun configureViewHolder(overview: Overview?, position: Int)
+    {
+        val currencyOverview = overview as CurrencyOverview
+        val currencyLine = currencyOverview?.lines?.let { it[position] }
+        val currencyTypeName = currencyLine?.currencyTypeName
+        val iconUrl = this.getIconUrlForCurrencyType(overview as CurrencyOverview, currencyLine?.currencyTypeName)
+
+        iconUrl?.let { configureViewHolder(overview, position, it) }
+    }
+
+    fun getIconUrlForCurrencyType(currencyOverview: CurrencyOverview?, currencyTypeName: String?): String?
     {
         var iconUrl: String? = ""
 

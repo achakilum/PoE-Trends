@@ -5,78 +5,103 @@ import com.google.gson.annotations.SerializedName
 
 class Line
 {
-    @SerializedName("id")
+    @Expose
+	@SerializedName("id")
     var id: Int? = null
 
-    @SerializedName("name")
+    @Expose
+	@SerializedName("name")
     var name: String? = null
 
-    @SerializedName("icon")
+    @Expose
+	@SerializedName("icon")
     var icon: String? = null
 
-    @SerializedName("mapTier")
+    @Expose
+	@SerializedName("mapTier")
     var mapTier: Int? = null
 
-    @SerializedName("levelRequired")
+    @Expose
+	@SerializedName("levelRequired")
     var levelRequired: Int? = null
 
-    @SerializedName("baseType")
+    @Expose
+	@SerializedName("baseType")
     var baseType: String? = null
 
-    @SerializedName("stackSize")
+    @Expose
+	@SerializedName("stackSize")
     var stackSize: Int? = null
 
-    @SerializedName("variant")
+    @Expose
+	@SerializedName("variant")
     var variant: String? = null
 
-    @SerializedName("prophecyText")
+    @Expose
+	@SerializedName("prophecyText")
     var prophecyText: String? = null
 
-    @SerializedName("artFilename")
+    @Expose
+	@SerializedName("artFilename")
     var artFilename: String? = null
 
-    @SerializedName("links")
+    @Expose
+	@SerializedName("links")
     var links: Int? = null
 
-    @SerializedName("itemClass")
+    @Expose
+	@SerializedName("itemClass")
     var itemClass: Int? = null
 
-    @SerializedName("sparkline")
+    @Expose
+	@SerializedName("sparkline")
     var sparkline: Sparkline? = null
 
-    @SerializedName("lowConfidenceSparkline")
+    @Expose
+	@SerializedName("lowConfidenceSparkline")
     var lowConfidenceSparkline: LowConfidenceSparkline? = null
 
-    @SerializedName("implicitModifiers")
+    @Expose
+	@SerializedName("implicitModifiers")
     var implicitModifiers: List<Any>? = null
 
-    @SerializedName("explicitModifiers")
+    @Expose
+	@SerializedName("explicitModifiers")
     var explicitModifiers: List<ExplicitModifier>? = null
 
-    @SerializedName("flavourText")
+    @Expose
+	@SerializedName("flavourText")
     var flavourText: String? = null
 
-    @SerializedName("corrupted")
+    @Expose
+	@SerializedName("corrupted")
     var corrupted: Boolean? = null
 
-    @SerializedName("gemLevel")
+    @Expose
+	@SerializedName("gemLevel")
     var gemLevel: Int? = null
 
-    @SerializedName("gemQuality")
+    @Expose
+	@SerializedName("gemQuality")
     var gemQuality: Int? = null
 
-    @SerializedName("itemType")
+    @Expose
+	@SerializedName("itemType")
     var itemType: String? = null
 
-    @SerializedName("chaosValue")
+    @Expose
+	@SerializedName("chaosValue")
     var chaosValue: Double? = null
 
-    @SerializedName("exaltedValue")
+    @Expose
+	@SerializedName("exaltedValue")
     var exaltedValue: Double? = null
 
-    @SerializedName("count")
+    @Expose
+	@SerializedName("count")
     var count: Int? = null
 
-    @SerializedName("detailsId")
+    @Expose
+	@SerializedName("detailsId")
     var detailsId: String? = null
 }

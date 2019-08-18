@@ -5,9 +5,11 @@ import com.google.gson.annotations.SerializedName
 
 class CurrencyHistory
 {
-    @SerializedName("payCurrencyGraphData")
+    @Expose
+	@SerializedName("payCurrencyGraphData")
     var payCurrencyGraphData: List<PayCurrencyGraphDatum>? = null
 
-    @SerializedName("receiveCurrencyGraphData")
+    @Expose
+	@SerializedName("receiveCurrencyGraphData")
     var receiveCurrencyGraphData: List<ReceiveCurrencyGraphDatum>? = null
 }

@@ -44,12 +44,11 @@ class FragmentViewHolder : PoeNinjaViewHolder
         fragmentSellConfidenceMarker = v.findViewById<View>(R.id.fragment_sell_confidence_marker)
     }
 
-    override fun configureViewHolder(overview: Overview?, position: Int)
+    fun configureViewHolder(overview: Overview?, position: Int, iconUrl: String)
     {
         val fragmentOverview = overview as CurrencyOverview
         val fragmentLine = fragmentOverview?.lines?.let { it[position] }
         val fragmentTypeName = fragmentLine?.currencyTypeName
-        val iconUrl = this.getIconUrlForFragmentType(fragmentOverview, fragmentTypeName)
 
         fragmentTypeNameTextView.text = fragmentTypeName
         Picasso.get()
@@ -141,7 +140,17 @@ class FragmentViewHolder : PoeNinjaViewHolder
         }
     }
 
-    private fun getIconUrlForFragmentType(fragmentOverview: CurrencyOverview?, fragmentTypeName: String?): String?
+    override fun configureViewHolder(overview: Overview?, position: Int)
+    {
+        val fragmentOverview = overview as CurrencyOverview
+        val fragmentLine = fragmentOverview?.lines?.let { it[position] }
+        val fragmentTypeName = fragmentLine?.currencyTypeName
+        val iconUrl = this.getIconUrlForFragmentType(fragmentOverview, fragmentTypeName)
+
+        iconUrl?.let { configureViewHolder(overview, position, it) }
+    }
+
+    fun getIconUrlForFragmentType(fragmentOverview: CurrencyOverview?, fragmentTypeName: String?): String?
     {
         var iconUrl: String? = ""
 

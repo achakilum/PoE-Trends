@@ -1,33 +1,43 @@
 package com.bluelithalo.poetrends.model.currency
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 class Line
 {
-    @SerializedName("currencyTypeName")
+    @Expose
+	@SerializedName("currencyTypeName")
     var currencyTypeName: String? = null
 
-    @SerializedName("pay")
+    @Expose
+	@SerializedName("pay")
     var pay: Pay? = null
 
-    @SerializedName("receive")
+    @Expose
+	@SerializedName("receive")
     var receive: Receive? = null
 
-    @SerializedName("paySparkLine")
+    @Expose
+	@SerializedName("paySparkLine")
     var paySparkLine: PaySparkLine? = null
 
-    @SerializedName("receiveSparkLine")
+    @Expose
+	@SerializedName("receiveSparkLine")
     var receiveSparkLine: ReceiveSparkLine? = null
 
-    @SerializedName("chaosEquivalent")
+    @Expose
+	@SerializedName("chaosEquivalent")
     var chaosEquivalent: Double? = null
 
-    @SerializedName("lowConfidencePaySparkLine")
+    @Expose
+	@SerializedName("lowConfidencePaySparkLine")
     var lowConfidencePaySparkLine: LowConfidencePaySparkLine? = null
 
-    @SerializedName("lowConfidenceReceiveSparkLine")
+    @Expose
+	@SerializedName("lowConfidenceReceiveSparkLine")
     var lowConfidenceReceiveSparkLine: LowConfidenceReceiveSparkLine? = null
 
-    @SerializedName("detailsId")
+    @Expose
+	@SerializedName("detailsId")
     var detailsId: String? = null
 }

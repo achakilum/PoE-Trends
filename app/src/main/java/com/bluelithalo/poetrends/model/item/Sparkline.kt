@@ -5,9 +5,11 @@ import com.google.gson.annotations.SerializedName
 
 class Sparkline
 {
-    @SerializedName("data")
+    @Expose
+	@SerializedName("data")
     var data: List<Double>? = null
 
-    @SerializedName("totalChange")
+    @Expose
+	@SerializedName("totalChange")
     var totalChange: Double? = null
 }

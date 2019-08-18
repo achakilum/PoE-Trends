@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 class ItemOverview : Overview()
 {
-    @SerializedName("lines")
+    @Expose
+	@SerializedName("lines")
     var lines: List<Line>? = null
 }

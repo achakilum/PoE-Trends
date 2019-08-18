@@ -11,20 +11,20 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bluelithalo.poetrends.model.league.League
-import com.bluelithalo.poetrends.poe.PoeLeagueAdapter
-import com.bluelithalo.poetrends.poe.PoeLeagueViewModel
+import com.bluelithalo.poetrends.poe.LeagueAdapter
+import com.bluelithalo.poetrends.poe.LeagueViewModel
 
 import kotlinx.android.synthetic.main.activity_league_selector.*
 
-class LeagueSelectorActivity : AppCompatActivity(), PoeLeagueAdapter.PoeLeagueContainer
+class LeagueSelectorActivity : AppCompatActivity(), LeagueAdapter.PoeLeagueContainer
 {
-    private lateinit var poeLeagueViewModel : PoeLeagueViewModel
+    private lateinit var leagueViewModel : LeagueViewModel
 
     private var loadingProgressBar: ProgressBar? = null
 
     private var recyclerView: RecyclerView? = null
     private var rvLayoutManager: RecyclerView.LayoutManager? = null
-    private var rvAdapter: PoeLeagueAdapter? = null
+    private var rvAdapter: LeagueAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -32,13 +32,13 @@ class LeagueSelectorActivity : AppCompatActivity(), PoeLeagueAdapter.PoeLeagueCo
         setContentView(R.layout.activity_league_selector)
         setSupportActionBar(toolbar)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = "Choose your League..."
 
         loadingProgressBar = findViewById<ProgressBar?>(R.id.league_selector_loading_progress_bar)
 
-        poeLeagueViewModel = ViewModelProviders.of(this).get(PoeLeagueViewModel::class.java)
-        poeLeagueViewModel.getLeagueList().observe(this, Observer<List<League>> { leagueList ->
+        leagueViewModel = ViewModelProviders.of(this).get(LeagueViewModel::class.java)
+        leagueViewModel.getLeagueList().observe(this, Observer<List<League>> { leagueList ->
             leagueList?.let {
                 recyclerView = findViewById<RecyclerView?>(R.id.league_selector_recycler_view)
                 recyclerView?.setHasFixedSize(true)
@@ -46,7 +46,7 @@ class LeagueSelectorActivity : AppCompatActivity(), PoeLeagueAdapter.PoeLeagueCo
                 rvLayoutManager = LinearLayoutManager(this)
                 recyclerView?.layoutManager = rvLayoutManager
 
-                rvAdapter = PoeLeagueAdapter(this, leagueList)
+                rvAdapter = LeagueAdapter(this, leagueList)
                 recyclerView?.adapter = rvAdapter
             }
 
