@@ -44,7 +44,7 @@ class CurrencyHistoryActivity : AppCompatActivity()
         linearLayout = findViewById<LinearLayout>(R.id.currency_history_layout)
 
         val leagueId: String = intent?.extras?.getString(LEAGUE_ID) ?: "Standard"
-        val currencyType: Overview.Type = intent?.extras?.getInt(CURRENCY_TYPE_ORDINAL)?.let { Overview.Type.values()[it] } ?: Overview.Type.CURRENCY
+        val currencyType: Overview.Type = intent?.extras?.getInt(CURRENCY_TYPE_ORDINAL)?.let { Overview.Type.values()[it] } ?: Overview.Type.NONE
         val currencyLine: Line = Gson().fromJson(intent?.extras?.getString(CURRENCY_MODEL_STRING), Line::class.java)
         val currencyIconUrl: String = intent?.extras?.getString(CURRENCY_ICON_URL) ?: ""
         val poeTradeId: Int = intent?.extras?.getInt(POE_TRADE_ID) ?: -1
@@ -141,7 +141,7 @@ class CurrencyHistoryActivity : AppCompatActivity()
             override fun onClick(v: View?)
             {
                 val tradeCurrencyId = 4 // chaos orbs expected
-                val searchBuyUrl: String = if (poeTradeId >= 0) "http://currency.poe.trade/search?league=${leagueId}&online=x&stock=&want=${poeTradeId}&have=${tradeCurrencyId}" else "http://poe.trade/search?league=${leagueId}&online=x&name=${fragmentLine.currencyTypeName}"
+                val searchBuyUrl: String = if (poeTradeId >= 0) "https://currency.poe.trade/search?league=${leagueId}&online=x&stock=&want=${poeTradeId}&have=${tradeCurrencyId}" else "https://poe.trade/search?league=${leagueId}&online=x&name=${fragmentLine.currencyTypeName}"
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(searchBuyUrl))
                 intent.resolveActivity(packageManager)?.let { startActivity(intent) }
             }
@@ -153,7 +153,7 @@ class CurrencyHistoryActivity : AppCompatActivity()
             override fun onClick(v: View?)
             {
                 val tradeCurrencyId = 4 // chaos orbs expected
-                val searchSellUrl: String = if (poeTradeId >= 0) "http://currency.poe.trade/search?league=${leagueId}&online=x&stock=&want=${tradeCurrencyId}&have=${poeTradeId}" else "http://poe.trade/search?league=${leagueId}&online=x&name=${fragmentLine.currencyTypeName}"
+                val searchSellUrl: String = if (poeTradeId >= 0) "https://currency.poe.trade/search?league=${leagueId}&online=x&stock=&want=${tradeCurrencyId}&have=${poeTradeId}" else "https://poe.trade/search?league=${leagueId}&online=x&name=${fragmentLine.currencyTypeName}"
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(searchSellUrl))
                 intent.resolveActivity(packageManager)?.let { startActivity(intent) }
             }

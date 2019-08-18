@@ -6,42 +6,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/activity_currency_history"
-        tools:context=".CurrencyHistoryActivity" android:orientation="vertical"
-        android:id="@+id/currency_history_layout">
+        tools:showIn="@layout/activity_item_history"
+        tools:context=".ItemHistoryActivity" android:orientation="vertical"
+        android:id="@+id/item_history_layout">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/currency_history_details_layout">
+            android:layout_height="match_parent" android:id="@+id/item_history_details_layout">
 
         <Button
                 android:text="wiki"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content" android:id="@+id/currency_wiki_button"
+                android:layout_width="108dp"
+                android:layout_height="wrap_content" android:id="@+id/item_wiki_button"
                 app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="16dp" app:layout_constraintHorizontal_bias="0.0"
                 android:backgroundTint="@color/button_extra_1" android:textAllCaps="false"
                 android:fontFamily="sans-serif-medium" android:textSize="16sp"/>
         <Button
-                android:text="Buy"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content" android:id="@+id/currency_search_buy_button"
+                android:text="Listings"
+                android:layout_width="108dp"
+                android:layout_height="wrap_content" android:id="@+id/item_listings_button"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginEnd="16dp" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp"
                 app:layout_constraintEnd_toEndOf="parent" android:drawableLeft="@drawable/baseline_search_white_24dp"
-                android:backgroundTint="@color/button_extra_1" android:textSize="14sp"
-                android:textAllCaps="true"/>
+                android:backgroundTint="@color/button_extra_1" android:textSize="12sp"
+                android:textAllCaps="true" app:layout_constraintHorizontal_bias="0.5"/>
         <Button
-                android:text="Sell"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content" android:id="@+id/currency_search_sell_button"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="Offline"
+                android:layout_width="108dp"
+                android:layout_height="wrap_content" android:id="@+id/item_offline_listings_button"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginEnd="16dp" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="16dp" app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                android:drawableStart="@drawable/baseline_search_white_24dp"
-                android:backgroundTint="@color/button_extra_1" android:textAllCaps="true"/>
+                android:layout_marginStart="16dp"
+                app:layout_constraintEnd_toEndOf="parent" android:drawableLeft="@drawable/baseline_search_white_24dp"
+                android:backgroundTint="#4B4B4B" android:textSize="12sp"
+                android:textAllCaps="true" app:layout_constraintHorizontal_bias="1.0"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

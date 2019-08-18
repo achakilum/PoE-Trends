@@ -185,18 +185,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onClickCurrencyOverviewItem(overviewType: Overview.Type, iconUrl: String?, lineString: String?, poeTradeId: Int)
     {
-        if (overviewType == Overview.Type.CURRENCY || overviewType == Overview.Type.FRAGMENT)
-        {
-            val intent = Intent(this, CurrencyHistoryActivity::class.java).apply {
-                putExtra(CurrencyHistoryActivity.POE_TRADE_ID, poeTradeId)
-                putExtra(CurrencyHistoryActivity.LEAGUE_ID, poeNinjaViewModel.getLeagueId())
-                putExtra(CurrencyHistoryActivity.CURRENCY_TYPE_ORDINAL, overviewType.ordinal)
-                putExtra(CurrencyHistoryActivity.CURRENCY_MODEL_STRING, lineString)
-                putExtra(CurrencyHistoryActivity.CURRENCY_ICON_URL, iconUrl)
-            }
-
-            startActivity(intent)
+        val intent = Intent(this, CurrencyHistoryActivity::class.java).apply {
+            putExtra(CurrencyHistoryActivity.POE_TRADE_ID, poeTradeId)
+            putExtra(CurrencyHistoryActivity.LEAGUE_ID, poeNinjaViewModel.getLeagueId())
+            putExtra(CurrencyHistoryActivity.CURRENCY_TYPE_ORDINAL, overviewType.ordinal)
+            putExtra(CurrencyHistoryActivity.CURRENCY_MODEL_STRING, lineString)
+            putExtra(CurrencyHistoryActivity.CURRENCY_ICON_URL, iconUrl)
         }
+
+        startActivity(intent)
+    }
+
+    override fun onClickItemOverviewItem(overviewType: Overview.Type, lineString: String?)
+    {
+        val intent = Intent(this, ItemHistoryActivity::class.java).apply {
+            putExtra(ItemHistoryActivity.LEAGUE_ID, poeNinjaViewModel.getLeagueId())
+            putExtra(ItemHistoryActivity.ITEM_TYPE_ORDINAL, overviewType.ordinal)
+            putExtra(ItemHistoryActivity.ITEM_MODEL_STRING, lineString)
+        }
+
+        startActivity(intent)
     }
 
     override fun onBackPressed()

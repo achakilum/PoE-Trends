@@ -32,4 +32,5 @@
     <string name="title_activity_league_selector">LeagueSelectorActivity</string>
     <string name="title_activity_history">HistoryActivity</string>
     <string name="title_activity_currency_history">CurrencyHistoryActivity</string>
+    <string name="title_activity_item_history">ItemHistoryActivity</string>
 </resources>

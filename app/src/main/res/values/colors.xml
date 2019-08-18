@@ -14,5 +14,6 @@
     <color name="confidence_low">#880000</color>
     <color name="confidence_none">#444444</color>
 
-    <color name="button_extra">#0E7C4C</color>
+    <color name="button_extra_1">#0E7C4C</color>
+    <color name="button_extra_2">#4B4B4B</color>
 </resources>

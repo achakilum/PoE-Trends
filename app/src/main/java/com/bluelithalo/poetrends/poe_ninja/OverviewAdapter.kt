@@ -145,6 +145,10 @@ class OverviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                     overviewContainer?.onClickCurrencyOverviewItem(overviewType, iconUrl, Gson().toJson((overview as CurrencyOverview)?.lines?.let { it[position] }), poeTradeId)
                 }
+                else
+                {
+                    overviewContainer?.onClickItemOverviewItem(overviewType, Gson().toJson((overview as ItemOverview)?.lines?.let { it[position] }))
+                }
             }
         })
     }
@@ -152,5 +156,6 @@ class OverviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
     interface OverviewContainer
     {
         fun onClickCurrencyOverviewItem(overviewType: Overview.Type, iconUrl: String?, lineString: String?, poeTradeId: Int)
+        fun onClickItemOverviewItem(overviewType: Overview.Type, lineString: String?)
     }
 }

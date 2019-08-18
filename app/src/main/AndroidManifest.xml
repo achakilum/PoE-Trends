@@ -15,6 +15,15 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".ItemHistoryActivity"
+                android:label="@string/title_activity_item_history"
+                android:parentActivityName=".MainActivity"
+                android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.bluelithalo.poetrends.MainActivity"/>
+        </activity>
+        <activity
                 android:name=".CurrencyHistoryActivity"
                 android:label="@string/title_activity_currency_history"
                 android:parentActivityName=".MainActivity"
