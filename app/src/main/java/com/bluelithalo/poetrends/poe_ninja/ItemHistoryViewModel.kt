@@ -87,7 +87,7 @@ class ItemHistoryViewModel(newleagueId: String,
 
     private fun handleItemHistoryError(errorMessage : String?)
     {
-        errorMessage?.let{ Log.i("ItemHistoryVM", errorMessage) }
+        //errorMessage?.let{ Log.i("ItemHistoryVM", errorMessage) }
     }
 
     fun getItemHistory() : LiveData<List<ItemGraphDatum>>

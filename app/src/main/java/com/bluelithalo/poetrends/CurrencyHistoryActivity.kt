@@ -88,9 +88,9 @@ class CurrencyHistoryActivity : AppCompatActivity()
 
         configureCurrencyDatumDisplay(currencyLine)
 
-        currencyHistoryViewModel = ViewModelProviders.of(this, CurrencyHistoryViewModelFactory(leagueId, currencyType, currencyLine?.pay?.payCurrencyId ?: 0)).get(CurrencyHistoryViewModel::class.java)
+        currencyHistoryViewModel = ViewModelProviders.of(this, CurrencyHistoryViewModelFactory(leagueId, currencyType, currencyLine.pay?.payCurrencyId ?: (currencyLine.receive?.getCurrencyId ?: 0))).get(CurrencyHistoryViewModel::class.java)
         currencyHistoryViewModel.getCurrencyHistory().observe(this, Observer<CurrencyHistory> { currencyHistory ->
-            configureLineChart(currencyHistory)
+            configureLineChart(currencyHistory, currencyLine)
         })
     }
 
@@ -137,7 +137,7 @@ class CurrencyHistoryActivity : AppCompatActivity()
             override fun onClick(v: View?)
             {
                 val tradeCurrencyId = if (poeTradeId == 24 || poeTradeId == 520 || poeTradeId == 25) 6 else 4 // for expensive currency currencys: mirror, mirror shard, eternal orb
-                val searchBuyUrl: String = "http://currency.poe.trade/search?league=${leagueId}&online=x&stock=&want=${poeTradeId}&have=${tradeCurrencyId}"
+                val searchBuyUrl: String = if (poeTradeId >= 0) "https://currency.poe.trade/search?league=${leagueId}&online=x&stock=&want=${poeTradeId}&have=${tradeCurrencyId}" else "https://poe.trade/search?league=${leagueId}&online=x&name=${currencyLine.currencyTypeName}"
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(searchBuyUrl))
                 intent.resolveActivity(packageManager)?.let { startActivity(intent) }
             }
@@ -149,7 +149,7 @@ class CurrencyHistoryActivity : AppCompatActivity()
             override fun onClick(v: View?)
             {
                 val tradeCurrencyId = if (poeTradeId == 24 || poeTradeId == 520 || poeTradeId == 25) 6 else 4 // for expensive currency currencys: mirror, mirror shard, eternal orb
-                val searchSellUrl: String = "http://currency.poe.trade/search?league=${leagueId}&online=x&stock=&want=${tradeCurrencyId}&have=${poeTradeId}"
+                val searchSellUrl: String = if (poeTradeId >= 0) "http://currency.poe.trade/search?league=${leagueId}&online=x&stock=&want=${tradeCurrencyId}&have=${poeTradeId}" else "https://poe.trade/search?league=${leagueId}&online=x&name=${currencyLine.currencyTypeName}"
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(searchSellUrl))
                 intent.resolveActivity(packageManager)?.let { startActivity(intent) }
             }
@@ -202,21 +202,31 @@ class CurrencyHistoryActivity : AppCompatActivity()
         sellValueTextView = findViewById<TextView>(R.id.currency_sell_value_text_view)
 
         val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-        val buyValue = (currencyLine.receive?.value ?: 0.0)
-        val sellValue = 1.0 / (currencyLine.pay?.value ?: 0.0)
-
         val dateString = "${calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)} ${calendar.get(
             Calendar.DAY_OF_MONTH)}"
-        val buyValueString = "${String.format("%.1f", buyValue)} ×"
-        val sellValueString = "${String.format("%.1f", sellValue)} ×"
 
-        buyDateTextView?.text = dateString
-        buyValueTextView?.text = buyValueString
-        sellDateTextView?.text = dateString
-        sellValueTextView?.text = sellValueString
+        currencyLine.receive?.let {
+            val buyValue = it.value
+            val buyValueString = "${String.format("%.1f", buyValue)} ×"
+            buyDateTextView?.text = dateString
+            buyValueTextView?.text = buyValueString
+        } ?: run {
+            buyDateTextView?.text = dateString
+            buyValueTextView?.text = "N/A \u00D7"
+        }
+
+        currencyLine.pay?.let {
+            val sellValue = 1.0 / (it.value ?: 0.0)
+            val sellValueString = "${String.format("%.1f", sellValue)} ×"
+            sellDateTextView?.text = dateString
+            sellValueTextView?.text = sellValueString
+        } ?: run {
+            sellDateTextView?.text = dateString
+            sellValueTextView?.text = "N/A \u00D7"
+        }
     }
 
-    private fun configureLineChart(currencyHistory: CurrencyHistory)
+    private fun configureLineChart(currencyHistory: CurrencyHistory, currencyLine: Line)
     {
         val buyValues: ArrayList<Entry> = ArrayList()
         for (i in 0 until (currencyHistory.receiveCurrencyGraphData?.size ?: 0))
@@ -315,18 +325,7 @@ class CurrencyHistoryActivity : AppCompatActivity()
             {
                 override fun onNothingSelected()
                 {
-                    val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-                    val buyValue = currencyHistory.receiveCurrencyGraphData?.get((currencyHistory.receiveCurrencyGraphData?.size ?: 1) - 1)?.value ?: 1.0
-                    val sellValue = 1.0 / (currencyHistory.payCurrencyGraphData?.get((currencyHistory.payCurrencyGraphData?.size ?: 1) - 1)?.value ?: 1.0)
-
-                    val dateString = "${calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)} ${calendar.get(Calendar.DAY_OF_MONTH)}"
-                    val buyValueString = "${String.format("%.1f", buyValue)} ×"
-                    val sellValueString = "${String.format("%.1f", sellValue)} ×"
-
-                    buyDateTextView?.text = dateString
-                    buyValueTextView?.text = buyValueString
-                    sellDateTextView?.text = dateString
-                    sellValueTextView?.text = sellValueString
+                    configureCurrencyDatumDisplay(currencyLine)
                 }
 
                 override fun onValueSelected(e: Entry?, h: Highlight?)
@@ -343,17 +342,16 @@ class CurrencyHistoryActivity : AppCompatActivity()
                         Calendar.DAY_OF_MONTH)}"
                     val currencyValueString = "${String.format("%.1f", currencyValue)} ×"
 
-                    if (datasetIdx == 0)
-                    {
-                        buyDateTextView?.text = dateString
-                        buyValueTextView?.text = currencyValueString
-                    }
-                    else
+                    if (datasetIdx == 0) // sell dataset inserted first
                     {
                         sellDateTextView?.text = dateString
                         sellValueTextView?.text = currencyValueString
                     }
-
+                    else // buy dataset inserted last
+                    {
+                        buyDateTextView?.text = dateString
+                        buyValueTextView?.text = currencyValueString
+                    }
                 }
             })
 

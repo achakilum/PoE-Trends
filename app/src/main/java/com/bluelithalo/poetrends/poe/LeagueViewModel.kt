@@ -47,7 +47,7 @@ class LeagueViewModel : ViewModel()
 
     private fun handleLeagueListError(errorMessage : String?)
     {
-        errorMessage?.let{ Log.i("LeagueViewModel", errorMessage) }
+        //errorMessage?.let{ Log.i("LeagueViewModel", errorMessage) }
     }
 
     private fun filterLeagueList(sourceLeagueList: List<League>) : List<League>

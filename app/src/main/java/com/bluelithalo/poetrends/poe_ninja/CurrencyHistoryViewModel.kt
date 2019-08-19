@@ -71,7 +71,7 @@ class CurrencyHistoryViewModel(newleagueId: String,
 
     private fun handleCurrencyHistoryError(errorMessage : String?)
     {
-        errorMessage?.let{ Log.i("CurrencyHistoryVM", errorMessage) }
+        //errorMessage?.let{ Log.i("CurrencyHistoryVM", errorMessage) }
     }
 
     fun getCurrencyHistory() : LiveData<CurrencyHistory>

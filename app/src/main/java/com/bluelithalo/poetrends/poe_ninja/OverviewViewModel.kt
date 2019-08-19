@@ -153,7 +153,7 @@ class OverviewViewModel : ViewModel()
 
     private fun handleOverviewError(errorMessage : String?)
     {
-        errorMessage?.let{ Log.i("OverviewViewModel", errorMessage) }
+        //errorMessage?.let{ Log.i("OverviewViewModel", errorMessage) }
     }
 
     fun getLeagueId() : String
