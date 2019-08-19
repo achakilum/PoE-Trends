@@ -1,19 +1,37 @@
 package com.bluelithalo.poetrends
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.bluelithalo.poetrends.model.Overview
+import com.bluelithalo.poetrends.model.item.ItemGraphDatum
 import com.bluelithalo.poetrends.model.item.ItemOverview
 import com.bluelithalo.poetrends.model.item.Line
+import com.bluelithalo.poetrends.poe_ninja.ItemHistoryViewModel
+import com.bluelithalo.poetrends.poe_ninja.ItemHistoryViewModelFactory
 import com.bluelithalo.poetrends.view.*
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.google.gson.Gson
 
 import kotlinx.android.synthetic.main.activity_item_history.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ItemHistoryActivity : AppCompatActivity()
 {
@@ -24,12 +42,18 @@ class ItemHistoryActivity : AppCompatActivity()
         val ITEM_MODEL_STRING = "ITEM_MODEL_STRING"
     }
 
+    private lateinit var itemHistoryViewModel: ItemHistoryViewModel
+
     var linearLayout: LinearLayout? = null
     var itemSummaryView: View? = null
 
     var wikiButton: Button? = null
     var listingsButton: Button? = null
     var offlineListingsButton: Button? = null
+
+    var lineChart: LineChart? = null
+    var buyDateTextView: TextView? = null
+    var buyValueTextView: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -38,7 +62,7 @@ class ItemHistoryActivity : AppCompatActivity()
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        linearLayout = findViewById<LinearLayout>(R.id.item_history_layout)
+        linearLayout = findViewById<LinearLayout>(R.id.item_history_linear_layout)
 
         val leagueId: String = intent?.extras?.getString(LEAGUE_ID) ?: "Standard"
         val itemType: Overview.Type = intent?.extras?.getInt(ITEM_TYPE_ORDINAL)?.let { Overview.Type.values()[it] } ?: Overview.Type.NONE
@@ -47,6 +71,12 @@ class ItemHistoryActivity : AppCompatActivity()
         this.title = "History (${leagueId})"
         insertItemSummary(itemType, itemLine)
         configureItemButtons(leagueId, itemLine)
+        configureItemDatumDisplay(itemLine)
+
+        itemHistoryViewModel = ViewModelProviders.of(this, ItemHistoryViewModelFactory(leagueId, itemType, itemLine?.id ?: 0)).get(ItemHistoryViewModel::class.java)
+        itemHistoryViewModel.getItemHistory().observe(this, Observer<List<ItemGraphDatum>> { itemHistory ->
+            configureLineChart(itemHistory)
+        })
     }
 
     private fun insertItemSummary(itemType: Overview.Type, itemLine: Line)
@@ -120,5 +150,122 @@ class ItemHistoryActivity : AppCompatActivity()
                 intent.resolveActivity(packageManager)?.let { startActivity(intent) }
             }
         })
+    }
+
+    private fun configureItemDatumDisplay(itemLine: Line)
+    {
+        buyDateTextView = findViewById<TextView>(R.id.item_buy_date_text_view)
+        buyValueTextView = findViewById<TextView>(R.id.item_buy_value_text_view)
+
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        val itemValue = itemLine.chaosValue
+
+        val dateString = "${calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)} ${calendar.get(Calendar.DAY_OF_MONTH)}"
+        val itemValueString = "${String.format("%.1f", itemValue)} ×"
+
+        buyDateTextView?.text = dateString
+        buyValueTextView?.text = itemValueString
+    }
+
+    private fun configureLineChart(itemHistory: List<ItemGraphDatum>)
+    {
+        val values: ArrayList<Entry> = ArrayList()
+        for (i in 0 until itemHistory.size)
+        {
+            itemHistory[i]?.let {
+                val daysAgo: Float = -1 * (it.daysAgo ?: 0).toFloat()
+                val itemValue: Float = (it.value ?: 0.0).toFloat()
+                values.add(Entry(daysAgo, itemValue))
+            }
+        }
+
+        lineChart = findViewById<LineChart>(R.id.item_line_chart)
+        lineChart?.let {
+
+            it.setExtraOffsets(0.0f, 0.0f, 0.0f, 8.0f)
+            it.setBackgroundColor(Color.rgb(40, 40, 40))
+            it.description.isEnabled = false
+            it.setTouchEnabled(true)
+            it.setDragEnabled(true)
+            it.setScaleEnabled(true)
+            it.setPinchZoom(false)
+            it.setDrawGridBackground(false)
+            it.setMaxHighlightDistance(50.0f)
+
+            val x = it.xAxis
+            x.setLabelCount(6, false)
+            x.textColor = Color.WHITE
+            x.setPosition(XAxis.XAxisPosition.BOTTOM)
+            x.setDrawGridLines(true)
+            x.gridColor = Color.rgb(125, 125, 125)
+            x.axisLineColor = Color.WHITE
+            x.setValueFormatter(object : IndexAxisValueFormatter()
+            {
+                override fun getFormattedValue(value: Float): String
+                {
+                    val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+                    val daysAgo = value.toInt()
+                    calendar.add(Calendar.DATE, daysAgo)
+                    return "${calendar.get(Calendar.MONTH)+1}/${calendar.get(Calendar.DAY_OF_MONTH)}"
+                }
+            })
+
+            val y = it.axisRight
+            y.setLabelCount(6, false)
+            y.textColor = Color.WHITE
+            y.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
+            y.setDrawGridLines(true)
+            y.gridColor = Color.rgb(125, 125, 125)
+            y.axisLineColor = Color.WHITE
+
+            it.axisLeft.isEnabled = false
+            it.legend.isEnabled = false
+
+            val dataset = LineDataSet(values, "Currency History Dataset")
+            dataset.cubicIntensity = 0.2f
+            dataset.setDrawFilled(true)
+            dataset.lineWidth = 2.0f
+            dataset.color = Color.rgb(250, 200, 0)
+            dataset.setCircleColor(Color.rgb(250, 200, 0))
+            dataset.circleHoleColor = Color.rgb(250, 200, 0)
+            dataset.highLightColor = Color.rgb(0, 255, 0)
+            dataset.fillColor = Color.rgb(75, 50, 0)
+
+            val data = LineData(dataset)
+            data.setValueTextSize(9.0f)
+            data.setDrawValues(false)
+
+            it.data = data
+            it.invalidate()
+            it.setOnChartValueSelectedListener(object : OnChartValueSelectedListener
+            {
+                override fun onNothingSelected()
+                {
+                    val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+                    val itemValue = itemHistory.get(itemHistory.size - 1).value
+
+                    val dateString = "${calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)} ${calendar.get(Calendar.DAY_OF_MONTH)}"
+                    val itemValueString = "${String.format("%.1f", itemValue)} ×"
+
+                    buyDateTextView?.text = dateString
+                    buyValueTextView?.text = itemValueString
+                }
+
+                override fun onValueSelected(e: Entry?, h: Highlight?)
+                {
+                    val daysAgo: Int = e?.x?.toInt() ?: 0
+                    val itemValue: Float = e?.y ?: 0.0f
+
+                    val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+                    calendar.add(Calendar.DATE, daysAgo)
+
+                    val dateString = "${calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)} ${calendar.get(Calendar.DAY_OF_MONTH)}"
+                    val itemValueString = "${String.format("%.1f", itemValue)} ×"
+
+                    buyDateTextView?.text = dateString
+                    buyValueTextView?.text = itemValueString
+                }
+            })
+        }
     }
 }

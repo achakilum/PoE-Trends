@@ -3,13 +3,19 @@ package com.bluelithalo.poetrends
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.bluelithalo.poetrends.model.Overview
+import com.bluelithalo.poetrends.model.currency.CurrencyHistory
 import com.bluelithalo.poetrends.model.currency.CurrencyOverview
 import com.bluelithalo.poetrends.model.currency.Line
+import com.bluelithalo.poetrends.poe_ninja.CurrencyHistoryViewModel
+import com.bluelithalo.poetrends.poe_ninja.CurrencyHistoryViewModelFactory
 import com.bluelithalo.poetrends.view.CurrencyViewHolder
 import com.bluelithalo.poetrends.view.FragmentViewHolder
 import com.google.gson.Gson
@@ -27,6 +33,8 @@ class CurrencyHistoryActivity : AppCompatActivity()
         val CURRENCY_ICON_URL = "CURRENCY_ICON_URL"
     }
 
+    private lateinit var currencyHistoryViewModel: CurrencyHistoryViewModel
+
     var linearLayout: LinearLayout? = null
     var currencySummaryView: View? = null
 
@@ -41,7 +49,7 @@ class CurrencyHistoryActivity : AppCompatActivity()
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        linearLayout = findViewById<LinearLayout>(R.id.currency_history_layout)
+        linearLayout = findViewById<LinearLayout>(R.id.currency_history_linear_layout)
 
         val leagueId: String = intent?.extras?.getString(LEAGUE_ID) ?: "Standard"
         val currencyType: Overview.Type = intent?.extras?.getInt(CURRENCY_TYPE_ORDINAL)?.let { Overview.Type.values()[it] } ?: Overview.Type.NONE
@@ -58,6 +66,10 @@ class CurrencyHistoryActivity : AppCompatActivity()
             Overview.Type.FRAGMENT -> configureFragmentButtons(leagueId, currencyLine, poeTradeId)
         }
 
+        currencyHistoryViewModel = ViewModelProviders.of(this, CurrencyHistoryViewModelFactory(leagueId, currencyType, currencyLine?.pay?.payCurrencyId ?: 0)).get(CurrencyHistoryViewModel::class.java)
+        currencyHistoryViewModel.getCurrencyHistory().observe(this, Observer<CurrencyHistory> { currencyHistory ->
+            Log.i("CurrencyHistory", Gson().toJson(currencyHistory))
+        })
     }
 
     private fun insertCurrencySummary(currencyType: Overview.Type, currencyLine: Line, currencyIconUrl: String)

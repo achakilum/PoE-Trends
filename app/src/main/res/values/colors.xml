@@ -16,4 +16,8 @@
 
     <color name="button_extra_1">#0E7C4C</color>
     <color name="button_extra_2">#4B4B4B</color>
+
+    <color name="buy_label">#775C00</color>
+    <color name="sell_label">#005177</color>
+    <color name="datum_bg">#282828</color>
 </resources>
