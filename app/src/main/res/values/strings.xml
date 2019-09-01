@@ -2,7 +2,7 @@
     <string name="app_name">PoE Trends</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">PoE Trends (BETA)</string>
+    <string name="nav_header_title">PoE Trends</string>
     <string name="nav_header_subtitle">Data source: poe.ninja</string>
     <string name="nav_header_desc">Path of Exile Economy Tracker</string>
     <string name="action_change_league">Change League&#8230;</string>
