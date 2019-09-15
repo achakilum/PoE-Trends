@@ -17,6 +17,7 @@ class PoeNinjaUnitTest
         HashMap<Overview.Type, String>().also {
             it[Overview.Type.CURRENCY] = "Currency"
             it[Overview.Type.FRAGMENT] = "Fragment"
+            it[Overview.Type.OIL] = "Oil"
             it[Overview.Type.INCUBATOR] = "Incubator"
             it[Overview.Type.SCARAB] = "Scarab"
             it[Overview.Type.FOSSIL] = "Fossil"

@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             {
                 Overview.Type.CURRENCY -> updateRecyclerViewWithCurrency(overview as CurrencyOverview)
                 Overview.Type.FRAGMENT -> updateRecyclerViewWithCurrency(overview as CurrencyOverview)
+                Overview.Type.OIL -> updateRecyclerViewWithItems(overview as ItemOverview)
                 Overview.Type.INCUBATOR -> updateRecyclerViewWithItems(overview as ItemOverview)
                 Overview.Type.SCARAB -> updateRecyclerViewWithItems(overview as ItemOverview)
                 Overview.Type.FOSSIL -> updateRecyclerViewWithItems(overview as ItemOverview)
@@ -254,6 +255,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         {
             R.id.nav_currency -> poeNinjaViewModel.setOverviewType(Overview.Type.CURRENCY)
             R.id.nav_fragments -> poeNinjaViewModel.setOverviewType(Overview.Type.FRAGMENT)
+            R.id.nav_oils -> poeNinjaViewModel.setOverviewType(Overview.Type.OIL)
             R.id.nav_incubators -> poeNinjaViewModel.setOverviewType(Overview.Type.INCUBATOR)
             R.id.nav_scarabs -> poeNinjaViewModel.setOverviewType(Overview.Type.SCARAB)
             R.id.nav_fossils -> poeNinjaViewModel.setOverviewType(Overview.Type.FOSSIL)

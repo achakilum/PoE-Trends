@@ -13,6 +13,10 @@
             android:icon="@drawable/ic_fragments"
             android:title="@string/menu_fragments" />
         <item
+            android:id="@+id/nav_oils"
+            android:icon="@drawable/ic_oils"
+            android:title="@string/menu_oils" />
+        <item
             android:id="@+id/nav_incubators"
             android:icon="@drawable/ic_incubators"
             android:title="@string/menu_incubators" />

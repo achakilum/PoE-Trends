@@ -32,6 +32,7 @@ class ItemHistoryViewModel(newleagueId: String,
 
     private val namesByType: HashMap<Overview.Type, String> by lazy {
         HashMap<Overview.Type, String>().also {
+            it[Overview.Type.OIL] = "Oil"
             it[Overview.Type.INCUBATOR] = "Incubator"
             it[Overview.Type.SCARAB] = "Scarab"
             it[Overview.Type.FOSSIL] = "Fossil"
