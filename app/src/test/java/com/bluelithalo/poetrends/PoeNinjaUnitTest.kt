@@ -46,12 +46,12 @@ class PoeNinjaUnitTest
     @Test
     fun currencyOverviewsAreValid()
     {
-        val currencyCall = testPoeNinjaService?.getCurrencyOverview("Blight", overviewNamesByType?.get(Overview.Type.CURRENCY) ?: "")
+        val currencyCall = testPoeNinjaService?.getCurrencyOverview("Metamorph", overviewNamesByType?.get(Overview.Type.CURRENCY) ?: "")
         val currencyOverview = currencyCall?.execute()?.body()
 
         assertNotNull(currencyOverview)
 
-        val fragmentCall = testPoeNinjaService?.getCurrencyOverview("Blight", overviewNamesByType?.get(Overview.Type.FRAGMENT) ?: "")
+        val fragmentCall = testPoeNinjaService?.getCurrencyOverview("Metamorph", overviewNamesByType?.get(Overview.Type.FRAGMENT) ?: "")
         val fragmentOverview = fragmentCall?.execute()?.body()
 
         assertNotNull(fragmentOverview)
@@ -60,7 +60,7 @@ class PoeNinjaUnitTest
     @Test
     fun currencyOverviewFilteredBySextantShowsThreeSextants()
     {
-        val currencyCall = testPoeNinjaService?.getCurrencyOverview("Blight", overviewNamesByType?.get(Overview.Type.CURRENCY) ?: "")
+        val currencyCall = testPoeNinjaService?.getCurrencyOverview("Metamorph", overviewNamesByType?.get(Overview.Type.CURRENCY) ?: "")
         var currencyOverview = currencyCall?.execute()?.body()?.byName("sextant")
 
         assertEquals(3, currencyOverview?.lines?.size)
