@@ -89,6 +89,7 @@ class ItemHistoryActivity : AppCompatActivity()
         {
             Overview.Type.OIL -> itemViewHolder = OilViewHolder(layoutInflater.inflate(R.layout.oil_list_item, linearLayout, false))
             Overview.Type.INCUBATOR -> itemViewHolder = IncubatorViewHolder(layoutInflater.inflate(R.layout.incubator_list_item, linearLayout, false))
+            Overview.Type.WATCHSTONE -> itemViewHolder = WatchstoneViewHolder(layoutInflater.inflate(R.layout.watchstone_list_item, linearLayout, false))
             Overview.Type.SCARAB -> itemViewHolder = ScarabViewHolder(layoutInflater.inflate(R.layout.scarab_list_item, linearLayout, false))
             Overview.Type.FOSSIL -> itemViewHolder = FossilViewHolder(layoutInflater.inflate(R.layout.fossil_list_item, linearLayout, false))
             Overview.Type.RESONATOR -> itemViewHolder = ResonatorViewHolder(layoutInflater.inflate(R.layout.resonator_list_item, linearLayout, false))

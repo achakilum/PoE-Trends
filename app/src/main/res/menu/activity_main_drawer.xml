@@ -13,6 +13,10 @@
             android:icon="@drawable/ic_fragments"
             android:title="@string/menu_fragments" />
         <item
+            android:id="@+id/nav_watchstones"
+            android:icon="@drawable/ic_watchstones"
+            android:title="@string/menu_watchstones" />
+        <item
             android:id="@+id/nav_oils"
             android:icon="@drawable/ic_oils"
             android:title="@string/menu_oils" />

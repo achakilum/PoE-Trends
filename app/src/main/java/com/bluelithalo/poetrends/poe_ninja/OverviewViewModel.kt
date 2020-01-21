@@ -33,6 +33,7 @@ class OverviewViewModel : ViewModel()
         HashMap<Overview.Type, String>().also {
             it[Overview.Type.CURRENCY] = "Currency"
             it[Overview.Type.FRAGMENT] = "Fragment"
+            it[Overview.Type.WATCHSTONE] = "Watchstone"
             it[Overview.Type.OIL] = "Oil"
             it[Overview.Type.INCUBATOR] = "Incubator"
             it[Overview.Type.SCARAB] = "Scarab"
@@ -59,6 +60,7 @@ class OverviewViewModel : ViewModel()
         HashMap<Overview.Type, Int>().also {
             it[Overview.Type.CURRENCY] = R.string.menu_currency
             it[Overview.Type.FRAGMENT] = R.string.menu_fragments
+            it[Overview.Type.WATCHSTONE] = R.string.menu_watchstones
             it[Overview.Type.OIL] = R.string.menu_oils
             it[Overview.Type.INCUBATOR] = R.string.menu_incubators
             it[Overview.Type.SCARAB] = R.string.menu_scarabs
@@ -96,6 +98,7 @@ class OverviewViewModel : ViewModel()
         {
             Overview.Type.CURRENCY -> loadCurrencyOverview()
             Overview.Type.FRAGMENT -> loadCurrencyOverview()
+            Overview.Type.WATCHSTONE -> loadItemOverview()
             Overview.Type.OIL -> loadItemOverview()
             Overview.Type.INCUBATOR -> loadItemOverview()
             Overview.Type.SCARAB -> loadItemOverview()

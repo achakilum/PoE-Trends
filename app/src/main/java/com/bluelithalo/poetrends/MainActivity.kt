@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             {
                 Overview.Type.CURRENCY -> updateRecyclerViewWithCurrency(overview as CurrencyOverview)
                 Overview.Type.FRAGMENT -> updateRecyclerViewWithCurrency(overview as CurrencyOverview)
+                Overview.Type.WATCHSTONE -> updateRecyclerViewWithItems(overview as ItemOverview)
                 Overview.Type.OIL -> updateRecyclerViewWithItems(overview as ItemOverview)
                 Overview.Type.INCUBATOR -> updateRecyclerViewWithItems(overview as ItemOverview)
                 Overview.Type.SCARAB -> updateRecyclerViewWithItems(overview as ItemOverview)
@@ -255,6 +256,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         {
             R.id.nav_currency -> poeNinjaViewModel.setOverviewType(Overview.Type.CURRENCY)
             R.id.nav_fragments -> poeNinjaViewModel.setOverviewType(Overview.Type.FRAGMENT)
+            R.id.nav_watchstones -> poeNinjaViewModel.setOverviewType(Overview.Type.WATCHSTONE)
             R.id.nav_oils -> poeNinjaViewModel.setOverviewType(Overview.Type.OIL)
             R.id.nav_incubators -> poeNinjaViewModel.setOverviewType(Overview.Type.INCUBATOR)
             R.id.nav_scarabs -> poeNinjaViewModel.setOverviewType(Overview.Type.SCARAB)
@@ -294,7 +296,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             if (requestCode == MainActivity.CHANGE_LEAGUE)
             {
                 extras?.let {
-                    val leagueId = extras.getString(LeagueSelectorActivity.RESULT_LEAGUE_ID)
+                    val leagueId = extras.getString(LeagueSelectorActivity.RESULT_LEAGUE_ID) ?: "Standard"
                     this.poeNinjaViewModel.setLeagueId(leagueId)
                     setLoadingState()
                 }
