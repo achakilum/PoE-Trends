@@ -104,6 +104,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Overview.Type.UNIQUE_ARMOUR -> updateRecyclerViewWithItems(overview as ItemOverview)
                 Overview.Type.UNIQUE_ACCESSORY -> updateRecyclerViewWithItems(overview as ItemOverview)
                 Overview.Type.BEAST -> updateRecyclerViewWithItems(overview as ItemOverview)
+                Overview.Type.VIAL -> updateRecyclerViewWithItems(overview as ItemOverview)
             }
 
             loading = false
@@ -276,6 +277,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_unique_armours -> poeNinjaViewModel.setOverviewType(Overview.Type.UNIQUE_ARMOUR)
             R.id.nav_unique_accessories -> poeNinjaViewModel.setOverviewType(Overview.Type.UNIQUE_ACCESSORY)
             R.id.nav_beasts -> poeNinjaViewModel.setOverviewType(Overview.Type.BEAST)
+            R.id.nav_vials -> poeNinjaViewModel.setOverviewType(Overview.Type.VIAL)
         }
 
         setLoadingState()

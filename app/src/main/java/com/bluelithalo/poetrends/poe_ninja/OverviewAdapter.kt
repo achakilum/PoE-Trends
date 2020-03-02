@@ -89,6 +89,7 @@ class OverviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
             Overview.Type.UNIQUE_ARMOUR -> UniqueArmourViewHolder(inflater.inflate(R.layout.unique_armour_list_item, viewGroup, false))
             Overview.Type.UNIQUE_ACCESSORY -> UniqueAccessoryViewHolder(inflater.inflate(R.layout.unique_accessory_list_item, viewGroup, false))
             Overview.Type.BEAST -> BeastViewHolder(inflater.inflate(R.layout.beast_list_item, viewGroup, false))
+            Overview.Type.VIAL -> VialViewHolder(inflater.inflate(R.layout.vial_list_item, viewGroup, false))
             Overview.Type.NONE -> ItemViewHolder(inflater.inflate(R.layout.item_list_item, viewGroup, false))
         }
     }
@@ -121,6 +122,7 @@ class OverviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
             Overview.Type.UNIQUE_ARMOUR -> (viewHolder as UniqueArmourViewHolder).configureViewHolder(overview, position)
             Overview.Type.UNIQUE_ACCESSORY -> (viewHolder as UniqueAccessoryViewHolder).configureViewHolder(overview, position)
             Overview.Type.BEAST -> (viewHolder as BeastViewHolder).configureViewHolder(overview, position)
+            Overview.Type.VIAL -> (viewHolder as VialViewHolder).configureViewHolder(overview, position)
         }
 
         viewHolder.itemView.setOnClickListener(object : View.OnClickListener

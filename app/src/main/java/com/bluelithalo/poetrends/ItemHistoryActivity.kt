@@ -107,6 +107,7 @@ class ItemHistoryActivity : AppCompatActivity()
             Overview.Type.UNIQUE_ARMOUR -> itemViewHolder = UniqueArmourViewHolder(layoutInflater.inflate(R.layout.unique_armour_list_item, linearLayout, false))
             Overview.Type.UNIQUE_ACCESSORY -> itemViewHolder = UniqueAccessoryViewHolder(layoutInflater.inflate(R.layout.unique_accessory_list_item, linearLayout, false))
             Overview.Type.BEAST -> itemViewHolder = BeastViewHolder(layoutInflater.inflate(R.layout.beast_list_item, linearLayout, false))
+            Overview.Type.VIAL -> itemViewHolder = VialViewHolder(layoutInflater.inflate(R.layout.vial_list_item, linearLayout, false))
         }
 
         itemViewHolder?.let {

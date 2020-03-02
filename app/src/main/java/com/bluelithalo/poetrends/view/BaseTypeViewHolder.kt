@@ -55,6 +55,18 @@ class BaseTypeViewHolder : PoeNinjaViewHolder
                     baseTypeVariantImageView.setImageResource(R.drawable.ic_shaper)
                     iconUrl += "&shaper=1"
                 }
+                else if (it.equals("Warlord")) {
+                    baseTypeVariantImageView.setImageResource(R.drawable.ic_warlord)
+                }
+                else if (it.equals("Hunter")) {
+                    baseTypeVariantImageView.setImageResource(R.drawable.ic_hunter)
+                }
+                else if (it.equals("Redeemer")) {
+                    baseTypeVariantImageView.setImageResource(R.drawable.ic_redeemer)
+                }
+                else if (it.equals("Crusader")) {
+                    baseTypeVariantImageView.setImageResource(R.drawable.ic_crusader)
+                }
             } ?: run {
                 baseTypeVariantImageView.setImageResource(android.R.color.transparent)
             }

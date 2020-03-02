@@ -92,6 +92,10 @@
             android:id="@+id/nav_beasts"
             android:icon="@drawable/ic_beasts"
             android:title="@string/menu_beasts" />
+        <item
+            android:id="@+id/nav_vials"
+            android:icon="@drawable/ic_vials"
+            android:title="@string/menu_vials" />
     </group>
 
 </menu>

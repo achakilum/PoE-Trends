@@ -52,6 +52,7 @@ class ItemHistoryViewModel(newleagueId: String,
             it[Overview.Type.UNIQUE_ARMOUR] = "UniqueArmour"
             it[Overview.Type.UNIQUE_ACCESSORY] = "UniqueAccessory"
             it[Overview.Type.BEAST] = "Beast"
+            it[Overview.Type.VIAL] = "Vial"
         }
     }
 

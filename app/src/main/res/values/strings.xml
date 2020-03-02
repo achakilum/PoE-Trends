@@ -31,6 +31,7 @@
     <string name="menu_unique_armours">Unique Armours</string>
     <string name="menu_unique_accessories">Unique Accessories</string>
     <string name="menu_beasts">Beasts</string>
+    <string name="menu_vials">Vials</string>
     <string name="title_activity_league_selector">LeagueSelectorActivity</string>
     <string name="title_activity_history">HistoryActivity</string>
     <string name="title_activity_currency_history">CurrencyHistoryActivity</string>

@@ -53,6 +53,7 @@ class OverviewViewModel : ViewModel()
             it[Overview.Type.UNIQUE_ARMOUR] = "UniqueArmour"
             it[Overview.Type.UNIQUE_ACCESSORY] = "UniqueAccessory"
             it[Overview.Type.BEAST] = "Beast"
+            it[Overview.Type.VIAL] = "Vial"
         }
     }
 
@@ -80,6 +81,8 @@ class OverviewViewModel : ViewModel()
             it[Overview.Type.UNIQUE_ARMOUR] = R.string.menu_unique_armours
             it[Overview.Type.UNIQUE_ACCESSORY] = R.string.menu_unique_accessories
             it[Overview.Type.BEAST] = R.string.menu_beasts
+            it[Overview.Type.VIAL] = R.string.menu_vials
+
         }
     }
 
@@ -118,6 +121,7 @@ class OverviewViewModel : ViewModel()
             Overview.Type.UNIQUE_ARMOUR -> loadItemOverview()
             Overview.Type.UNIQUE_ACCESSORY -> loadItemOverview()
             Overview.Type.BEAST -> loadItemOverview()
+            Overview.Type.VIAL -> loadItemOverview()
         }
     }
 
