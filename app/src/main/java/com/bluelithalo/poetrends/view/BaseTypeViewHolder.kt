@@ -67,6 +67,9 @@ class BaseTypeViewHolder : PoeNinjaViewHolder
                 else if (it.equals("Crusader")) {
                     baseTypeVariantImageView.setImageResource(R.drawable.ic_crusader)
                 }
+                else if (it.equals("")) {
+                    baseTypeVariantImageView.setImageResource(android.R.color.transparent)
+                }
             } ?: run {
                 baseTypeVariantImageView.setImageResource(android.R.color.transparent)
             }
