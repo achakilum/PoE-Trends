@@ -69,6 +69,7 @@ class OverviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
         {
             Overview.Type.CURRENCY -> CurrencyViewHolder(inflater.inflate(R.layout.currency_list_item, viewGroup, false))
             Overview.Type.FRAGMENT -> FragmentViewHolder(inflater.inflate(R.layout.fragment_list_item, viewGroup, false))
+            Overview.Type.DELIRIUM_ORB -> DeliriumOrbViewHolder(inflater.inflate(R.layout.delirium_orb_list_item, viewGroup, false))
             Overview.Type.WATCHSTONE -> WatchstoneViewHolder(inflater.inflate(R.layout.watchstone_list_item, viewGroup, false))
             Overview.Type.OIL -> OilViewHolder(inflater.inflate(R.layout.oil_list_item, viewGroup, false))
             Overview.Type.INCUBATOR -> IncubatorViewHolder(inflater.inflate(R.layout.incubator_list_item, viewGroup, false))
@@ -102,6 +103,7 @@ class OverviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
         {
             Overview.Type.CURRENCY -> (viewHolder as CurrencyViewHolder).configureViewHolder(overview, position)
             Overview.Type.FRAGMENT -> (viewHolder as FragmentViewHolder).configureViewHolder(overview, position)
+            Overview.Type.DELIRIUM_ORB -> (viewHolder as DeliriumOrbViewHolder).configureViewHolder(overview, position)
             Overview.Type.WATCHSTONE -> (viewHolder as WatchstoneViewHolder).configureViewHolder(overview, position)
             Overview.Type.OIL -> (viewHolder as OilViewHolder).configureViewHolder(overview, position)
             Overview.Type.INCUBATOR -> (viewHolder as IncubatorViewHolder).configureViewHolder(overview, position)

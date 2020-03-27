@@ -20,7 +20,7 @@ class WatchstoneViewHolder : PoeNinjaViewHolder
 
     var watchstoneValueChange: TextView
 
-    var watchstoneTierTextView: TextView
+    var watchstoneUsesTextView: TextView
 
     constructor(v: View) : super(v)
     {
@@ -33,7 +33,7 @@ class WatchstoneViewHolder : PoeNinjaViewHolder
 
         watchstoneValueChange = v.findViewById<View>(R.id.watchstone_value_change) as TextView
 
-        watchstoneTierTextView = v.findViewById<View>(R.id.watchstone_uses_text_view) as TextView
+        watchstoneUsesTextView = v.findViewById<View>(R.id.watchstone_uses_text_view) as TextView
     }
 
     override fun configureViewHolder(overview: Overview?, position: Int)
@@ -54,7 +54,7 @@ class WatchstoneViewHolder : PoeNinjaViewHolder
             watchstoneNameTextView.text = it.name
             watchstoneChaosValueAffix.text = chaosValueAffixText
             watchstoneExaltValueAffix.text = exaltValueAffixText
-            watchstoneTierTextView.text = "${it.mapTier}"
+            watchstoneUsesTextView.text = "${it.mapTier}"
             watchstoneConfidenceMarker.setBackgroundResource(when {
                 count < 5 -> R.color.confidence_low
                 count < 10 -> R.color.confidence_medium
@@ -71,7 +71,7 @@ class WatchstoneViewHolder : PoeNinjaViewHolder
             watchstoneNameTextView.text = "N/A"
             watchstoneChaosValueAffix.text = "N/A \u00D7"
             watchstoneExaltValueAffix.text = "N/A \u00D7"
-            watchstoneTierTextView.text = "X"
+            watchstoneUsesTextView.text = "X"
             watchstoneValueChange.text = "N/A"
             watchstoneValueChange.setTextColor(Color.GRAY)
             watchstoneConfidenceMarker.setBackgroundResource(R.color.confidence_none)

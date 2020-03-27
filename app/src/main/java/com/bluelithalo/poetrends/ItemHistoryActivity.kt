@@ -70,7 +70,7 @@ class ItemHistoryActivity : AppCompatActivity()
 
         this.title = "History (${leagueId})"
         insertItemSummary(itemType, itemLine)
-        configureItemButtons(leagueId, itemLine)
+        configureItemButtons(leagueId, itemLine, itemType)
         configureItemDatumDisplay(itemLine)
 
         itemHistoryViewModel = ViewModelProviders.of(this, ItemHistoryViewModelFactory(leagueId, itemType, itemLine?.id ?: 0)).get(ItemHistoryViewModel::class.java)
@@ -89,6 +89,7 @@ class ItemHistoryActivity : AppCompatActivity()
         {
             Overview.Type.OIL -> itemViewHolder = OilViewHolder(layoutInflater.inflate(R.layout.oil_list_item, linearLayout, false))
             Overview.Type.INCUBATOR -> itemViewHolder = IncubatorViewHolder(layoutInflater.inflate(R.layout.incubator_list_item, linearLayout, false))
+            Overview.Type.DELIRIUM_ORB -> itemViewHolder = DeliriumOrbViewHolder(layoutInflater.inflate(R.layout.delirium_orb_list_item, linearLayout, false))
             Overview.Type.WATCHSTONE -> itemViewHolder = WatchstoneViewHolder(layoutInflater.inflate(R.layout.watchstone_list_item, linearLayout, false))
             Overview.Type.SCARAB -> itemViewHolder = ScarabViewHolder(layoutInflater.inflate(R.layout.scarab_list_item, linearLayout, false))
             Overview.Type.FOSSIL -> itemViewHolder = FossilViewHolder(layoutInflater.inflate(R.layout.fossil_list_item, linearLayout, false))
@@ -117,7 +118,7 @@ class ItemHistoryActivity : AppCompatActivity()
         }
     }
 
-    private fun configureItemButtons(leagueId: String, itemLine: Line)
+    private fun configureItemButtons(leagueId: String, itemLine: Line, itemType: Overview.Type)
     {
         wikiButton = findViewById<Button>(R.id.item_wiki_button)
         wikiButton?.setOnClickListener(object: View.OnClickListener
