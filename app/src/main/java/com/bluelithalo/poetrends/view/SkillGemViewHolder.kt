@@ -54,7 +54,7 @@ class SkillGemViewHolder : PoeNinjaViewHolder
 
             val chaosValueAffixText = String.format("%.1f", it.chaosValue) + " \u00D7"
             val exaltValueAffixText = String.format("%.1f", it.exaltedValue) + " \u00D7"
-            val skillGemQualityText = "+${it.gemQuality}"
+            val skillGemQualityText = "+${it.gemQuality ?: 0}"
             val count = (it.count ?: 0)
             skillGemNameTextView.text = it.name
             skillGemChaosValueAffix.text = chaosValueAffixText
