@@ -125,7 +125,7 @@ class CurrencyHistoryActivity : AppCompatActivity()
         {
             override fun onClick(v: View?)
             {
-                val wikiUrl: String = "https://pathofexile.gamepedia.com/${currencyLine.currencyTypeName}"
+                val wikiUrl: String = "https://pathofexile.fandom.com/wiki/${currencyLine.currencyTypeName}"
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(wikiUrl))
                 intent.resolveActivity(packageManager)?.let { startActivity(intent) }
             }

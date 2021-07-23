@@ -125,7 +125,7 @@ class ItemHistoryActivity : AppCompatActivity()
         {
             override fun onClick(v: View?)
             {
-                val wikiUrl: String = "https://pathofexile.gamepedia.com/${itemLine.name}"
+                val wikiUrl: String = "https://pathofexile.fandom.com/wiki/${itemLine.name}"
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(wikiUrl))
                 intent.resolveActivity(packageManager)?.let { startActivity(intent) }
             }

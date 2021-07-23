@@ -15,7 +15,7 @@ import java.util.*
 
 class OverviewViewModel : ViewModel()
 {
-    private var leagueId: String = "Ultimatum"
+    private var leagueId: String = "Expedition"
     private var overviewType: Overview.Type = Overview.Type.CURRENCY
     private var searchQuery: String = ""
 
